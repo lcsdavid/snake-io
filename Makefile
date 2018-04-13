@@ -4,7 +4,7 @@ EXEC = bin/snake-io
 
 SDIR = src
 ODIR = obj
-OBJs = $(patsubst $(SDIR)/%.c,%.o, $(wildcard $(SDIR)/*.c))
+OBJs = $(patsubst $(SDIR)/%.c,%.o, $(rwildcard $(SDIR)/*.c))
 
 all: $(EXEC)
 

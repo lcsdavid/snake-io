@@ -1,5 +1,5 @@
 #ifndef VECTOR_H
-#endif VECTOR_H
+#define VECTOR_H
 
 #include <assert.h>
 #include <stdbool.h>
@@ -33,3 +33,5 @@ void vector_push_back(vector_t* vector, void* value);
 void vector_pop_back(vector_t* vector);
 
 void vector_resize(vector_t* vector, size_t new_capacity);
+
+#endif
