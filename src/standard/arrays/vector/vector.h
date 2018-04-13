@@ -14,6 +14,8 @@ typedef struct {
 } vector_t;
 
 /* Constructor & destructor */
+vector_t vector_create(size_t capacity);
+
 vector_t* vector_create_ptr(size_t capacity);
 
 void vector_delete(vector_t* vector);

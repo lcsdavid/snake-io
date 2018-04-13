@@ -1,6 +1,15 @@
 #include "vector.h"
 
 /* Constructor & destructor */
+vector_t vector_create(size_t capacity) {
+    void** data = calloc(capacity, sizeof(void*));
+    if(data == (void*)0) {
+        perror("calloc()");
+        capacity = 0;
+    }
+    return (vector_t){ data, 0, capacity };
+}
+
 vector_t* vector_create_ptr(size_t capacity) {
     vector_t* vector = calloc(1, sizeof(vector_t));
     if(!vector) {
