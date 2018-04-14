@@ -13,7 +13,7 @@ typedef struct {
     size_t size;
 } stack_t;
 
-const stack_t stack_default = {(void *) 0, 0};
+const stack_t stack_default;
 
 stack_t *stack_create();
 

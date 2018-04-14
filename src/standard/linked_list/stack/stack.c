@@ -1,5 +1,7 @@
 #include "stack.h"
 
+const stack_t stack_default = {(void *) 0, 0};
+
 stack_t *stack_create() {
     stack_t *stack = calloc(1, sizeof(stack_t));
     if (!stack) {

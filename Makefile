@@ -1,24 +1,38 @@
+# Author: Lucas David
+# Date: 2018-04-13
+
+rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
+
 CC = gcc
 CFLAGS = -g -std=c11 -Wall
 EXEC = bin/snake-io
+LIB = -lm
 
-SDIR = src
-ODIR = obj
-OBJs = $(patsubst $(SDIR)/%.c,%.o, $(rwildcard $(SDIR)/*.c))
+SRC_DIR = src/
+OBJ_DIR = obj/
+SRC = $(call rwildcard,$(SRC_DIR),*.c)
+OBJ = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
+_OBJ_DIR = $(dir $(OBJ))
 
-all: $(EXEC)
+all: ${_OBJ_DIR} $(EXEC)
 
-$(EXEC): $(ODIR)/$(OBJs)
-	$(CC) -o $@ $^
-	
-$(ODIR)/%.o: $(SDIR)/%.c
+$(EXEC): $(OBJ)
+	$(CC) -o $@ $^ $(LIB)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
-	
-.PHONY: clean cclean
+
+%:
+	mkdir -pv $@
+
+.PHONY: check clean cclean
+
+check:
+	echo $(OBJ)
 
 clean:
-	rm -f $(ODIR)/*.o
-	
+	rm -rfv $(OBJ_DIR)*.o
+
 cclean: clean
-	rm -f $(EXEC)
+	rm -rfv $(EXEC)
 

@@ -1,5 +1,7 @@
 #include "queue.h"
 
+const queue_t queue_default = {(void *) 0, (void *) 0, 0};
+
 dlnode_t *node_create(void *data, dlnode_t *next, dlnode_t *previous) {
     dlnode_t *node = calloc(1, sizeof(dlnode_t));
     if (node == (void *) 0) {

@@ -9,7 +9,7 @@ typedef struct DoublyLinkedNode {
     void* data;
 } dlnode_t;
 
-const dlnode_t dlnode_default = { (void*)0, (void*)0, (void*)0 };
+const dlnode_t dlnode_default;
 
 dlnode_t* dlnode_create(void* data, dlnode_t* next, dlnode_t* previous);
 

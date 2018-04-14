@@ -11,7 +11,7 @@ typedef struct SimplyLinkedNode {
     void *data;
 } slnode_t;
 
-const slnode_t slnode_default = {(void *) 0, (void *) 0};
+const slnode_t slnode_default;
 
 slnode_t *slnode_create(slnode_t *next, void *data);
 

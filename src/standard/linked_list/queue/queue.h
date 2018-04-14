@@ -15,7 +15,7 @@ typedef struct Queue {
     size_t size;
 } queue_t;
 
-const queue_t queue_default = {(void *) 0, (void *) 0, 0};
+const queue_t queue_default;
 
 queue_t *queue_create();
 

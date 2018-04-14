@@ -1,12 +1,14 @@
 #include "slnode.h"
 
+const slnode_t slnode_default = {(void *) 0, (void *) 0};
+
 slnode_t *slnode_create(slnode_t *next, void *data) {
     slnode_t *slnode = calloc(1, sizeof(slnode_t));
     if (!slnode) {
         perror("calloc()");
         return (void *) 0;
     }
-    *slnode = {next, data};
+    *slnode = (slnode_t){next, data};
     return slnode;
 }
 
