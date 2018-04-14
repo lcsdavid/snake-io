@@ -1,26 +1,24 @@
 #include "queue.h"
 
-/* Utiles ?
-queue_t *queue_create() {
+/* Utiles ? */
+queue_t *queue_create(node_t *front, node_t *back) {
     queue_t *queue = calloc(1, sizeof(queue_t));
-    if (queue == (void *) 0) {
+    if (!queue) {
         perror("calloc()");
-        return (void *) 0;
+        return NULL;
     }
-    *queue = (queue_t) {(void *) 0, (void *) 0, 0};
+    *queue = {front, back};
     return queue;
 }
 
 void queue_delete(queue_t *queue) {
-    if (queue) {
-        queue_pop_front(queue);
-        queue_delete(queue);
-        if (queue_empty(*queue))
-            free(queue);
+    if(queue) {
+        queue_empty(queue);
+        free(queue);
     }
 }
 
-*/
+/* Queue primitive functions */
 
 bool queue_is_empty(queue_t queue) {
     return queue.front == NULL || queue.back == NULL;
@@ -59,18 +57,15 @@ void queue_dequeue(queue_t *queue) {
 
 /* Queue complementary functions */
 
-int queue_lenght_r(queue_t queue, queue_t *save) {
-    if(queue_is_empty(queue))
-        return 0;
-    queue_enqueue(save, queue_front(queue));
-    queue_dequeue(&queue);
-    return queue_lenght_r(queue, save) + 1;
-}
-
-int queue_lenght(queue_t *queue) {
+unsigned int queue_lenght(queue_t *queue) {
     assert(queue);
     queue_t save = {NULL, NULL};
-    int lenght = queue_lenght_r(*queue, &save);
+    unsigned int lenght = 0;
+    while (!queue_is_empty(*queue)) {
+        queue_enqueue(&save, queue_front(*queue));
+        queue_dequeue(queue);
+        ++lenght;
+    }
     *queue = save;
     return lenght;
 }

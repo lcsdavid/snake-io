@@ -13,10 +13,13 @@ typedef struct Queue {
 } queue_t;
 
 /* Dynamic memory functions */ // Utiles ?
-queue_t *queue_create();
+
+queue_t *queue_create(node_t *front, node_t *back);
+
 void queue_delete(queue_t *queue);
 
 /* Queue primitive functions */
+
 bool queue_is_empty(queue_t queue);
 
 void *queue_front(queue_t queue);
@@ -28,7 +31,11 @@ void queue_enqueue(queue_t *queue, void *element);
 void queue_dequeue(queue_t *queue);
 
 /* Queue complementary functions */
-int queue_lenght(queue_t *queue);
+unsigned int queue_lenght(queue_t *queue);
+
+void queue_empty(queue_t *queue);
+
+void queue_copy(queue_t *source, queue_t *copy);
 
 int queue_find(queue_t *queue, void *element);
 
