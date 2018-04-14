@@ -2,33 +2,39 @@
 #define QUEUE_H
 
 #include <assert.h>
-#include <stdarg.h>
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdlib.h>
 
-#include "../node/dlnode.h"
+#include "../node/node.h"
 
 typedef struct Queue {
-    dlnode_t *front;
-    dlnode_t *back;
-    size_t size;
+    node_t *front;
+    node_t *back;
 } queue_t;
 
-const queue_t queue_default;
-
+/* Dynamic memory functions */ // Utiles ?
 queue_t *queue_create();
-
 void queue_delete(queue_t *queue);
 
-bool queue_empty(const queue_t *queue);
+/* Queue primitive functions */
+bool queue_is_empty(queue_t queue);
 
-void *queue_front(const queue_t *queue);
+void *queue_front(queue_t queue);
 
-void *queue_back(const queue_t *queue);
+void *queue_back(queue_t queue);
 
-void queue_push_back(queue_t *queue, void *data);
+void queue_enqueue(queue_t *queue, void *element);
 
-void queue_pop_front(queue_t *queue);
+void queue_dequeue(queue_t *queue);
+
+/* Queue complementary functions */
+int queue_lenght(queue_t *queue);
+
+int queue_find(queue_t *queue, void *element);
+
+void *queue_element_at(queue_t *queue, unsigned int at);
+
+void queue_insert_at(queue_t *queue, void* data, unsigned int at);
+
 
 #endif

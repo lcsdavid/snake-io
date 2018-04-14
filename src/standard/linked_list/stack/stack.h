@@ -8,23 +8,55 @@
 
 #include "../node/slnode.h"
 
-typedef struct {
-    slnode_t *head;
-    size_t size;
-} stack_t;
+#define STACK_DEFAULT = NULL;
 
-const stack_t stack_default;
+typedef slnode_t* stack_t;
 
-stack_t *stack_create();
+/**
+ *
+ * @param stack Stack to evaluate.
+ * @return If stack is empty. true for 'empty', false for 'not empty'.
+ */
+bool stack_is_empty(stack_t stack);
 
-void stack_delete(stack_t *stack);
+/**
+ * Give the head of the stack.
+ * @param stack Stack which you want to get the head.
+ * @return Head of the stack.
+ */
+void *stack_top(stack_t stack);
 
-bool stack_empty(const stack_t *stack);
+/**
+ * Push a new value on stack.
+ * @param stack Pointer on stack to modify. Can't be null.
+ * @param data Value to push.
+ */
+void stack_push(stack_t *stack, void *data);
 
-void *stack_top(const stack_t *stack);
+/**
+ * Pop the head.
+ * @param stack  Pointer on stack to modify. Can't be null.
+ */
+void stack_pop(stack_t *stack);
 
-void stack_push_back(stack_t *stack, void *data);
+/**
+ * Empty the stack.
+ * @param stack Pointer on stack to empty. Can't be null.
+ */
+void stack_empty(stack_t *stack);
 
-void stack_pop_back(stack_t *stack);
+// TODO
+void stack_copy(stack_t source_stack, stack_t *new_stack);
+
+// TODO
+bool stack_is_equal(stack_t stack_one, stack_t stack_two);
+
+// TODO
+/**
+ * Give the height of th stack.
+ * @param stack Stack to evaluate. Not altered.
+ * @return Height of the stack.
+ */
+size_t stack_size(stack_t stack);
 
 #endif

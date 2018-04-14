@@ -1,67 +1,33 @@
 #include "stack.h"
 
-const stack_t stack_default = {(void *) 0, 0};
+bool stack_is_empty(stack_t stack) {
+    return stack == NULL;
+}
 
-stack_t *stack_create() {
-    stack_t *stack = calloc(1, sizeof(stack_t));
-    if (!stack) {
-        perror("calloc()");
-        return (void *) 0;
+void *stack_top(stack_t stack) {
+    if(!stack_is_empty(stack))
+        return NULL;
+    return stack->data;
+}
+
+void stack_push(stack_t *stack, void *data) {
+    assert(stack);
+    *stack = slnode_create(*stack, data);
+}
+
+void stack_pop(stack_t *stack) {
+    assert(stack);
+    if(!stack_is_empty(*stack)) {
+        stack_t to_free = *stack;
+        *stack = (*stack)->next;
+        free(to_free);
     }
-    stack = stack_create();
-    return stack;
 }
 
-void stack_delete(stack_t *stack) {
-    if (stack) {
-        stack_pop_back(stack);
-        stack_delete(stack);
-        if (stack_empty(stack))
-            free(stack);
-    }
-}
-
-bool stack_empty(const stack_t *stack) {
+void stack_empty(stack_t *stack) {
     assert(stack);
-    return stack->size < 1;
-}
-
-void *stack_top(const stack_t *stack) {
-    assert(stack);
-    if (stack_empty(stack))
-        return (void *) 0;
-    slnode_t *current_node = stack->head;
-    while (current_node->next)
-        current_node = current_node->next;
-    return current_node->data;
-}
-
-void stack_push_back(stack_t *stack, void *data) {
-    assert(stack);
-    if (stack_empty(stack))
-        stack->head = slnode_create((void *) 0, data);
-    else {
-        slnode_t *current_node = stack->head;
-        while (current_node->next)
-            current_node = current_node->next;
-        current_node->next = slnode_create((void *) 0, data);
-    }
-    stack->size++;
-}
-
-void stack_pop_back(stack_t *stack) {
-    assert(stack);
-    if (!stack_empty(stack)) {
-        if (stack->size > 1) {
-            slnode_t *current_node = stack->head;
-            while (current_node->next->next)
-                current_node = current_node->next;
-            free(current_node->next);
-            current_node->next = (void *) 0;
-        } else {
-            free(stack->head);
-            stack->head->next = (void *) 0;
-        }
-        stack->size--;
+    if(!stack_is_empty(*stack)) {
+        stack_pop(stack);
+        stack_empty(stack);
     }
 }

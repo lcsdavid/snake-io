@@ -1,19 +1,19 @@
 #ifndef DLNODE_H
 #define DLNODE_H
 
-typedef struct DoublyLinkedNode dlnode_t;
+typedef struct DoublyLinkedNode node_t;
 
 typedef struct DoublyLinkedNode {
-    dlnode_t* next;
-    dlnode_t* previous;
+    node_t* next;
+    node_t* previous;
     void* data;
-} dlnode_t;
+} node_t;
 
-const dlnode_t dlnode_default;
+const node_t dlnode_default;
 
-dlnode_t* dlnode_create(void* data, dlnode_t* next, dlnode_t* previous);
+node_t* dlnode_create(void* data, node_t* next, node_t* previous);
 
-void dlnode_delete(dlnode_t* node);
+void dlnode_delete(node_t* node);
 
 
 #endif
