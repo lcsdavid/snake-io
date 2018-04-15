@@ -4,8 +4,8 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <stddef.h>
 
+#include "../../function/function.h"
 #include "../node/node.h"
 
 /**
@@ -20,13 +20,6 @@
 typedef node_t* stack_t;
 
 /* Stack primitive functions */
-
-/**
- * @remark stack_t primitive function.
- * @param stack Stack to evaluate.
- * @return If stack is empty. true for 'empty', false for 'not empty'.
- */
-bool stack_is_empty(stack_t stack);
 
 /**
  * Top returns the value of the top ("head") of the collection without removing the element from the collection.
@@ -51,7 +44,30 @@ void stack_push(stack_t *stack, void *data);
  */
 void stack_pop(stack_t *stack);
 
+/**
+ * @remark stack_t primitive function.
+ * @param stack Stack to evaluate.
+ * @return If stack is empty. true for 'empty', false for 'not empty'.
+ */
+bool stack_is_empty(stack_t stack);
+
 /* Stack complementary functions */
+
+/**
+ * @brief Copies a collection.
+ * Copies a collection without altering it.
+ * @param source Source collection.
+ * @param copy Pointer on collection copy.
+ */
+void stack_copy(stack_t *source, stack_t *copy);
+
+void *stack_element_at(stack_t *stack, unsigned int at);
+
+/**
+ * @brief Empty the stack.
+ * @param stack Pointer on collection of element. Can't be null.
+ */
+void stack_empty(stack_t *stack);
 
 /**
  * @brief Gives the size ("height") of the collection ("stack").
@@ -61,19 +77,7 @@ void stack_pop(stack_t *stack);
  */
 unsigned int stack_height(stack_t *stack);
 
-/**
- * @brief Empty the stack.
- * @param stack Pointer on collection of element. Can't be null.
- */
-void stack_empty(stack_t *stack);
-
-/**
- * @brief Copies a collection.
- * Copies a collection without altering it.
- * @param source Source collection.
- * @param copy Pointer on collection copy.
- */
-void stack_copy(stack_t *source, stack_t *copy);
+void stack_insert_at(stack_t *stack, void *element, unsigned int at);
 
 /**
  * @brief Determines if two collections are the same.

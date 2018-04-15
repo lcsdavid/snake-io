@@ -2,12 +2,6 @@
 
 /* Stack primitive functions */
 
-comparison_func(void* a, void* b) ;
-
-bool stack_is_empty(stack_t stack) {
-    return stack == NULL;
-}
-
 void *stack_top(stack_t stack) {
     if(!stack_is_empty(stack))
         return NULL;
@@ -28,6 +22,10 @@ void stack_pop(stack_t *stack) {
     }
 }
 
+bool stack_is_empty(stack_t stack) {
+    return stack == NULL;
+}
+
 /* Stack complementary functions */
 
 unsigned int stack_height(stack_t *stack) {
@@ -44,6 +42,23 @@ unsigned int stack_height(stack_t *stack) {
         stack_pop(&save);
     }
     return index;
+}
+
+void *stack_element_at(stack_t *stack, unsigned int at) {
+    assert(stack);
+    stack_t save = NULL;
+    unsigned int index = 0;
+    while (!stack_is_empty(*stack) && index < at) {
+        stack_push(&save, stack_top(*stack));
+        stack_pop(stack);
+        ++index;
+    }
+    void* element_at = stack_top(*stack);
+    while (!stack_is_empty(save)) {
+        stack_push(stack, stack_top(save));
+        stack_pop(&save);
+    }
+    return element_at;
 }
 
 void stack_empty(stack_t *stack) {
@@ -68,12 +83,26 @@ void stack_copy(stack_t *source, stack_t *copy) {
     }
 }
 
-bool generic_ptr_is_equal(void* a, void* b) { return a == b; };
+void stack_insert_at(stack_t *stack, void *element, unsigned int at) {
+    assert(stack);
+    stack_t save = NULL;
+    unsigned int index = 0;
+    while (!stack_is_empty(*stack) && index < at) {
+        stack_push(&save, stack_top(*stack));
+        stack_pop(stack);
+        ++index;
+    }
+    stack_push(stack, element);
+    while (!stack_is_empty(save)) {
+        stack_push(stack, stack_top(save));
+        stack_pop(&save);
+    }
+}
 
 bool stack_is_equal(stack_t *stack_1, stack_t *stack_2, bool (*comparison_func)(void*, void*)) {
     assert(stack_1 && stack_2);
-    if(comparison_func == NULL)
-        comparison_func = generic_ptr_is_equal;
+    if(!comparison_func)
+        comparison_func = &generic_ptr_is_equal;
     stack_t save = NULL;
     bool is_equal = true;
     unsigned int index_1 = 0, index_2 = 0;

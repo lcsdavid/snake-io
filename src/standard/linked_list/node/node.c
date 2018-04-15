@@ -6,7 +6,7 @@ node_t *node_create(node_t *next, void *data) {
         perror("calloc()");
         return NULL;
     }
-    *node = {next, data};
+    *node = (node_t) {next, data};
     return node;
 }
 
