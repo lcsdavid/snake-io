@@ -120,25 +120,17 @@ size_t stack_height(stack_t *stack) {
     return index;
 }
 
-
-
-
-
-
-
-
-
-void stack_insert_at(stack_t *stack, void *element, unsigned int at) {
+void stack_insert_at(stack_t *stack, void *element, size_t at) {
     assert(stack);
     stack_t save = NULL;
-    unsigned int index = 0;
-    while (!stack_is_empty(*stack) && index < at) {
+    size_t index = 0;
+    while (!stack_empty(*stack) && index < at) {
         stack_push(&save, stack_top(*stack));
         stack_pop(stack);
         ++index;
     }
     stack_push(stack, element);
-    while (!stack_is_empty(save)) {
+    while (!stack_empty(save)) {
         stack_push(stack, stack_top(save));
         stack_pop(&save);
     }

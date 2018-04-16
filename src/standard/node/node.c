@@ -10,20 +10,13 @@ node_t *node_create(node_t *next, void *data) {
     return node;
 }
 
+node_t *node_copy(const node_t *node) {
+    return node_create(NULL, node->data);
+}
 
 void node_delete(node_t *node) {
     free(node->data);
     free(node);
 }
 
-node_t *node_copy(node_t node) {
-    return node_create(NULL, node.data);
-}
-
-
-int8_t node_is_empty(node_t node) {
-    if (node.data == NULL)
-        return 1;
-    else
-        return 0;
-}
+bool node_empty(const node_t *node) { return node->data == NULL; }

@@ -93,7 +93,7 @@ bool stack_equal(stack_t *first_stack, stack_t *second_stack, bool (*_type_equal
  */
 size_t stack_height(stack_t *stack);
 
-void stack_insert_at(stack_t *stack, void *element, unsigned int at);
+void stack_insert_at(stack_t *stack, void *element, size_t at);
 
 
 
