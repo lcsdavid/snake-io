@@ -7,7 +7,7 @@
 
 typedef struct snake {
     queue_t body;
-    uint8_t lenght;
+    unsigned char lenght;
     double /* type ? */ direction;
 } snake_t ;
 

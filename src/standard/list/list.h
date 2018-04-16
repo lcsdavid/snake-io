@@ -1,6 +1,7 @@
 #ifndef SNAKE_IO_LIST_H
 #define SNAKE_IO_LIST_H
 
+#include <assert.h>
 #include <stdbool.h>
 
 #include "../node/node.h"
@@ -16,7 +17,7 @@ void* list_front(const list_t *list);
 
 void* list_back(const list_t *list);
 
-void* list_element_at(const list_t *list);
+void* list_element_at(const list_t *list, size_t at);
 
 /* Capacity */
 
@@ -28,9 +29,9 @@ size_t list_size(const list_t *list);
 
 void list_clear(list_t *list);
 
-void list_insert_at(list_t *list, void *element);
+void list_insert_at(list_t *list, void *element, size_t at);
 
-void list_erase_at(list_t *list, unsigned int index);
+void list_erase_at(list_t *list, size_t at);
 
 void list_push_back(list_t *list, void *element);
 
