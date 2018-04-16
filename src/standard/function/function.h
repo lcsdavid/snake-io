@@ -1,8 +1,9 @@
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
-int8_t generic_ptr_is_equal(void* a, void* b);
+bool generic_ptr_equal(void* a, void* b);
 
 #endif

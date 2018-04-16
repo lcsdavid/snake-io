@@ -2,12 +2,13 @@
 #define POINT_H
 
 #include <assert.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
 
 typedef struct {
-	double x;
-	double y;
+	int16_t x;
+	int16_t y;
 } point_t;
 
 point_t* point_create(double x, double y);

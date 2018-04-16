@@ -19,15 +19,17 @@ void queue_delete(queue_t *queue) {
     }
 }
 
-/* Queue primitive functions */
+/* Access */
 
-void *queue_front(queue_t queue) {
-    return queue.front->data;
-}
+void *queue_front(const queue_t *queue) { return queue->front->data; }
 
-void *queue_back(queue_t queue) {
-    return queue.back->data;
-}
+void *queue_back(const queue_t *queue) { return queue->back->data; }
+
+/* Capacity */
+
+bool queue_empty(const queue_t *queue) { return queue->front || queue->back; }
+
+/* Modifiers */
 
 void queue_enqueue(queue_t *queue, void *data) {
     assert(queue);
@@ -52,68 +54,101 @@ void queue_dequeue(queue_t *queue) {
     }
 }
 
-int8_t queue_is_empty(queue_t queue) { return queue.front || queue.back; }
+/* Operations */
 
-/* Queue complementary functions */
+void queue_clear(queue_t *queue) {
+    assert(queue);
+    while (!queue_empty(queue)) {
+        queue_dequeue(queue);
+    }
+}
 
 void queue_copy(queue_t *source, queue_t *copy) {
     assert(source && copy);
     queue_t save = {NULL, NULL};
-    while (!queue_is_empty(*source)) {
-        queue_enqueue(&save, queue_front(*source));
-        queue_enqueue(copy, queue_front(*source));
+    while (!queue_empty(source)) {
+        queue_enqueue(&save, queue_front(source));
+        queue_enqueue(copy, queue_front(source));
         queue_dequeue(source);
     }
-    while (!queue_is_empty(save)) {
-        queue_enqueue(source, queue_front(save));
+    while (!queue_empty(&save)) {
+        queue_enqueue(source, queue_front(&save));
         queue_dequeue(&save);
     }
 }
 
-void *queue_element_at(queue_t *queue, unsigned int at) {
+void *queue_element_at(queue_t *queue, size_t at) {
     assert(queue);
     queue_t save = {NULL, NULL};
     void *element = NULL;
     int index = 0;
-    while (!queue_is_empty(*queue)) {
+    while (!queue_empty(queue)) {
         if (index == at)
-            element = queue_front(*queue);
-        queue_enqueue(&save, queue_front(*queue));
+            element = queue_front(queue);
+        queue_enqueue(&save, queue_front(queue));
         queue_dequeue(queue);
     }
     *queue = save;
     return element;
 }
 
-void queue_empty(queue_t *queue) {
-    assert(queue);
-    while (!queue_is_empty(*queue)) {
-        queue_dequeue(queue);
+bool queue_equal(queue_t *first_queue, queue_t *second_queue, bool (*_type_equal_func)(void *, void *)) {
+    assert(first_queue && second_queue);
+    if (!_type_equal_func)
+        _type_equal_func = &generic_ptr_equal;
+    queue_t save = {NULL, NULL};
+    unsigned int index_1 = 0, index_2 = 0;
+    while (!queue_empty(first_queue) || !queue_empty(second_queue)) {
+        if (!queue_empty(first_queue)) {
+            queue_enqueue(&save, queue_front(first_queue));
+            queue_dequeue(first_queue);
+            ++index_1;
+        }
+        if (!queue_empty(second_queue)) {
+            queue_enqueue(&save, queue_front(second_queue));
+            queue_dequeue(second_queue);
+            ++index_2;
+        }
     }
+    bool is_equal = index_1 == index_2;
+    while (!queue_empty(&save)) {
+        if (index_1 > 0) {
+            queue_enqueue(first_queue, queue_front(&save));
+            queue_dequeue(&save);
+            --index_1;
+        }
+        if (index_2 > 0) {
+            queue_enqueue(second_queue, queue_front(&save));
+            queue_dequeue(&save);
+            ++index_2;
+        }
+        is_equal = is_equal && _type_equal_func(queue_back(first_queue), queue_back(second_queue));
+    }
+    return is_equal;
 }
 
-int queue_find(queue_t *q, void *element, int8_t (*comparison_func)(void *, void *)) {
+ssize_t queue_find(queue_t *q, void *element, bool (*_type_equal_func)(void *, void *)) {
     assert(q);
-    if (comparison_func == NULL)
-        comparison_func = &generic_ptr_is_equal;
+    if (_type_equal_func == NULL)
+        _type_equal_func = &generic_ptr_equal;
     queue_t save = {NULL, NULL};
-    int index = 0;
-    while (comparison_func(queue_front(*q), element)) {
-        if (queue_is_empty(*q))
+    ssize_t index = 0;
+    while (_type_equal_func(queue_front(q), element)) {
+        if (queue_empty(q))
             return -1;
-        queue_enqueue(&save, queue_front(*q));
+        queue_enqueue(&save, queue_front(q));
         queue_dequeue(q);
         ++index;
     }
     return index;
 }
 
-void queue_insert_at(queue_t *queue, void *element, unsigned int at) {
+void queue_insert_at(queue_t *queue, void *element, size_t at) {
     assert(queue);
     queue_t save = {NULL, NULL};
-    int index = 0;
-    while (!queue_is_empty(*queue) && index < at) {
-        queue_enqueue(&save, queue_front(*queue));
+    size_t index = 0;
+    while (!queue_empty(queue) && index < at) {
+        queue_enqueue(&save, queue_front(queue));
         queue_dequeue(queue);
         ++index;
     }
@@ -121,48 +156,12 @@ void queue_insert_at(queue_t *queue, void *element, unsigned int at) {
     *queue = save;
 }
 
-int8_t queue_is_equal(queue_t *first_queue, queue_t *second_queue, int8_t (*comparison_func)(void *, void *)) {
-    assert(first_queue && second_queue);
-    if (!comparison_func)
-        comparison_func = &generic_ptr_is_equal;
-    queue_t save = {NULL, NULL};
-    unsigned int index_1 = 0, index_2 = 0;
-    while (!queue_is_empty(*first_queue) || !queue_is_empty(*second_queue)) {
-        if (!queue_is_empty(*first_queue)) {
-            queue_enqueue(&save, queue_front(*first_queue));
-            queue_dequeue(first_queue);
-            ++index_1;
-        }
-        if (!queue_is_empty(*second_queue)) {
-            queue_enqueue(&save, queue_front(*second_queue));
-            queue_dequeue(second_queue);
-            ++index_2;
-        }
-    }
-    uint8_t is_equal = index_1 == index_2;
-    while (!queue_is_empty(save)) {
-        if (index_1 > 0) {
-            queue_enqueue(first_queue, queue_front(save));
-            queue_dequeue(&save);
-            --index_1;
-        }
-        if (index_2 > 0) {
-            queue_enqueue(second_queue, queue_front(save));
-            queue_dequeue(&save);
-            ++index_2;
-        }
-        if (is_equal && comparison_func(queue_back(*first_queue), queue_back(*second_queue)))
-            is_equal = 0;
-    }
-    return is_equal;
-}
-
-unsigned int queue_lenght(queue_t *queue) {
+size_t queue_lenght(queue_t *queue) {
     assert(queue);
     queue_t save = {NULL, NULL};
     unsigned int lenght = 0;
-    while (!queue_is_empty(*queue)) {
-        queue_enqueue(&save, queue_front(*queue));
+    while (!queue_empty(queue)) {
+        queue_enqueue(&save, queue_front(queue));
         queue_dequeue(queue);
         ++lenght;
     }
