@@ -2,10 +2,10 @@
 #define STACK_H
 
 #include <assert.h>
-#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 
-#include "../../function/function.h"
+#include "../function/function.h"
 #include "../node/node.h"
 
 /**
@@ -47,9 +47,9 @@ void stack_pop(stack_t *stack);
 /**
  * @remark stack_t primitive function.
  * @param stack Stack to evaluate.
- * @return If stack is empty. true for 'empty', false for 'not empty'.
+ * @return If stack is empty. 1 for 'empty', 0 for 'not empty'.
  */
-bool stack_is_empty(stack_t stack);
+int8_t stack_is_empty(stack_t stack);
 
 /* Stack complementary functions */
 
@@ -88,7 +88,7 @@ void stack_insert_at(stack_t *stack, void *element, unsigned int at);
  * @param comparison_func Function which compares two generic pointers values.
  * @return is_equal.
  */
-bool stack_is_equal(stack_t *first_stack, stack_t *second_stack, bool (*comparison_func)(void*, void*));
+int8_t stack_is_equal(stack_t *first_stack, stack_t *second_stack, int8_t (*comparison_func)(void*, void*));
 
 
 

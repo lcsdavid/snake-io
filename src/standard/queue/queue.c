@@ -52,9 +52,7 @@ void queue_dequeue(queue_t *queue) {
     }
 }
 
-bool queue_is_empty(queue_t queue) {
-    return queue.front == NULL || queue.back == NULL;
-}
+int8_t queue_is_empty(queue_t queue) { return queue.front || queue.back; }
 
 /* Queue complementary functions */
 
@@ -94,9 +92,9 @@ void queue_empty(queue_t *queue) {
     }
 }
 
-int queue_find(queue_t *q, void *element, bool (*comparison_func)(void*, void*)) {
+int queue_find(queue_t *q, void *element, int8_t (*comparison_func)(void *, void *)) {
     assert(q);
-    if(comparison_func == NULL)
+    if (comparison_func == NULL)
         comparison_func = &generic_ptr_is_equal;
     queue_t save = {NULL, NULL};
     int index = 0;
@@ -123,13 +121,12 @@ void queue_insert_at(queue_t *queue, void *element, unsigned int at) {
     *queue = save;
 }
 
-bool queue_is_equal(queue_t *first_queue, queue_t *second_queue, bool (*comparison_func)(void*, void*)) {
+int8_t queue_is_equal(queue_t *first_queue, queue_t *second_queue, int8_t (*comparison_func)(void *, void *)) {
     assert(first_queue && second_queue);
     if (!comparison_func)
         comparison_func = &generic_ptr_is_equal;
     queue_t save = {NULL, NULL};
     unsigned int index_1 = 0, index_2 = 0;
-    bool is_equal = true;
     while (!queue_is_empty(*first_queue) || !queue_is_empty(*second_queue)) {
         if (!queue_is_empty(*first_queue)) {
             queue_enqueue(&save, queue_front(*first_queue));
@@ -142,7 +139,7 @@ bool queue_is_equal(queue_t *first_queue, queue_t *second_queue, bool (*comparis
             ++index_2;
         }
     }
-    is_equal = index_1 == index_2;
+    uint8_t is_equal = index_1 == index_2;
     while (!queue_is_empty(save)) {
         if (index_1 > 0) {
             queue_enqueue(first_queue, queue_front(save));
@@ -154,8 +151,8 @@ bool queue_is_equal(queue_t *first_queue, queue_t *second_queue, bool (*comparis
             queue_dequeue(&save);
             ++index_2;
         }
-        if (is_equal && !comparison_func(queue_back(*first_queue), queue_back(*second_queue)))
-            is_equal = false;
+        if (is_equal && comparison_func(queue_back(*first_queue), queue_back(*second_queue)))
+            is_equal = 0;
     }
     return is_equal;
 }

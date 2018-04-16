@@ -22,9 +22,7 @@ void stack_pop(stack_t *stack) {
     }
 }
 
-bool stack_is_empty(stack_t stack) {
-    return stack == NULL;
-}
+int8_t stack_is_empty(stack_t stack) { return stack == NULL; }
 
 /* Stack complementary functions */
 
@@ -99,12 +97,11 @@ void stack_insert_at(stack_t *stack, void *element, unsigned int at) {
     }
 }
 
-bool stack_is_equal(stack_t *stack_1, stack_t *stack_2, bool (*comparison_func)(void*, void*)) {
+int8_t stack_is_equal(stack_t *stack_1, stack_t *stack_2, int8_t (*comparison_func)(void*, void*)) {
     assert(stack_1 && stack_2);
     if(!comparison_func)
         comparison_func = &generic_ptr_is_equal;
     stack_t save = NULL;
-    bool is_equal = true;
     unsigned int index_1 = 0, index_2 = 0;
     while (!stack_is_empty(*stack_1) || !stack_is_empty(*stack_2)) {
         if(!stack_is_empty(*stack_1)) {
@@ -118,7 +115,7 @@ bool stack_is_equal(stack_t *stack_1, stack_t *stack_2, bool (*comparison_func)(
             ++index_2;
         }
     }
-    is_equal = index_1 == index_2;
+    int8_t is_equal = index_1 == index_2;
     while (!stack_is_empty(save)) {
         if (index_1 > 0) {
             stack_push(stack_1, stack_top(save));
@@ -130,8 +127,8 @@ bool stack_is_equal(stack_t *stack_1, stack_t *stack_2, bool (*comparison_func)(
             stack_pop(&save);
             --index_2;
         }
-        if(is_equal && !comparison_func(stack_top(*stack_1), stack_top(*stack_2)))
-            is_equal = false;
+        if(is_equal && comparison_func(stack_top(*stack_1), stack_top(*stack_2)))
+            is_equal = 0;
     }
     return is_equal;
 }

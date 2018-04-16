@@ -2,13 +2,13 @@
 #define QUEUE_H
 
 #include <assert.h>
-#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 
-#include "../../function/function.h"
+#include "../function/function.h"
 #include "../node/node.h"
 
-typedef struct Queue {
+typedef struct queue {
     node_t *front;
     node_t *back;
 } queue_t;
@@ -29,7 +29,7 @@ void queue_enqueue(queue_t *queue, void *element);
 
 void queue_dequeue(queue_t *queue);
 
-bool queue_is_empty(queue_t queue);
+int8_t queue_is_empty(queue_t queue);
 
 /* Queue complementary functions */
 
@@ -39,11 +39,11 @@ void *queue_element_at(queue_t *queue, unsigned int at);
 
 void queue_empty(queue_t *queue);
 
-int queue_find(queue_t *queue, void *element, bool (*comparison_func)(void*, void*));
+int queue_find(queue_t *queue, void *element, int8_t (*comparison_func)(void*, void*));
 
 void queue_insert_at(queue_t *queue, void *element, unsigned int at);
 
-bool queue_is_equal(queue_t *first_queue, queue_t *second_queue, bool (*comparison_func)(void*, void*));
+int8_t queue_is_equal(queue_t *first_queue, queue_t *second_queue, int8_t (*comparison_func)(void*, void*));
 
 unsigned int queue_lenght(queue_t *queue);
 

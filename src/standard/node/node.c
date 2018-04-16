@@ -21,6 +21,9 @@ node_t *node_copy(node_t node) {
 }
 
 
-bool node_is_empty(node_t node) {
-    return node.data == NULL;
+int8_t node_is_empty(node_t node) {
+    if (node.data == NULL)
+        return 1;
+    else
+        return 0;
 }
