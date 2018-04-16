@@ -2,6 +2,7 @@
 #define STACK_H
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -13,13 +14,13 @@
  * @brief Collection of elements.
  *
  * stack_t is a collection of elements.
- * The main operations are:
+ * The main operations ("modifiers") are:
  *   - push, which adds an element to the collection,
  *   - pop, which removes the most recently added element that was not yet removed.
  */
 typedef node_t* stack_t;
 
-/* Stack primitive functions */
+/* Access */
 
 /**
  * Top returns the value of the top ("head") of the collection without removing the element from the collection.
@@ -28,6 +29,17 @@ typedef node_t* stack_t;
  * @return Head of the stack.
  */
 void *stack_top(stack_t stack);
+
+/* Capacity */
+
+/**
+ * @remark stack_t primitive function.
+ * @param stack Stack to evaluate.
+ * @return If stack is empty. 1 for 'empty', 0 for 'not empty'.
+ */
+bool stack_empty(stack_t stack);
+
+/* Modifiers */
 
 /**
  * Push adds an element to the collection.
@@ -44,14 +56,13 @@ void stack_push(stack_t *stack, void *data);
  */
 void stack_pop(stack_t *stack);
 
-/**
- * @remark stack_t primitive function.
- * @param stack Stack to evaluate.
- * @return If stack is empty. 1 for 'empty', 0 for 'not empty'.
- */
-int8_t stack_is_empty(stack_t stack);
+/* Operations */
 
-/* Stack complementary functions */
+/**
+ * @brief Empty the stack.
+ * @param stack Pointer on collection of element. Can't be null.
+ */
+void stack_clear(stack_t *stack);
 
 /**
  * @brief Copies a collection.
@@ -61,23 +72,7 @@ int8_t stack_is_empty(stack_t stack);
  */
 void stack_copy(stack_t *source, stack_t *copy);
 
-void *stack_element_at(stack_t *stack, unsigned int at);
-
-/**
- * @brief Empty the stack.
- * @param stack Pointer on collection of element. Can't be null.
- */
-void stack_empty(stack_t *stack);
-
-/**
- * @brief Gives the size ("height") of the collection ("stack").
- * Gives the size ("height") of the collection ("stack") without altering it.
- * @param stack Pointer on collection. Can't be null.
- * @return Height.
- */
-unsigned int stack_height(stack_t *stack);
-
-void stack_insert_at(stack_t *stack, void *element, unsigned int at);
+void *stack_element_at(stack_t *stack, size_t at);
 
 /**
  * @brief Determines if two collections are the same.
@@ -88,7 +83,19 @@ void stack_insert_at(stack_t *stack, void *element, unsigned int at);
  * @param comparison_func Function which compares two generic pointers values.
  * @return is_equal.
  */
-int8_t stack_is_equal(stack_t *first_stack, stack_t *second_stack, int8_t (*comparison_func)(void*, void*));
+bool stack_equal(stack_t *first_stack, stack_t *second_stack, bool (*_type_equal_func)(void*, void*));
+
+/**
+ * @brief Gives the size ("height") of the collection ("stack").
+ * Gives the size ("height") of the collection ("stack") without altering it.
+ * @param stack Pointer on collection. Can't be null.
+ * @return Height.
+ */
+size_t stack_height(stack_t *stack);
+
+void stack_insert_at(stack_t *stack, void *element, unsigned int at);
+
+
 
 
 

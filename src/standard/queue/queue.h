@@ -2,13 +2,23 @@
 #define QUEUE_H
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #include "../function/function.h"
 #include "../node/node.h"
 
+/**
+ * @typedef queue_t
+ * @struct queue
+ * @brief Collection of elements.
+ *
+ * stack_t is a collection of elements.
+ * The main operations ("modifiers") are:
+ *   - enqueue, which adds an element to the collection,
+ *   - dequeue, which removes the least recently added element that was not yet removed.
+ */
 typedef struct queue {
     node_t *front;
     node_t *back;
