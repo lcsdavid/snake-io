@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "../../standard/queue/queue.h"
+#include "../../standard/math/point.h"
 
 typedef struct snake {
     queue_t body;
@@ -14,6 +15,8 @@ typedef struct snake {
 void snake_grow(snake_t *snake);
 
 void snake_diminish(snake_t *snake);
+
+void change_dir(point_t* last_dir, char new_dir);
 
 void snake_move(snake_t *snake, double direction /* type ? */);
 

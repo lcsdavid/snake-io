@@ -18,8 +18,13 @@
 -- Looking for pthread_create
 -- Looking for pthread_create - found
 -- Found Threads: TRUE  
--- Found SDL2: mingw32;-mwindows;C:/Users/user/Documents/GitHub/snake-io/lib/SDL2/win32/x86_64-w64-mingw32/lib/libSDL2main.a;C:/Users/user/Documents/GitHub/snake-io/lib/SDL2/win32/x86_64-w64-mingw32/lib/libSDL2.dll.a  
--- Found SDL2_image: C:/Users/user/Documents/GitHub/snake-io/lib/SDL2_image/win32/x86_64-w64-mingw32/lib/libSDL2_image.dll.a (found version "2.0.3") 
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug
+CMake Error at C:/Program Files/CMake/share/cmake-3.11/Modules/FindPackageHandleStandardArgs.cmake:137 (message):
+  Could NOT find SDL2 (missing: SDL2_LIBRARY)
+Call Stack (most recent call first):
+  C:/Program Files/CMake/share/cmake-3.11/Modules/FindPackageHandleStandardArgs.cmake:378 (_FPHSA_FAILURE_MESSAGE)
+  C:/Program Files/CMake/share/cmake-3.11/Modules/FindSDL2.cmake:173 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  CMakeLists.txt:12 (find_package)
+
+
+-- Configuring incomplete, errors occurred!
+See also "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug-mingw/CMakeFiles/CMakeOutput.log".

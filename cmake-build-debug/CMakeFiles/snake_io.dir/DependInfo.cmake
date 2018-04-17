@@ -4,16 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/gameplay/menu/button.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/gameplay/menu/button.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/gameplay/snake/snake.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/gameplay/snake/snake.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/main.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/main.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/standard/function/function.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/function/function.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/standard/list/list.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/list/list.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/standard/math/point.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/math/point.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/standard/node/node.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/node/node.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/standard/queue/queue.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/queue/queue.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/standard/stack/stack.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/stack/stack.c.obj"
-  "D:/Users/lucasdavid/Documents/GitHub/snake-io/src/standard/vector/vector.c" "D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/vector/vector.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/gameplay/menu/button.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/gameplay/menu/button.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/gameplay/snake/snake.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/gameplay/snake/snake.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/main.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/main.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/standard/function/function.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/function/function.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/standard/list/list.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/list/list.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/standard/math/point.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/math/point.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/standard/node/node.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/node/node.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/standard/queue/queue.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/queue/queue.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/standard/stack/stack.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/stack/stack.c.obj"
+  "C:/Users/user/Documents/GitHub/snake-io/src/standard/vector/vector.c" "C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir/src/standard/vector/vector.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
