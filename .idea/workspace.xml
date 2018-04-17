@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
+    <generated>
+      <config projectName="snake-io" targetName="snake_io" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f5ffa2c9-1338-4458-a686-a304d053d8e6" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/gameplay/menu/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/menu/menu.h" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <ignored path="$PROJECT_DIR$/cmake-build-release/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FavoritesManager">
+    <favorites_list name="snake-io" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="stack.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/standard/stack/stack.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="659">
+              <caret line="95" column="59" selection-start-line="95" selection-start-column="59" selection-end-line="95" selection-end-column="59" />
+              <folding>
+                <element signature="e#176#460#0" />
+                <element signature="e#501#729#0" />
+                <element signature="e#779#924#0" />
+                <element signature="e#976#1160#0" />
+                <element signature="e#1207#1391#0" />
+                <element signature="e#1443#1542#0" />
+                <element signature="e#1578#1739#0" />
+                <element signature="e#1842#2286#0" />
+                <element signature="e#2391#2614#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="map.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gameplay/map/map.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="button.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gameplay/menu/button.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-146">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="menu.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gameplay/menu/menu.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+              <folding>
+                <element signature="e#49#69#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stack.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/standard/stack/stack.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="function.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/standard/function/function.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="59" selection-start-line="2" selection-start-column="59" selection-end-line="2" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/Snake.h" />
+        <option value="$PROJECT_DIR$/src/list/queue.h" />
+        <option value="$PROJECT_DIR$/src/vector/vector.h" />
+        <option value="$PROJECT_DIR$/src/vector/vector.c" />
+        <option value="$PROJECT_DIR$/src/snake.h" />
+        <option value="$PROJECT_DIR$/src/list/node.h" />
+        <option value="$PROJECT_DIR$/src/list/queue/queue.h.c" />
+        <option value="$PROJECT_DIR$/src/list/queue/queue.h" />
+        <option value="$PROJECT_DIR$/src/list/queue/queue.c" />
+        <option value="$PROJECT_DIR$/src/array/vector/vector.c" />
+        <option value="$PROJECT_DIR$/src/array/vector/vector.h" />
+        <option value="$PROJECT_DIR$/src/math/point.h" />
+        <option value="$PROJECT_DIR$/src/math/point.c" />
+        <option value="$PROJECT_DIR$/src/list/stack/stack.h" />
+        <option value="$PROJECT_DIR$/src/list/stack/stack.c" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/node/dlnode.h" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/node/dlnode.c" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/node/slnode.h" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/node/slnode.c" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/node/node.h" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/node/node.c" />
+        <option value="$PROJECT_DIR$/src/standard/function/function.hpp" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/stack/stack.h" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/queue/queue.c" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/stack/stack.c" />
+        <option value="$PROJECT_DIR$/src/standard/math/point.c" />
+        <option value="$PROJECT_DIR$/src/gameplay/map.h" />
+        <option value="$PROJECT_DIR$/src/gameplay/snake.h" />
+        <option value="$PROJECT_DIR$/src/standard/linked_list/queue/queue.h" />
+        <option value="$PROJECT_DIR$/src/gameplay/tile.h" />
+        <option value="$PROJECT_DIR$/src/gameplay/map/map.h" />
+        <option value="$PROJECT_DIR$/src/standard/math/point.h" />
+        <option value="$PROJECT_DIR$/src/gameplay/menu/button.c" />
+        <option value="$PROJECT_DIR$/src/standard/function/function.h" />
+        <option value="$PROJECT_DIR$/src/standard/queue/queue.c" />
+        <option value="$PROJECT_DIR$/src/standard/queue/queue.h" />
+        <option value="$PROJECT_DIR$/src/standard/stack/stack.h" />
+        <option value="$PROJECT_DIR$/src/standard/node/node.h" />
+        <option value="$PROJECT_DIR$/src/standard/node/node.c" />
+        <option value="$PROJECT_DIR$/src/standard/vector/vector.h" />
+        <option value="$PROJECT_DIR$/src/standard/list/list.h" />
+        <option value="$PROJECT_DIR$/src/gameplay/snake/snake.h" />
+        <option value="$PROJECT_DIR$/src/gameplay/snake/snake.c" />
+        <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/src/standard/list/list.c" />
+        <option value="$PROJECT_DIR$/src/standard/function/function.c" />
+        <option value="$PROJECT_DIR$/src/main.c" />
+        <option value="$PROJECT_DIR$/src/gameplay/menu/button.h" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/standard/stack/stack.c" />
+        <option value="$PROJECT_DIR$/src/gameplay/menu/menu.h" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="223" />
+    <option name="y" value="159" />
+    <option name="width" value="1298" />
+    <option name="height" value="715" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="snake-io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="snake-io" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="snake-io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="snake-io" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Users\lucasdavid\Documents\GitHub\snake-io\lib\SDL2_mixer" />
+      <recent name="D:\Users\lucasdavid\Documents\GitHub\snake-io\src\gameplay\map" />
+      <recent name="D:\Users\lucasdavid\Documents\GitHub\snake-io\src\standard" />
+      <recent name="D:\Users\lucasdavid\Documents\GitHub\snake-io\src\gameplay\snake" />
+      <recent name="D:\Users\lucasdavid\Documents\GitHub\snake-io\src\array" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Build All">
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="snake-io" RUN_TARGET_NAME="snake_io" EXPLICIT_BUILD_TARGET_NAME="all" />
+    <configuration name="snake_io" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="snake-io" TARGET_NAME="snake_io" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="snake-io" RUN_TARGET_NAME="snake_io" />
+    <configuration name="%.o" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="%.o" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+    </configuration>
+    <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="all" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Build All" />
+      <item itemvalue="Application.snake_io" />
+      <item itemvalue="Makefile.%.o" />
+      <item itemvalue="Makefile.all" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile.all" />
+        <item itemvalue="Makefile.%.o" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f5ffa2c9-1338-4458-a686-a304d053d8e6" name="Default" comment="" />
+      <created>1523572185234</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1523572185234</updated>
+      <workItem from="1523572186351" duration="11573000" />
+      <workItem from="1523607426433" duration="1395000" />
+      <workItem from="1523637506284" duration="5723000" />
+      <workItem from="1523646818456" duration="13720000" />
+      <workItem from="1523731327200" duration="14274000" />
+      <workItem from="1523753079802" duration="4671000" />
+      <workItem from="1523882728211" duration="6278000" />
+      <workItem from="1523892060288" duration="8151000" />
+      <workItem from="1523963160982" duration="7003000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="72788000" />
+  </component>
+  <component name="TodoView" selected-index="3">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="223" y="159" width="1298" height="715" extended-state="0" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49705535" visible="true" weight="0.2531746" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.10190217" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.28816468" />
+      <window_info active="true" anchor="bottom" id="CMake" order="11" visible="true" weight="0.974271" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3293011" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Structure" order="1" sideWeight="0.50294465" side_tool="true" weight="0.31875658" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.29475102" />
+      <window_info id="Favorites" order="2" sideWeight="0.50224215" side_tool="true" weight="0.24963716" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="bottom" id="CMake" order="11" weight="0.32526475" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49775785" visible="true" weight="0.24963716" />
+      <window_info id="Structure" order="1" sideWeight="0.50224215" side_tool="true" weight="0.24963716" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32980332" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.29475102" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32980332" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.32974428" />
+      <window_info id="Favorites" order="2" sideWeight="0.50224215" side_tool="true" weight="0.24963716" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="18" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/x86_64-w64-mingw32/include/stddef.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="398" column="8" selection-start-line="398" selection-start-column="8" selection-end-line="398" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/snake.h" />
+    <entry file="file://$PROJECT_DIR$/src/list/node.h" />
+    <entry file="file://$PROJECT_DIR$/src/math/point.h" />
+    <entry file="file://$PROJECT_DIR$/src/math/point.c" />
+    <entry file="file://$PROJECT_DIR$/src/array/vector/vector.c" />
+    <entry file="file://$PROJECT_DIR$/src/array/vector/vector.h" />
+    <entry file="file://$PROJECT_DIR$/src/list/queue/queue.h" />
+    <entry file="file://$PROJECT_DIR$/src/list/queue/queue.c" />
+    <entry file="file://$PROJECT_DIR$/src/list/stack/stack.c" />
+    <entry file="file://$PROJECT_DIR$/src/list/stack/stack.h" />
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Makefile" />
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" />
+    <entry file="file://$PROJECT_DIR$/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-510" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/linked_list/node/dlnode.h" />
+    <entry file="file://$PROJECT_DIR$/src/standard/linked_list/node/dlnode.c" />
+    <entry file="file://$PROJECT_DIR$/src/standard/linked_list/node/slnode.h" />
+    <entry file="file://$PROJECT_DIR$/src/standard/linked_list/node/slnode.c" />
+    <entry file="file://C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/x86_64-w64-mingw32/include/mmcobj.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4704">
+          <caret line="739" column="32" selection-start-line="739" selection-start-column="32" selection-end-line="739" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/lib/gcc/x86_64-w64-mingw32/7.2.0/include/stdbool.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/x86_64-w64-mingw32/include/ctype.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3859" />
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/x86_64-w64-mingw32/include/vss.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3043">
+          <caret line="179" column="13" selection-start-line="179" selection-start-column="13" selection-end-line="179" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameplay/menu/button.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="145" column="63" selection-start-line="145" selection-start-column="63" selection-end-line="145" selection-end-column="63" />
+          <folding>
+            <element signature="e#20#284#0" />
+            <element signature="e#286#395#0" />
+            <element signature="e#564#844#0" />
+            <element signature="e#846#1168#0" />
+            <element signature="e#1272#1419#0" />
+            <element signature="e#1417#1824#0" />
+            <element signature="e#1698#2086#0" />
+            <element signature="e#2207#3458#0" />
+            <element signature="e#2219#2681#0" />
+            <element signature="e#2683#3036#0" />
+            <element signature="e#4323#4630#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="55" column="85" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="85" />
+          <folding>
+            <element signature="e#184#237#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/math/point.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+          <folding>
+            <element signature="e#33#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/math/point.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/vector/vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/list/list.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="31" column="58" selection-start-line="31" selection-start-column="58" selection-end-line="31" selection-end-column="58" />
+          <folding>
+            <element signature="e#49#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/node/node.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+          <folding>
+            <element signature="e#31#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/node/node.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#19#238#0" />
+            <element signature="e#240#323#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" selection-start-line="13" selection-end-line="19" selection-end-column="38" />
+          <folding>
+            <element signature="e#51#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameplay/tile.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/SDL2/win32/x86_64-w64-mingw32/lib/cmake/SDL2/sdl2-config.cmake">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/list/list.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/function/function.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#39#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameplay/map/map.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameplay/menu/button.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-146">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/SDL2/win32/x86_64-w64-mingw32/include/SDL2/SDL_test_images.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-955" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/SDL2/win32/x86_64-w64-mingw32/include/SDL2/SDL_main.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-615">
+          <caret line="110" selection-start-line="110" selection-end-line="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/SDL2/win32/x86_64-w64-mingw32/include/SDL2/SDL.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-204" />
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/CMake/share/cmake-3.11/Modules/FindPackageHandleStandardArgs.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="136" selection-start-line="136" selection-end-line="136" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/stack/stack.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/stack/stack.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="659">
+          <caret line="95" column="59" selection-start-line="95" selection-start-column="59" selection-end-line="95" selection-end-column="59" />
+          <folding>
+            <element signature="e#176#460#0" />
+            <element signature="e#501#729#0" />
+            <element signature="e#779#924#0" />
+            <element signature="e#976#1160#0" />
+            <element signature="e#1207#1391#0" />
+            <element signature="e#1443#1542#0" />
+            <element signature="e#1578#1739#0" />
+            <element signature="e#1842#2286#0" />
+            <element signature="e#2391#2614#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/function/function.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="59" selection-start-line="2" selection-start-column="59" selection-end-line="2" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/SDL2_image/win32/x86_64-w64-mingw32/include/SDL2/SDL_image.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-969" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameplay/menu/menu.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <folding>
+            <element signature="e#49#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

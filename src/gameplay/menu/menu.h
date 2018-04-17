@@ -13,7 +13,7 @@ typedef struct menu {
     SDL_Surface *sdl_surface;
 } menu_t ;
 
-void menu_init(menu_t *menu /*, surface etc*/);
+void menu_init(menu_t *menu);
 
 
 #endif
