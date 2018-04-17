@@ -6,7 +6,7 @@ rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2
 CC = gcc
 CFLAGS = -g -std=c11 -Wall
 EXEC = bin/snake-io
-LIB = -lm
+LIB = -lm -lsdl
 
 SRC_DIR = src/
 OBJ_DIR = obj/

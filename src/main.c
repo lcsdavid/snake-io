@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "standard/node/node.h"
+#include <SDL.h>
 
 /*
 int8_t sdl_init(SDL_Window *, SDL_Renderer *);
@@ -12,7 +13,7 @@ void input();
 void render();
 void update();
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	/*
 	SDL_Window *sdl_window = NULL;
 	SDL_Renderer *sdl_renderer = NULL;

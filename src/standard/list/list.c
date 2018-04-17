@@ -47,7 +47,7 @@ void list_clear(list_t *list) {
         current_node = current_node->next;
         node_delete(node);
     }
-    *list = {NULL, NULL};
+    *list = (list_t){NULL, NULL};
 }
 
 void list_insert_at(list_t *list, void *element, size_t at) {
