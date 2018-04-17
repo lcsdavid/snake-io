@@ -3,13 +3,14 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <SDL_surface.h>
+#include <SDL_image.h>
 #include "../../standard/list/list.h"
 
 typedef struct menu {
     list_t button_list;
     list_t submenu_list;
-
-    // sdl surface -> image
+    SDL_Surface *sdl_surface;
 } menu_t ;
 
 void menu_init(menu_t *menu /*, surface etc*/);

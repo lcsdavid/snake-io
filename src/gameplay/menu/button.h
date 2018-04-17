@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include <SDL_surface.h>
+
 #include "../../standard/math/point.h"
 
 /**
@@ -19,7 +21,7 @@ typedef struct button {
     point_t position;
     bool selected;
 
-    // SDL_Surface *sld_surface;
+    SDL_Surface *sld_surface;
 } button_t ;
 
 bool button_is_selected(const button_t *button);

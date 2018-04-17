@@ -39,7 +39,7 @@ void stack_clear(stack_t *stack) {
 void stack_copy(stack_t *source, stack_t *copy) {
     assert(source && copy);
     if (!stack_empty(*copy))
-        stack_empty(copy);
+        stack_clear(copy);
     stack_t reversed_save = NULL;
     while (!stack_empty(*source)) {
         stack_push(&reversed_save, stack_top(*source));
