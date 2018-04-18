@@ -3,8 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-
-#include <SDL_surface.h>
+#include <stdio.h>
 
 #include "../../standard/math/point.h"
 
@@ -15,14 +14,22 @@
  *
  */
 typedef struct button {
-    void (*effect)();
-    uint16_t height;
-    uint16_t lenght;
-    point_t position;
+    char *desc;
+    int x, y;
+    int w, h;
     bool selected;
 
-    SDL_Surface *sld_surface;
+    //void (*effect)();
 } button_t ;
+
+button_t *button_create(char *desc, int x, int y, int w, int h);
+
+void button_delete(button_t *button);
+
+
+void button_select(button_t *button);
+
+void button_deselect(button_t *button);
 
 bool button_is_selected(const button_t *button);
 
