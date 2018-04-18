@@ -52,8 +52,10 @@ void list_clear(list_t *list) {
 
 void list_insert_at(list_t *list, void *element, size_t at) {
     assert(list);
+    if(at == 0)
+        list_push_front(list, element);
     node_t *current_node = list->front;
-    while (--at > 0 && current_node->next) current_node = current_node->next;
+    while (--at > 1 && current_node->next) current_node = current_node->next;
     if(!current_node->next) {
         current_node->next = node_create(NULL, element);
         list->back = current_node->next;
@@ -63,9 +65,24 @@ void list_insert_at(list_t *list, void *element, size_t at) {
 
 void list_erase_at(list_t *list, size_t at) {
     assert(list);
+    if(at == 0)
+        list_pop_front(list);
     node_t *current_node = list->front;
-    while (--at > 0 && current_node->next) current_node = current_node->next;
-    // TODO
+    while (--at > 1 && current_node->next) current_node = current_node->next;
+    if(current_node->next) {
+        node_t *node_to_delete = current_node->next;
+        current_node->next = current_node->next->next;
+        node_delete(node_to_delete);
+    }
+}
+
+void list_push_back(list_t *list, void *element) {
+    assert(list);
+    if(list->back) {
+        list->back->next = node_create(NULL, element);
+        list->back = list->back->next;
+    } else
+        list->front = list->back = node_create(NULL, element);
 }
 
 void list_pop_back(list_t *list) {
@@ -81,13 +98,23 @@ void list_pop_back(list_t *list) {
 void list_push_front(list_t *list, void *element) {
     assert(list);
     list->front = node_create(list->front, element);
+    if(!list->back)
+        list->back = list->front;
 }
 
-
-
-
-
-
+void list_pop_front(list_t *list) {
+    assert(list);
+    if(list->front) {
+        if(list->front->next) {
+            node_t *new_front_node = list->front->next;
+            node_delete(list->front);
+            list->front = new_front_node;
+        } else {
+            node_delete(list->front);
+            list->front = list->back = NULL;
+        }
+    }
+}
 
 /* Operations */
 
