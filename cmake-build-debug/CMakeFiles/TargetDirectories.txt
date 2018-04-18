@@ -1,3 +1,0 @@
-C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/snake_io.dir
-C:/Users/user/Documents/GitHub/snake-io/cmake-build-debug/CMakeFiles/rebuild_cache.dir
