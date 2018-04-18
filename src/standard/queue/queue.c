@@ -153,6 +153,12 @@ void queue_insert_at(queue_t *queue, void *element, size_t at) {
         ++index;
     }
     queue_enqueue(&save, element);
+    if(index == 0){
+        queue->front = element;
+    }
+    if(index == queue_lenght(queue)){
+        queue->back = element;
+    }
     while (!queue_empty(queue)) {//on finit de faire le tour de la queue
         queue_enqueue(&save, queue_front(queue));
         queue_dequeue(queue);
