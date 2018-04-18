@@ -127,6 +127,20 @@ bool queue_equal(queue_t *first_queue, queue_t *second_queue, bool (*_type_equal
     return is_equal;
 }
 
+void queue_erase_at(queue_t *queue, size_t at) {
+    assert(queue);
+    queue_t save = {NULL, NULL};
+    while (!queue_empty(queue)) {
+        if(at-- > 0)
+            queue_enqueue(&save, queue_front(queue));
+        queue_dequeue(queue);
+    }
+    while (!queue_empty(&save)) {
+        queue_enqueue(queue, queue_front(&save));
+        queue_dequeue(&save);
+    }
+}
+
 ssize_t queue_find(queue_t *q, void *element, bool (*_type_equal_func)(void *, void *)) {
     assert(q);
     if (_type_equal_func == NULL)

@@ -55,6 +55,8 @@ void *queue_element_at(queue_t *queue, size_t at);
 
 bool queue_equal(queue_t *first_queue, queue_t *second_queue, bool (*_type_equal_func)(void*, void*));
 
+void queue_erase_at(queue_t *queue, size_t at);
+
 ssize_t queue_find(queue_t *queue, void *element, bool (*_type_equal_func)(void*, void*));
 
 void queue_insert_at(queue_t *queue, void *element, size_t at);

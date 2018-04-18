@@ -12,7 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5ffa2c9-1338-4458-a686-a304d053d8e6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/gameplay/menu/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/menu/menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/snake/snake.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/snake/snake.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/standard/queue/queue.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/standard/queue/queue.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/standard/queue/queue.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/standard/queue/queue.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -66,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/src/standard/math/point.c">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
-              <caret line="20" column="45" lean-forward="true" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+              <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -74,7 +77,7 @@
       <file leaf-file-name="snake.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
+            <state relative-caret-position="374">
               <caret line="27" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#51#70#0" expanded="true" />
@@ -98,8 +101,8 @@
       <file leaf-file-name="snake.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-520">
-              <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+            <state relative-caret-position="-11">
+              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -119,8 +122,8 @@
       <file leaf-file-name="queue.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="55" column="85" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="85" />
+            <state relative-caret-position="652">
+              <caret line="57" selection-start-line="57" selection-end-line="57" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -128,11 +131,19 @@
       <file leaf-file-name="queue.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="874">
-              <caret line="111" column="5" lean-forward="true" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
+            <state relative-caret-position="618">
+              <caret line="140" column="5" lean-forward="true" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
               <folding>
                 <element signature="e#20#284#0" />
                 <element signature="e#286#395#0" />
+                <element signature="e#649#946#0" />
+                <element signature="e#948#1270#0" />
+                <element signature="e#1272#1415#0" />
+                <element signature="e#1825#2201#0" />
+                <element signature="e#2207#3438#0" />
+                <element signature="e#3440#3903#0" />
+                <element signature="e#3905#4542#0" />
+                <element signature="e#4544#4840#0" />
               </folding>
             </state>
           </provider>
@@ -187,7 +198,6 @@
         <option value="$PROJECT_DIR$/src/standard/math/point.h" />
         <option value="$PROJECT_DIR$/src/gameplay/menu/button.c" />
         <option value="$PROJECT_DIR$/src/standard/function/function.h" />
-        <option value="$PROJECT_DIR$/src/standard/queue/queue.h" />
         <option value="$PROJECT_DIR$/src/standard/stack/stack.h" />
         <option value="$PROJECT_DIR$/src/standard/node/node.h" />
         <option value="$PROJECT_DIR$/src/standard/node/node.c" />
@@ -202,6 +212,7 @@
         <option value="$PROJECT_DIR$/src/standard/stack/stack.c" />
         <option value="$PROJECT_DIR$/src/gameplay/menu/menu.h" />
         <option value="$PROJECT_DIR$/src/gameplay/snake/snake.h" />
+        <option value="$PROJECT_DIR$/src/standard/queue/queue.h" />
         <option value="$PROJECT_DIR$/src/standard/queue/queue.c" />
         <option value="$PROJECT_DIR$/src/gameplay/snake/snake.c" />
       </list>
@@ -346,6 +357,8 @@
     <list>
       <item itemvalue="Application.Build All" />
       <item itemvalue="Application.snake_io" />
+      <item itemvalue="Makefile.%.o" />
+      <item itemvalue="Makefile.all" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -369,11 +382,12 @@
       <workItem from="1523963160982" duration="7003000" />
       <workItem from="1523974720094" duration="11275000" />
       <workItem from="1524031885517" duration="5196000" />
+      <workItem from="1524057282917" duration="2767000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89259000" />
+    <option name="totallyTimeSpent" value="92026000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -388,9 +402,8 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49705535" visible="true" weight="0.16875" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49705535" visible="true" weight="0.16859852" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.10190217" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.20085016" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.21679065" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3293011" />
@@ -403,28 +416,29 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.20085016" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="CMake" order="11" weight="0.32526475" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49775785" visible="true" weight="0.24963716" />
       <window_info id="Structure" order="1" sideWeight="0.50224215" side_tool="true" weight="0.24963716" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32980332" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32980332" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.32974428" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.29475102" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32980332" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.32974428" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="CMake" order="11" weight="0.32526475" />
       <window_info id="Favorites" order="2" sideWeight="0.50224215" side_tool="true" weight="0.24963716" />
     </layout-to-restore>
   </component>
@@ -661,7 +675,7 @@
     <entry file="file://$PROJECT_DIR$/src/standard/math/point.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="20" column="45" lean-forward="true" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -675,27 +689,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="55" column="85" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="111" column="5" lean-forward="true" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
-          <folding>
-            <element signature="e#20#284#0" />
-            <element signature="e#286#395#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
+        <state relative-caret-position="374">
           <caret line="27" selection-start-line="27" selection-end-line="27" />
           <folding>
             <element signature="e#51#70#0" expanded="true" />
@@ -703,10 +699,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="57" selection-start-line="57" selection-end-line="57" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="618">
+          <caret line="140" column="5" lean-forward="true" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
+          <folding>
+            <element signature="e#20#284#0" />
+            <element signature="e#286#395#0" />
+            <element signature="e#649#946#0" />
+            <element signature="e#948#1270#0" />
+            <element signature="e#1272#1415#0" />
+            <element signature="e#1825#2201#0" />
+            <element signature="e#2207#3438#0" />
+            <element signature="e#3440#3903#0" />
+            <element signature="e#3905#4542#0" />
+            <element signature="e#4544#4840#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-520">
-          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+        <state relative-caret-position="-11">
+          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
