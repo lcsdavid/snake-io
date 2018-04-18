@@ -51,7 +51,7 @@ void change_dir(point_t *last_dir, char new_dir) {//note, certaines situations n
 
 
 void snake_move(snake_t *snake){
-    node_t *elem;
+    point_t elem;
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     SDL_PumpEvents();
     if (state[SDL_SCANCODE_UP]) {
@@ -65,7 +65,10 @@ void snake_move(snake_t *snake){
     } else if (state[SDL_SCANCODE_ESCAPE]) {
         exit(0);
     }
-    //faire la suppression d'un élément d'une queue
+    elem = *((point_t*)snake->body.front->data);
+    elem = point_add(elem, snake->direction);
+    snake_diminish(snake);
+    queue_insert_at(&snake->body, &elem, 0);
 }
 
 void snake_draw(const snake_t *snake);
