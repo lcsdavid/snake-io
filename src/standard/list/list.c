@@ -68,7 +68,20 @@ void list_erase_at(list_t *list, size_t at) {
     // TODO
 }
 
+void list_pop_back(list_t *list) {
+    assert(list);
+    if (list_empty(list))
+        return;
+    node_t *current_node = list->front;
+    while (current_node->next) current_node = current_node->next;
+    node_delete(current_node->next);
+    list->back = current_node;
+}
 
+void list_push_front(list_t *list, void *element) {
+    assert(list);
+    list->front = node_create(list->front, element);
+}
 
 
 

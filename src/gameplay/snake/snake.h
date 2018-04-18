@@ -23,6 +23,7 @@ typedef enum body_type {
 
 typedef struct snake_body {
     point_t *position;
+    double angle;
     body_type_t type;
 } snake_body_t ;
 
@@ -38,6 +39,6 @@ void snake_move(snake_t *snake);
 
 void snake_load_texture();
 
-void snake_render(const snake_t *snake);
+void snake_render(snake_t *snake);
 
 #endif

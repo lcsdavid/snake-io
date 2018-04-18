@@ -6,7 +6,7 @@
 typedef struct map {
     unsigned int size_x;
     unsigned int size_y;
-    tile_t tiles[size_x][size_y];
+    tile_t **tiles;
 };
 
 #endif

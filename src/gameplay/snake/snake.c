@@ -95,7 +95,7 @@ void snake_render_body(void* element) {
         fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
 }
 
-void snake_render(const snake_t *snake) {
+void snake_render(snake_t *snake) {
     assert(snake);
     for_each(&snake->body, &snake_render_body);
 }
