@@ -68,14 +68,24 @@ void list_erase_at(list_t *list, size_t at) {
     // TODO
 }
 
-void list_push_back(list_t *list, void *element);
 
-void list_pop_back(list_t *list);
 
-void list_push_front(list_t *list, void *element);
 
-void list_pop_front(list_t *list);
+
+
+
+
 
 /* Operations */
+
+void for_each(list_t *list, void (*func)(void*)) {
+    assert(list);
+    node_t* current_node = list->front;
+    while (current_node) {
+        func(current_node->data);
+        current_node = current_node->next;
+    }
+}
+
 
 /* ... */

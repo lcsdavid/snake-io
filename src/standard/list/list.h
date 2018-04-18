@@ -43,6 +43,8 @@ void list_pop_front(list_t *list);
 
 /* Operations */
 
+void for_each(list_t *list, void (*func)(void*));
+
 /* ... */
 
 

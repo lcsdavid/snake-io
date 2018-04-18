@@ -1,7 +1,7 @@
 #include "snake.h"
 #include "../../standard/math/point.h"
 
-const short int TILE_SIZE = 16;
+SDL_Texture* snake_texture;
 
 void snake_grow(snake_t *snake) {
     assert(snake);
@@ -72,4 +72,35 @@ void snake_move(snake_t *snake){
     snake_grow(snake);
 }
 
-void snake_draw(const snake_t *snake);
+
+
+/* SDL */
+
+void snake_load_texture(snake_t *snake, SDL_Renderer *renderer, const char *file) {
+    // TODO
+}
+
+void snake_render_body(void* element) {
+    snake_body_t *body = element;
+    SDL_Rect src;
+    switch (body->type) {
+        case HEAD:
+            src = {};
+            break;
+        case BODY:
+            src = {};
+            break;
+        case TAIL:
+            src = {};
+            break;
+    }
+    SDL_Rect dst = {body->position->x, body->position->y, 16, 16}; //deux dernier chiffres = taille texture
+    double angle = 0;
+    if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &src, &dst, angle, NULL, SDL_FLIP_NONE))
+        fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
+}
+
+void snake_render(const snake_t *snake) {
+    assert(snake);
+    for_each(&snake->body, &snake_render_body);
+}

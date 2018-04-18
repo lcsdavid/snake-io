@@ -7,11 +7,13 @@
 #include <math.h>
 
 typedef struct {
-	int16_t x;
-	int16_t y;
+	int x;
+	int y;
 } point_t;
 
-point_t* point_create(double x, double y);
+point_t* point_create(int x, int y);
+
+point_t* point_copy(const point_t *point);
 
 point_t point_add(point_t A, point_t B);
 

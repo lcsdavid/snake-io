@@ -1,6 +1,6 @@
 #include "point.h"
 
-point_t *point_create(double x, double y) {
+point_t *point_create(int x, int y) {
     point_t *point = calloc(1, sizeof(point_t));
     if (point == (void *) 0) {
         perror("calloc()");
