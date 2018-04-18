@@ -2,13 +2,13 @@
 
 SDL_Texture* menu_texture;
 
-menu_t *menu_create(menu_desc_t descriptor, list_t button_list, list_t submenu_list, bool displayed) {
+menu_t *menu_create(menu_desc_t descriptor, bool displayed) {
     menu_t *menu = calloc(1, sizeof(menu_t));
     if(!menu) {
         perror("calloc():");
         return NULL;
     }
-    *menu = (menu_t){descriptor, button_list, submenu_list, displayed};
+    *menu = (menu_t){descriptor, (list_t){NULL, NULL}, (list_t){NULL, NULL}, displayed};
     return menu;
 }
 
@@ -21,16 +21,9 @@ void menu_delete(menu_t *menu) {
     free(menu);
 }
 
-void menu_init(menu_t *menu) {
-    menu->button_list = {NULL, NULL};
-    button_t *b = button_create("Scénario", 20, 20, 100, 50);
-    list_push_back(&menu->button_list, b);
-    b = button_create("Versus",0,0,0,0);
-    list_push_back(&menu->button_list, b);
-    b = button_create("Options",0,0,0,0);
-
-    menu->submenu_list = {NULL, NULL};
-
-
-    menu->displayed = true;
+menu_t *menu_init() {
+    menu_t *main_menu = menu_create(MAIN, true);
+    button_t *scenario = button_create("Scénatio", 0, 0, 0, 0, true, (void (*)()) &menu_init);
+    list_push_back(&main_menu->button_list, scenario);
+    return main_menu;
 }

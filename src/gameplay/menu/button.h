@@ -14,18 +14,16 @@
  *
  */
 typedef struct button {
-    char *desc;
+    const char *desc;
     int x, y;
     int w, h;
     bool selected;
-
-    //void (*effect)();
+    void (*effect)();
 } button_t ;
 
-button_t *button_create(char *desc, int x, int y, int w, int h);
+button_t *button_create(const char *desc, int x, int y, int w, int h, bool selected, void (*effect)());
 
 void button_delete(button_t *button);
-
 
 void button_select(button_t *button);
 

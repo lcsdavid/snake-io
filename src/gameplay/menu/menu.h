@@ -10,7 +10,7 @@
 #include "../../standard/list/list.h"
 
 typedef enum menu_desc {
-    MAIN, SCENARIO, VERSUS, ARCADE, SETTINGS
+    MAIN, SCENARIO, SETTINGS
 } menu_desc_t ;
 
 typedef struct menu {
@@ -20,11 +20,11 @@ typedef struct menu {
     bool displayed;
 } menu_t ;
 
-menu_t *menu_create(menu_desc_t descriptor, list_t button_list, list_t submenu_list, bool displayed);
+menu_t *menu_create(menu_desc_t descriptor, bool displayed);
 
 void menu_delete(menu_t *menu);
 
-void menu_init(menu_t *menu);
+menu_t *menu_init();
 
 
 #endif
