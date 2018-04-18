@@ -23,7 +23,7 @@ void menu_delete(menu_t *menu) {
 
 menu_t *menu_init() {
     menu_t *main_menu = menu_create(MAIN, true);
-    button_t *scenario = button_create("Scénatio", 0, 0, 0, 0, true, (void (*)()) &menu_init);
+    button_t *scenario = button_create("Scénario", 0, 0, 0, 0, true, (void (*)()) &menu_init);
     list_push_back(&main_menu->button_list, scenario);
     return main_menu;
 }
