@@ -5,16 +5,14 @@ SDL_Texture* snake_texture;
 
 void snake_grow(snake_t *snake) {
     assert(snake);
-    point_t elem = *(point_t*)queue_front(&snake->body);
+    point_t elem = *(point_t*)list_front(&snake->body);
     elem = point_add(elem, snake->direction);
-    queue_insert_at(&snake->body, &elem, 0);
+    list_push_front(&snake->body, &elem);
     ++snake->lenght;
-    // je serais d'avis d'ajouter le nouveau en bout de file en vrai a voir ce qui est plus facile
-
 }
 
 void snake_diminish(snake_t *snake){
-    queue_erase_at(&snake->body, snake->lenght);
+    list_pop_back(&snake->body);
     --snake->lenght;
 }
 
@@ -53,7 +51,6 @@ void change_dir(point_t *last_dir, char new_dir) {//note, certaines situations n
     }
 }
 
-
 void snake_move(snake_t *snake){
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     SDL_PumpEvents();
@@ -72,12 +69,10 @@ void snake_move(snake_t *snake){
     snake_grow(snake);
 }
 
-
-
 /* SDL */
 
-void snake_load_texture(snake_t *snake, SDL_Renderer *renderer, const char *file) {
-    // TODO
+void snake_load_texture() {
+    snake_texture = load_texture("../res/snake/snake.png");
 }
 
 void snake_render_body(void* element) {
@@ -85,17 +80,17 @@ void snake_render_body(void* element) {
     SDL_Rect src;
     switch (body->type) {
         case HEAD:
-            src = {};
+            src = (SDL_Rect){0, 0, 50, 50};
             break;
         case BODY:
-            src = {};
+            src = (SDL_Rect){50, 0, 50, 50};
             break;
         case TAIL:
-            src = {};
+            src = (SDL_Rect){100, 0, 50, 50};
             break;
     }
     SDL_Rect dst = {body->position->x, body->position->y, 16, 16}; //deux dernier chiffres = taille texture
-    double angle = 0;
+    double angle = 0; // comment faire :x TODO
     if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &src, &dst, angle, NULL, SDL_FLIP_NONE))
         fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
 }

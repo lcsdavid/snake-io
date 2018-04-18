@@ -3,7 +3,6 @@
 #include <stdint.h>
 
 #include <SDL.h>
-
 #include "sdl/sdl.h"
 
 void input();
@@ -11,13 +10,12 @@ void render();
 void update();
 
 int main(int argc, char *argv[]) {
-    ren
-    if (!sdl_init())
+    if (!init())
         return -1;
     while (!SDL_HasEvent(SDL_QUIT)) {
 
     }
-    sdl_close(window);
+    close();
     return 0;
 }
 

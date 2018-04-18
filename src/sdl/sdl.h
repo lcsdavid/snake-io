@@ -7,16 +7,13 @@
 #include <SDL_image.h>
 #include <SDL_render.h>
 
-bool sdl_init();
+bool init();
 
-void sdl_close(SDL_Window *window);
+void close();
 
 SDL_Renderer *get_renderer();
 
-SDL_Texture *sdl_load_texture(SDL_Renderer *renderer, const char *file);
+SDL_Texture *load_texture(const char *file);
 
-void sdl_render_texture_resized(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y, int w, int h);
-
-void sdl_render_texture(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y);
 
 #endif
