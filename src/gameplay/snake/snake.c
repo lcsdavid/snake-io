@@ -5,10 +5,21 @@ const short int TILE_SIZE = 16;
 
 void snake_grow(snake_t *snake) {
     assert(snake);
-    // TODO
+    point_t elem;
+    elem = *((point_t*)snake->body.front->data);
+    elem = point_add(elem, snake->direction);
+    queue_insert_at(&snake->body, &elem, 0);
 }
 
-void snake_diminish(snake_t *snake);
+void snake_diminish(snake_t *snake){
+    size_t lenght;
+    lenght = snake->lenght - 1;
+    node_t *element = (node_t *)queue_element_at(&snake->body, lenght-1); //on stock l'anvant dernier entier élément du snake
+    node_delete((node_t *)queue_element_at(&snake->body, lenght)); //on supprime le dernier élément
+    element->next = NULL;
+    snake->body.back = element;
+    snake->lenght = lenght;
+}
 
 void change_dir(point_t *last_dir, char new_dir) {//note, certaines situations ne sont pas prises en compte, c'est normale hors des cas ci-dessous le serpent doit garder sa trajectoire précèdente
     if(new_dir == 'G' && last_dir->x <= 0 && last_dir->x > -36){//on part du principe que les directions sont modélisées par un cercle de 36 pixels de rayon
@@ -51,7 +62,6 @@ void change_dir(point_t *last_dir, char new_dir) {//note, certaines situations n
 
 
 void snake_move(snake_t *snake){
-    point_t elem;
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     SDL_PumpEvents();
     if (state[SDL_SCANCODE_UP]) {
@@ -65,10 +75,8 @@ void snake_move(snake_t *snake){
     } else if (state[SDL_SCANCODE_ESCAPE]) {
         exit(0);
     }
-    elem = *((point_t*)snake->body.front->data);
-    elem = point_add(elem, snake->direction);
     snake_diminish(snake);
-    queue_insert_at(&snake->body, &elem, 0);
+    snake_grow(snake);
 }
 
 void snake_draw(const snake_t *snake);

@@ -95,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="snake.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="snake.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+            <state relative-caret-position="-520">
+              <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -119,17 +119,17 @@
       <file leaf-file-name="queue.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
+            <state relative-caret-position="449">
               <caret line="55" column="85" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="85" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="queue.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="queue.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="670">
-              <caret line="159" column="30" selection-start-line="159" selection-start-column="30" selection-end-line="159" selection-end-column="30" />
+            <state relative-caret-position="874">
+              <caret line="111" column="5" lean-forward="true" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
               <folding>
                 <element signature="e#20#284#0" />
                 <element signature="e#286#395#0" />
@@ -202,8 +202,8 @@
         <option value="$PROJECT_DIR$/src/standard/stack/stack.c" />
         <option value="$PROJECT_DIR$/src/gameplay/menu/menu.h" />
         <option value="$PROJECT_DIR$/src/gameplay/snake/snake.h" />
-        <option value="$PROJECT_DIR$/src/gameplay/snake/snake.c" />
         <option value="$PROJECT_DIR$/src/standard/queue/queue.c" />
+        <option value="$PROJECT_DIR$/src/gameplay/snake/snake.c" />
       </list>
     </option>
   </component>
@@ -218,8 +218,8 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="223" />
-    <option name="y" value="159" />
+    <option name="x" value="215" />
+    <option name="y" value="102" />
     <option name="width" value="1298" />
     <option name="height" value="715" />
   </component>
@@ -368,12 +368,12 @@
       <workItem from="1523892060288" duration="8151000" />
       <workItem from="1523963160982" duration="7003000" />
       <workItem from="1523974720094" duration="11275000" />
-      <workItem from="1524031885517" duration="2841000" />
+      <workItem from="1524031885517" duration="5196000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86904000" />
+    <option name="totallyTimeSpent" value="89259000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -675,6 +675,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="55" column="85" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="874">
+          <caret line="111" column="5" lean-forward="true" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
+          <folding>
+            <element signature="e#20#284#0" />
+            <element signature="e#286#395#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -687,28 +705,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gameplay/snake/snake.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+        <state relative-caret-position="-520">
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="55" column="85" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/standard/queue/queue.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="159" column="30" selection-start-line="159" selection-start-column="30" selection-end-line="159" selection-end-column="30" />
-          <folding>
-            <element signature="e#20#284#0" />
-            <element signature="e#286#395#0" />
           </folding>
         </state>
       </provider>
