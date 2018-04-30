@@ -6,7 +6,7 @@
 
 SDL_Texture* snake_texture;
 
-bool snake_collision(snake_t *snake){
+bool snake_self_eating(snake_t *snake){
     if(snake != NULL){
         node_t *node;
         node = snake->body.front;
