@@ -63,17 +63,17 @@ void change_dir(point_t *last_dir, char new_dir) {//note, certaines situations n
             last_dir->x -= 2;
         }
     }
-    if (last_dir->.x < 0){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->.x += MAX_X;
+    if (last_dir->x < 0){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
+        last_dir->x += MAX_X;
     }
-    if (last_dir->.x > MAX_X){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->.x -= 0;
+    if (last_dir->x > MAX_X){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
+        last_dir->x -= 0;
     }
-    if (last_dir->.y < 0){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->.y += MAX_Y;
+    if (last_dir->y < 0){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
+        last_dir->y += MAX_Y;
     }
-    if (last_dir->.y > MAX_Y){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->.y -= 0;
+    if (last_dir->y > MAX_Y){//si on passe à travers l'un des bords de la map on apparait de l'autre cote
+        last_dir->y -= 0;
     }
 }
 
