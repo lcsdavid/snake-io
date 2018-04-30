@@ -6,6 +6,16 @@
 
 SDL_Texture* snake_texture;
 
+void snake_init(snake_t *snake){
+    point_t point;
+    point.x = 0;
+    point.y = 0;
+    while(snake->lenght > 0){
+        snake_diminish(snake);
+    }
+    snake->direction = point;
+    snake_grow(snake);//on donne une tête a notre serpant
+}
 
 void snake_grow(snake_t *snake) {
     assert(snake);
