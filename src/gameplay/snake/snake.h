@@ -27,6 +27,8 @@ typedef struct snake_body {
     body_type_t type;
 } snake_body_t ;
 
+bool snake_collision(snake_t *snake);
+
 void snake_init(snake_t *snake);
 
 void snake_grow(snake_t *snake);

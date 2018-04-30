@@ -6,6 +6,20 @@
 
 SDL_Texture* snake_texture;
 
+bool snake_collision(snake_t *snake){
+    if(snake != NULL){
+        node_t *node;
+        node = snake->body.front;
+        while(node->next != NULL){
+            node = node->next;
+            if(point_distance(*(point_t *)snake->body.front->data, *(point_t *)node->data) == 18){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void snake_init(snake_t *snake){
     point_t point;
     point.x = 0;
