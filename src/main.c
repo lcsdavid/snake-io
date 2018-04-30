@@ -10,10 +10,11 @@ void render();
 void update();
 
 int main(int argc, char *argv[]) {
+
     if (!init()){
         return -1;
     }
-    printf("entrée dans la boucle \n");
+
     while (!SDL_HasEvent(SDL_QUIT)) {
 
     }
