@@ -13,15 +13,14 @@ bool snake_collision(snake_t *snake, point_t *point){
     //TODO ajouter les différents éléments (missiles, mur, pièges, deuxieme joueur ...
 }
 
-bool snake_self_eating(snake_t *snake){
+bool snake_self_eating(snake_t *snake) {
     if(snake != NULL){
-        node_t *node;
-        node = snake->body.front;
-        while(node->next != NULL){
-            node = node->next;
-            if(point_distance(*(point_t *)snake->body.front->data, *(point_t *)node->data) == 18){
+        snake_body_t *head = list_front(&snake->body);
+        snake_body_t *body_part;
+        for(size_t i = 1; i < snake->lenght; i++) {
+            body_part = list_element_at(&snake->body, i);
+            if (point_distance(head->position, body_part->position) < 18)
                 return true;
-            }
         }
     }
     return false;
@@ -136,9 +135,8 @@ void snake_render_body(void* element) {
             src = (SDL_Rect){100, 0, 50, 50};
             break;
     }
-    SDL_Rect dst = {body->position->x, body->position->y, 16, 16}; //deux dernier chiffres = taille texture
-    double angle = 0; // comment faire :x TODO
-    if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &src, &dst, angle, NULL, SDL_FLIP_NONE))
+    SDL_Rect dst = {body->position.x, body->position.y, 16, 16}; //deux dernier chiffres = taille texture
+    if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &src, &dst, body->angle, NULL, SDL_FLIP_NONE))
         fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
 }
 

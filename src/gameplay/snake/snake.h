@@ -22,7 +22,7 @@ typedef enum body_type {
 } body_type_t ;
 
 typedef struct snake_body {
-    point_t *position;
+    point_t position;
     double angle;
     body_type_t type;
 } snake_body_t ;
