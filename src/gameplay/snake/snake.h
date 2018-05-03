@@ -31,7 +31,7 @@ bool snake_collision(snake_t *snake, point_t *point);
 
 bool snake_self_eating(snake_t *snake);
 
-void snake_init(snake_t *snake);
+void snake_init(snake_t *snake, size_t size, point_t *direction);
 
 void snake_grow(snake_t *snake);
 

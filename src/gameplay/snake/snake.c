@@ -26,21 +26,25 @@ bool snake_self_eating(snake_t *snake) {
     return false;
 }
 
-void snake_init(snake_t *snake){
-    point_t point;
-    point.x = 0;
-    point.y = 0;
-    while(snake->lenght > 0){
-        snake_diminish(snake);
-    }
-    snake->direction = point;
-    snake_grow(snake);//on donne une tête a notre serpant
+void snake_init(snake_t *snake, size_t size, point_t* direction) {
+    assert(snake);
+    snake->body = {NULL, NULL};
+    snake->lenght = 0;
+    if(direction) snake->direction = *direction;
+    else snake->direction = {0, 0};
+    for(size_t i = 0; i < size; i++)
+        snake_grow(snake);
 }
 
 void snake_grow(snake_t *snake) {
     assert(snake);
-    point_t elem = *(point_t*)list_front(&snake->body);
-    elem = point_add(elem, snake->direction);
+    point_t elem;
+    if(list_empty(&snake->body))
+        elem = {0, 0};
+    else {
+        elem = *(point_t *) list_front(&snake->body);
+        elem = point_add(elem, snake->direction);
+    }
     list_push_front(&snake->body, &elem);
     ++snake->lenght;
 }
