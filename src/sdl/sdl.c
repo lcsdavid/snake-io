@@ -4,15 +4,8 @@ SDL_Window *window = NULL;
 SDL_Renderer *renderer;
 
 bool init() {
-    SDL_Surface*  field_surface = NULL;
-    SDL_Surface*  fruit_surface = NULL;
-    SDL_Surface*  shead_surface = NULL;
-    SDL_Surface*  snake_surface = NULL;
-    SDL_Texture*  field_texture = NULL;
-    SDL_Texture*  fruit_texture = NULL;
-    SDL_Texture*  shead_texture = NULL;
-    SDL_Texture*  snake_texture = NULL;
-    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0) {
+
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init(): %s\n", SDL_GetError());
         return false;
     }
@@ -25,22 +18,7 @@ bool init() {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
-    fruit_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\apple.bmp");
-    shead_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\head.bmp");
-    snake_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\snake.bmp");
-    field_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\field.bmp");
-    if(fruit_surface == NULL || shead_surface == NULL || snake_surface == NULL || field_surface == NULL){
-        fprintf(stderr, "SDL_LoadBMP(): %s\n", SDL_GetError());
-        return false;
-    }
-    fruit_texture = SDL_CreateTextureFromSurface(renderer, fruit_surface);
-    shead_texture = SDL_CreateTextureFromSurface(renderer, shead_surface);
-    snake_texture = SDL_CreateTextureFromSurface(renderer, snake_surface);
-    field_texture = SDL_CreateTextureFromSurface(renderer, field_surface);
-    if(fruit_texture == NULL || shead_texture == NULL || snake_texture == NULL || field_texture == NULL){
-        fprintf(stderr, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
-        return false;
-    }
+
     printf("Level 1\n");
     return true;
 }
