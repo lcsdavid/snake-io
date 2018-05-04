@@ -4,12 +4,13 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <SDL.h>
-#include <SDL_image.h>
-
-#include "../../sdl/sdl.h"
+#include <SDL_render.h>
+//#include <SDL_image.h>
 
 #include "../../standard/math/point.h"
 #include "../../standard/list/list.h"
+
+extern SDL_Renderer *get_renderer();
 
 typedef struct snake {
     list_t body;
@@ -47,7 +48,7 @@ bool snake_self_eating(snake_t *snake);
 
 /* SDL */
 
-void snake_load_texture();
+bool snake_load_texture();
 
 void snake_render(snake_t *snake);
 

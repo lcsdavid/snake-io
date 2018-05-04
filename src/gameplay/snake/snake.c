@@ -144,7 +144,7 @@ bool snake_self_eating(snake_t *snake) {
 
 /* SDL */
 
-void snake_load_texture() {
+bool snake_load_texture() {
     // snake_texture = load_texture("../res/snake/snake.png");
     /*SDL_Surface*  field_surface = NULL;
     SDL_Surface*  fruit_surface = NULL;
@@ -156,11 +156,11 @@ void snake_load_texture() {
     SDL_Texture*  snake_texture = NULL;*/
     //fruit_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\apple.bmp");
     //shead_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\head.bmp");
-   SDL_Surface *snake_surface = SDL_LoadBMP("res/snake/snake.bmp");
+   SDL_Surface *snake_surface = SDL_LoadBMP("../res/snake/snake.bmp");
     //field_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\field.bmp");
     if(!snake_surface) {
         fprintf(stderr, "SDL_LoadBMP(): %s\n", SDL_GetError());
-        return;
+        return false;
     }
     snake_texture = SDL_CreateTextureFromSurface(get_renderer(), snake_surface);
     /*fruit_texture = SDL_CreateTextureFromSurface(get_renderer(), fruit_surface);
@@ -168,14 +168,15 @@ void snake_load_texture() {
     field_texture = SDL_CreateTextureFromSurface(get_renderer(), field_surface);*/
     if(!snake_texture){
         fprintf(stderr, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
-        return;
+        return false;
     }
+    return true;
 }
 
 void snake_render_body(void* element) {
     snake_node_t *node = element;
     //SDL_Rect src = {node->position.x, node->position.y, 32, 32};
-    SDL_Rect dst = {node->position.x, node->position.y, 32, 32}; //deux dernier chiffres = taille texture
+    SDL_Rect dst = {255, 255, 64, 64}; //deux dernier chiffres = taille texture
     /*if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &rect, &dst, body->angle, NULL, SDL_FLIP_NONE))
         fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());*/
     SDL_RenderCopy(get_renderer(), snake_texture, NULL, &dst);
@@ -183,6 +184,8 @@ void snake_render_body(void* element) {
 
 void snake_render(snake_t *snake) {
     assert(snake);
+    SDL_Rect dst = {255, 255, 64, 64};
+    SDL_RenderCopy(get_renderer(), snake_texture, NULL, &dst);
     for_each(&snake->body, &snake_render_body);
 }
 
