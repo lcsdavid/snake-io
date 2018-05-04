@@ -136,6 +136,7 @@ void snake_load_texture() {
 
 void snake_render_body(void* element) {
     snake_body_t *body = element;
+    //SDL_Renderer* renderer = NULL;
     SDL_Rect src;
     switch (body->type) {
         case HEAD:
@@ -151,6 +152,12 @@ void snake_render_body(void* element) {
     SDL_Rect dst = {body->position.x, body->position.y, 16, 16}; //deux dernier chiffres = taille texture
     if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &src, &dst, body->angle, NULL, SDL_FLIP_NONE))
         fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
+    /*SDL_Rect rect;
+    rect.h = 32;
+    rect.w = 32;
+    rect.x = body->position.x;
+    rect.y = body->position.y;
+    SDL_RenderCopy(renderer, snake_texture, NULL, &rect);*/
 }
 
 void snake_render(snake_t *snake) {
