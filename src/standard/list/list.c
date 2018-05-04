@@ -119,7 +119,7 @@ void list_pop_front(list_t *list) {
 /* Operations */
 
 void for_each(list_t *list, void (*func)(void*)) {
-    assert(list);
+    assert(list && func);
     node_t* current_node = list->front;
     while (current_node) {
         func(current_node->data);

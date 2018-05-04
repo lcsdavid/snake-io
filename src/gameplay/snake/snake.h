@@ -23,6 +23,8 @@ typedef struct snake_node {
     double angle;
 } snake_node_t ;
 
+snake_node_t *snake_node_create(point_t p, double angle);
+
 void snake_init(snake_t *snake, size_t size, point_t *direction);
 
 snake_node_t* snake_head(const snake_t* snake);

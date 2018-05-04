@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     while (!end) {
         SDL_WaitEvent(&event);
         end = event.window.event == SDL_WINDOWEVENT_CLOSE;
-        //update();
+        update();
         render();
     }
     close();
@@ -70,9 +70,8 @@ void input() {
 }
 
 void render() {
-    //SDL_SetRenderDrawColor(renderer, 15, 78, 234, 255);
+    SDL_SetRenderDrawColor(renderer, 15, 78, 234, 255);
     snake_render(&snake_1);
-    SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
 }
 

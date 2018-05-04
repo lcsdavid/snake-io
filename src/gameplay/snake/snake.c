@@ -6,13 +6,20 @@
 
 SDL_Texture *snake_texture;
 
+snake_node_t *snake_node_create(point_t p, double angle) {
+    snake_node_t *snake_node = calloc(1, sizeof(snake_node_t));
+    if(!snake_node) {
+        perror("calloc():");
+        return NULL;
+    }
+    *snake_node = (snake_node_t){p, angle};
+    return snake_node;
+}
+
 void snake_init(snake_t *snake, size_t size, point_t *direction) {
     assert(snake);
-    snake->body.front = NULL;
-    snake->body.back = NULL;
-    snake->lenght = 0;
-    if (direction) snake->direction = *direction;
-    else snake->direction = (point_t){0, 0};
+    if (direction) *snake = (snake_t){(list_t){NULL, NULL}, 0, *direction};
+    else *snake = (snake_t){(list_t){NULL, NULL}, 0, (point_t){0, 0}};
     for (size_t i = 0; i < size; i++)
         snake_grow(snake);
 }
@@ -29,15 +36,11 @@ snake_node_t *snake_tail(const snake_t *snake) {
 
 void snake_grow(snake_t *snake) {
     assert(snake);
-    point_t elem;
-    if (list_empty(&snake->body)) {
-        elem.x = 0;
-        elem.y = 0;
-    } else {
-        elem = *(point_t *) list_front(&snake->body);
-        elem = point_add(elem, snake->direction);
-    }
-    list_push_front(&snake->body, &elem);
+    point_t point;
+    if (snake->lenght == 0) point = (point_t){0, 0};
+    else point = point_add(snake_head(snake)->position, snake->direction);
+    snake_node_t *snake_node = snake_node_create(point, 0);
+    list_push_front(&snake->body, snake_node);
     ++snake->lenght;
 }
 
@@ -145,47 +148,33 @@ bool snake_self_eating(snake_t *snake) {
 /* SDL */
 
 bool snake_load_texture() {
-    // snake_texture = load_texture("../res/snake/snake.png");
-    /*SDL_Surface*  field_surface = NULL;
-    SDL_Surface*  fruit_surface = NULL;
-    SDL_Surface*  shead_surface = NULL;
-    SDL_Surface*  snake_surface = NULL;
-    SDL_Texture*  field_texture = NULL;
-    SDL_Texture*  fruit_texture = NULL;
-    SDL_Texture*  shead_texture = NULL;
-    SDL_Texture*  snake_texture = NULL;*/
-    //fruit_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\apple.bmp");
-    //shead_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\head.bmp");
-   SDL_Surface *snake_surface = SDL_LoadBMP("../res/snake/snake.bmp");
-    //field_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\field.bmp");
+    SDL_Surface *snake_surface = SDL_LoadBMP("../res/snake/snake.bmp");
     if(!snake_surface) {
         fprintf(stderr, "SDL_LoadBMP(): %s\n", SDL_GetError());
         return false;
     }
     snake_texture = SDL_CreateTextureFromSurface(get_renderer(), snake_surface);
-    /*fruit_texture = SDL_CreateTextureFromSurface(get_renderer(), fruit_surface);
-    shead_texture = SDL_CreateTextureFromSurface(get_renderer(), shead_surface);
-    field_texture = SDL_CreateTextureFromSurface(get_renderer(), field_surface);*/
-    if(!snake_texture){
+    if(!snake_texture) {
         fprintf(stderr, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         return false;
     }
+    SDL_FreeSurface(snake_surface);
     return true;
 }
 
 void snake_render_body(void* element) {
     snake_node_t *node = element;
+    if(!node)
+        return;
     //SDL_Rect src = {node->position.x, node->position.y, 32, 32};
-    SDL_Rect dst = {255, 255, 64, 64}; //deux dernier chiffres = taille texture
-    /*if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &rect, &dst, body->angle, NULL, SDL_FLIP_NONE))
+    SDL_Rect dst = {node->position.x, node->position.y, 32, 32}; //deux dernier chiffres = taille texture
+    /*if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &src, &dst, body->angle, NULL, SDL_FLIP_NONE))
         fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());*/
     SDL_RenderCopy(get_renderer(), snake_texture, NULL, &dst);
 }
 
 void snake_render(snake_t *snake) {
     assert(snake);
-    SDL_Rect dst = {255, 255, 64, 64};
-    SDL_RenderCopy(get_renderer(), snake_texture, NULL, &dst);
     for_each(&snake->body, &snake_render_body);
 }
 
