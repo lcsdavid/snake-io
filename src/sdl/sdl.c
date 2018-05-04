@@ -1,6 +1,6 @@
 #include "sdl.h"
 
-SDL_Window *window;
+SDL_Window *window = NULL;
 SDL_Renderer *renderer;
 
 bool init() {
@@ -25,14 +25,19 @@ bool init() {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
-    fruit_surface = SDL_LoadBMP("apple.bmp");
-    shead_surface = SDL_LoadBMP("head.bmp");
-    snake_surface = SDL_LoadBMP("snake.bmp");
-    field_surface = SDL_LoadBMP("field.bmp");
+    fruit_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\apple.bmp");
+    shead_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\head.bmp");
+    snake_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\snake.bmp");
+    field_surface = SDL_LoadBMP("C:\\Users\\user\\Documents\\GitHub\\snake-io\\res\\snake\\field.bmp");
+    if(fruit_surface == NULL || shead_surface == NULL || snake_surface == NULL || field_surface == NULL){
+        fprintf(stderr, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        return false;
+    }
     fruit_texture = SDL_CreateTextureFromSurface(renderer, fruit_surface);
     shead_texture = SDL_CreateTextureFromSurface(renderer, shead_surface);
     snake_texture = SDL_CreateTextureFromSurface(renderer, snake_surface);
     field_texture = SDL_CreateTextureFromSurface(renderer, field_surface);
+    printf("Level 1\n");
     return true;
 }
 
