@@ -17,21 +17,16 @@ typedef struct snake {
     point_t direction;
 } snake_t ;
 
-typedef enum body_type {
-    HEAD, BODY, TAIL
-} body_type_t ;
-
-typedef struct snake_body {
+typedef struct snake_node {
     point_t position;
     double angle;
-    body_type_t type;
-} snake_body_t ;
-
-bool snake_collision(snake_t *snake, point_t *point);
-
-bool snake_self_eating(snake_t *snake);
+} snake_node_t ;
 
 void snake_init(snake_t *snake, size_t size, point_t *direction);
+
+snake_node_t* snake_head(const snake_t* snake);
+
+snake_node_t* snake_tail(const snake_t* snake);
 
 void snake_grow(snake_t *snake);
 
@@ -40,6 +35,15 @@ void snake_diminish(snake_t *snake);
 void change_dir(point_t* last_dir, char new_dir);
 
 void snake_move(snake_t *snake);
+
+bool snake_is_head(const snake_t* snake, const snake_node_t* node);
+
+bool snake_is_tail(const snake_t* snake, const snake_node_t* node);
+
+bool snake_collision(snake_t *snake, point_t *point);
+
+bool snake_self_eating(snake_t *snake);
+
 
 /* SDL */
 
