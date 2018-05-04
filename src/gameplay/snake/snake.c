@@ -11,6 +11,7 @@ bool snake_collision(snake_t *snake, point_t *point){
         return true;
     }
     //TODO ajouter les différents éléments (missiles, mur, pièges, deuxieme joueur ...
+    return false;
 }
 
 bool snake_self_eating(snake_t *snake) {
@@ -28,10 +29,15 @@ bool snake_self_eating(snake_t *snake) {
 
 void snake_init(snake_t *snake, size_t size, point_t* direction) {
     assert(snake);
-    snake->body = {NULL, NULL};
+    snake->body.front = NULL;
+    snake->body.back = NULL;
     snake->lenght = 0;
     if(direction) snake->direction = *direction;
-    else snake->direction = {0, 0};
+    else {
+        snake->direction.x = 0;
+        snake->direction.y = 0;
+    }
+
     for(size_t i = 0; i < size; i++)
         snake_grow(snake);
 }
@@ -39,8 +45,11 @@ void snake_init(snake_t *snake, size_t size, point_t* direction) {
 void snake_grow(snake_t *snake) {
     assert(snake);
     point_t elem;
-    if(list_empty(&snake->body))
-        elem = {0, 0};
+    if(list_empty(&snake->body)){
+        elem.x = 0;
+        elem.y = 0;
+    }
+
     else {
         elem = *(point_t *) list_front(&snake->body);
         elem = point_add(elem, snake->direction);
