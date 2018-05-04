@@ -37,6 +37,10 @@ bool init() {
     shead_texture = SDL_CreateTextureFromSurface(renderer, shead_surface);
     snake_texture = SDL_CreateTextureFromSurface(renderer, snake_surface);
     field_texture = SDL_CreateTextureFromSurface(renderer, field_surface);
+    if(fruit_texture == NULL || shead_texture == NULL || snake_texture == NULL || field_texture == NULL){
+        fprintf(stderr, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        return false;
+    }
     printf("Level 1\n");
     return true;
 }
