@@ -1,5 +1,10 @@
 #include "list.h"
 
+void list_init(list_t *list, void *first_element) {
+    assert(list);
+    list->front = list->back = node_create(NULL, first_element);
+}
+
 /* Access */
 
 void* list_front(const list_t *list) {
@@ -89,10 +94,14 @@ void list_pop_back(list_t *list) {
     assert(list);
     if (list_empty(list))
         return;
+    node_t *before_current_node = NULL;
     node_t *current_node = list->front;
-    while (current_node->next) current_node = current_node->next;
-    node_delete(current_node->next);
-    list->back = current_node;
+    while (current_node->next) {
+        before_current_node = current_node;
+        current_node = current_node->next;
+    }
+    node_delete(current_node);
+    list->back = before_current_node;
 }
 
 void list_push_front(list_t *list, void *element) {
@@ -118,11 +127,11 @@ void list_pop_front(list_t *list) {
 
 /* Operations */
 
-void for_each(list_t *list, void (*func)(void*)) {
-    assert(list && func);
+void for_each(list_t *list, void (*consumer)(void*)) {
+    assert(list && consumer);
     node_t* current_node = list->front;
     while (current_node) {
-        func(current_node->data);
+        (*consumer)(current_node->data);
         current_node = current_node->next;
     }
 }

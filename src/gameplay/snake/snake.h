@@ -23,9 +23,9 @@ typedef struct snake_node {
     double angle;
 } snake_node_t ;
 
-snake_node_t *snake_node_create(point_t p, double angle);
+snake_node_t *snake_node_create(const point_t *point, double angle);
 
-void snake_init(snake_t *snake, size_t size, point_t *direction);
+void snake_init(snake_t *snake, size_t size, const point_t *position, const point_t *direction);
 
 snake_node_t* snake_head(const snake_t* snake);
 
@@ -35,9 +35,7 @@ void snake_grow(snake_t *snake);
 
 void snake_diminish(snake_t *snake);
 
-void change_dir(point_t* last_dir, char new_dir);
-
-void snake_move(snake_t *snake);
+void snake_move(snake_t *snake, char direction);
 
 bool snake_is_head(const snake_t* snake, const snake_node_t* node);
 

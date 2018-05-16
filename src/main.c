@@ -3,7 +3,10 @@
 #include <stdint.h>
 
 #include <SDL.h>
+#include <time.h>
 #include "gameplay/snake/snake.h"
+
+time_t start_time, end_time;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -20,15 +23,17 @@ int main(int argc, char *argv[]) {
     bool end = false;
     if (!init()) return -1;
     if(!snake_load_texture()) return -1;
-
-    snake_init(&snake_1, 3, NULL);
-    printf("%p", renderer);
+    point_t start = {5, 5};
+    point_t dir = {41, 5};
+    snake_init(&snake_1, 3, &start, &dir);
     SDL_Event event;
     while (!end) {
+        time(&start_time);
         SDL_WaitEvent(&event);
         end = event.window.event == SDL_WINDOWEVENT_CLOSE;
         update();
         render();
+        do time(&start_time); while(difftime(end_time, start_time) <= 1);
     }
     close();
     return 0;
@@ -76,7 +81,7 @@ void render() {
 }
 
 void update() {
-    snake_move(&snake_1);
+    snake_move(&snake_1, 'H');
 }
 
 void close() {

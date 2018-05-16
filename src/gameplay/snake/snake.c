@@ -1,28 +1,34 @@
 #include "snake.h"
-#include "../../standard/math/point.h"
 
 #define MAX_X 800
 #define MAX_Y 480
 
 SDL_Texture *snake_texture;
 
-snake_node_t *snake_node_create(point_t p, double angle) {
+//
+
+snake_node_t *snake_node_create(const point_t *point, double angle) {
     snake_node_t *snake_node = calloc(1, sizeof(snake_node_t));
-    if(!snake_node) {
+    if (!snake_node) {
         perror("calloc():");
         return NULL;
     }
-    *snake_node = (snake_node_t){p, angle};
+    snake_node->position = *point;
+    snake_node->angle = angle;
     return snake_node;
 }
 
-void snake_init(snake_t *snake, size_t size, point_t *direction) {
-    assert(snake);
-    if (direction) *snake = (snake_t){(list_t){NULL, NULL}, 0, *direction};
-    else *snake = (snake_t){(list_t){NULL, NULL}, 0, (point_t){0, 0}};
-    for (size_t i = 0; i < size; i++)
+//
+void snake_init(snake_t *snake, size_t size, const point_t *position, const point_t *direction) {
+    assert(snake && position && direction);
+    list_init(&snake->body, snake_node_create(position, 0));
+    snake->lenght = 1;
+    snake->direction = *direction;
+    for (size_t i = 0; i < size - 1; i++)
         snake_grow(snake);
 }
+
+//
 
 snake_node_t *snake_head(const snake_t *snake) {
     assert(snake);
@@ -34,86 +40,63 @@ snake_node_t *snake_tail(const snake_t *snake) {
     return list_back(&snake->body);
 }
 
+//
+
 void snake_grow(snake_t *snake) {
-    assert(snake);
-    point_t point;
-    if (snake->lenght == 0) point = (point_t){0, 0};
-    else point = point_add(snake_head(snake)->position, snake->direction);
-    snake_node_t *snake_node = snake_node_create(point, 0);
+    assert(snake && snake->lenght > 0);
+    snake_node_t *snake_node = snake_node_create(&snake->direction, 0);
     list_push_front(&snake->body, snake_node);
     ++snake->lenght;
 }
 
 void snake_diminish(snake_t *snake) {
-    list_pop_back(&snake->body);
-    --snake->lenght;
-}
-
-void change_dir(point_t *last_dir, char new_dir) {//note, certaines situations ne sont pas prises en compte, c'est normale hors des cas ci-dessous le serpent doit garder sa trajectoire précèdente
-    if (new_dir == 'G' && last_dir->x <= 0 &&
-        last_dir->x > -36) {//on part du principe que les directions sont modélisées par un cercle de 36 pixels de rayon
-        last_dir->x -= 2;//le serpent doit à chaque tic se déplacer de 36 pixels en valeur absolue
-        if (last_dir->y < 0) {
-            last_dir->y += 2;
-        } else {
-            last_dir->y -= 2;
-        }
-    }
-    if (new_dir == 'D' && last_dir->x >= 0 && last_dir->x < 36) {
-        last_dir->x += 2;
-        if (last_dir->y < 0) {
-            last_dir->y += 2;
-        } else {
-            last_dir->y -= 2;
-        }
-    }
-    if (new_dir == 'H' && last_dir->y <= 0 && last_dir->y > -36) {
-        last_dir->y -= 2;
-        if (last_dir->x < 0) {
-            last_dir->x += 2;
-        } else {
-            last_dir->x -= 2;
-        }
-    }
-    if (new_dir == 'B' && last_dir->y >= 0 && last_dir->y < 36) {
-        last_dir->y += 2;
-        if (last_dir->x < 0) {
-            last_dir->x += 2;
-        } else {
-            last_dir->x -= 2;
-        }
-    }
-    if (last_dir->x < 0) {//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->x += MAX_X;
-    }
-    if (last_dir->x > MAX_X) {//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->x -= 0;
-    }
-    if (last_dir->y < 0) {//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->y += MAX_Y;
-    }
-    if (last_dir->y > MAX_Y) {//si on passe à travers l'un des bords de la map on apparait de l'autre cote
-        last_dir->y -= 0;
+    assert(snake);
+    if(snake->lenght > 0) {
+        list_pop_back(&snake->body);
+        --snake->lenght;
     }
 }
 
-void snake_move(snake_t *snake) {
-    const Uint8 *state = SDL_GetKeyboardState(NULL);
-    SDL_PumpEvents();
-    if (state[SDL_SCANCODE_UP]) {
-        change_dir(&snake->direction, 'H');
-    } else if (state[SDL_SCANCODE_DOWN]) {
-        change_dir(&snake->direction, 'B');
-    } else if (state[SDL_SCANCODE_LEFT]) {
-        change_dir(&snake->direction, 'G');
-    } else if (state[SDL_SCANCODE_RIGHT]) {
-        change_dir(&snake->direction, 'D');
-    } else if (state[SDL_SCANCODE_ESCAPE]) {
-        exit(0);
+//
+
+void snake_change_direction(point_t *direction, char new_direction) {
+    /* Certaines situations ne sont pas prises en compte, c'est normale hors des cas ci-dessous le serpent doit garder sa trajectoire précèdente. */
+    if (new_direction == 'G' && direction->x <= 0 && direction->x > -36) {
+        /* On part du principe que les directions sont modélisées par un cercle de 36 pixels de rayon. */
+        direction->x -= 2;
+        /* Le serpent doit à chaque tic se déplacer de 36 pixels en valeur absolue. */
+        if (direction->y < 0) direction->y += 2;
+        else direction->y -= 2;
     }
+    if (new_direction == 'D' && direction->x >= 0 && direction->x < 36) {
+        direction->x += 2;
+        if (direction->y < 0) direction->y += 2;
+        else direction->y -= 2;
+    }
+    if (new_direction == 'H' && direction->y <= 0 && direction->y > -36) {
+        direction->y -= 2;
+        if (direction->x < 0) direction->x += 2;
+        else direction->x -= 2;
+    }
+    if (new_direction == 'B' && direction->y >= 0 && direction->y < 36) {
+        direction->y += 2;
+        if (direction->x < 0) direction->x += 2;
+        else direction->x -= 2;
+    }
+    /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
+    if (direction->x < 0) direction->x += MAX_X;
+    if (direction->x > MAX_X) direction->x -= 0;
+    if (direction->y < 0) direction->y += MAX_Y;
+    if (direction->y > MAX_Y) direction->y -= 0;
+}
+
+void snake_move(snake_t *snake, char direction) {
+    snake_change_direction(&snake->direction, direction);
     snake_diminish(snake);
     snake_grow(snake);
 }
+
+//
 
 bool snake_is_head(const snake_t *snake, const snake_node_t *node) {
     assert(snake && node);
@@ -139,7 +122,7 @@ bool snake_self_eating(snake_t *snake) {
     snake_node_t *body_part;
     for (size_t i = 1; i < snake->lenght; i++) {
         body_part = list_element_at(&snake->body, i);
-        if (point_distance(head->position, body_part->position) < 18)
+        if (point_distance(&head->position, &body_part->position) < 18)
             return true;
     }
     return false;
@@ -149,12 +132,12 @@ bool snake_self_eating(snake_t *snake) {
 
 bool snake_load_texture() {
     SDL_Surface *snake_surface = SDL_LoadBMP("../res/snake/snake.bmp");
-    if(!snake_surface) {
+    if (!snake_surface) {
         fprintf(stderr, "SDL_LoadBMP(): %s\n", SDL_GetError());
         return false;
     }
     snake_texture = SDL_CreateTextureFromSurface(get_renderer(), snake_surface);
-    if(!snake_texture) {
+    if (!snake_texture) {
         fprintf(stderr, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         return false;
     }
@@ -162,9 +145,9 @@ bool snake_load_texture() {
     return true;
 }
 
-void snake_render_body(void* element) {
+void snake_render_body(void *element) {
     snake_node_t *node = element;
-    if(!node)
+    if (!node)
         return;
     //SDL_Rect src = {node->position.x, node->position.y, 32, 32};
     SDL_Rect dst = {node->position.x, node->position.y, 32, 32}; //deux dernier chiffres = taille texture

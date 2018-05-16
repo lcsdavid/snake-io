@@ -10,16 +10,21 @@ point_t *point_create(int x, int y) {
     return point;
 }
 
-point_t point_add(point_t A, point_t B) {
-    return (point_t){A.x + B.x, A.y + B.y};
+point_t point_add(const point_t *A, const point_t *B) {
+    return (point_t){A->x + B->x, A->y + B->y};
 }
 
-point_t point_substract(point_t A, point_t B) {
-    return (point_t){A.x - B.x, A.y - B.y};
+point_t point_substract(const point_t *A, const point_t *B) {
+    return (point_t){A->x - B->x, A->y - B->y};
 }
 
-double point_distance(point_t A, point_t B) {
-    double dx = A.x - B.x;
-    double dy = A.y - B.y;
-    return sqrt(dx * dx + dy * dy);
+double point_distance(const point_t *A, const point_t *B) {
+    point_t point = point_substract(A, B);
+    return sqrt(point.x * point.x + point.y * point.y);
+}
+
+void point_norm(point_t *point) {
+    long d = (long)sqrt(point->x * point->x + point->y * point->y);
+    point->x /= d;
+    point->y /= d;
 }

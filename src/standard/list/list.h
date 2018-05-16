@@ -11,6 +11,8 @@ typedef struct list {
     node_t *back;
 } list_t ;
 
+void list_init(list_t *list, void *first_element);
+
 /* Access */
 
 void* list_front(const list_t *list);
@@ -43,7 +45,7 @@ void list_pop_front(list_t *list);
 
 /* Operations */
 
-void for_each(list_t *list, void (*func)(void*));
+void for_each(list_t *list, void (*consumer)(void*));
 
 /* ... */
 
