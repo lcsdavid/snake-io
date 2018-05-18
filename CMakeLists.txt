@@ -15,7 +15,7 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
         #${SDL2_IMAGE_INCLUDE_DIR})
 
-add_executable(snake_io ${SOURCE_FILES})
+add_executable(snake_io ${SOURCE_FILES} src/input.h src/input.c)
 
 target_link_libraries(snake_io ${SDL2_LIBRARY})
      #   ${SDL2_IMAGE_LIBRARIES})

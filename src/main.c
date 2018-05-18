@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
         start_time = SDL_GetTicks();
         SDL_PollEvent(&event);
         end = event.window.event == SDL_WINDOWEVENT_CLOSE;
+        input();
         update();
         render();
         end_time = SDL_GetTicks();
