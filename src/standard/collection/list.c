@@ -20,8 +20,11 @@ void* list_back(const list_t *list) {
 void* list_element_at(const list_t *list, size_t at) {
     assert(list);
     node_t *current_node = list->front;
-    while (--at > 0 && current_node) current_node = current_node->next;
-    return current_node ? current_node->data : NULL;
+    while (current_node->next && at > 0) {
+        current_node = current_node->next;
+        at--;
+    }
+    return current_node;
 }
 
 /* Capacity */

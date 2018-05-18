@@ -117,13 +117,13 @@ bool snake_self_eating(snake_t *snake) {
 
 /* SDL */
 
-bool snake_load_texture() {
+bool snake_load_texture(SDL_Renderer *renderer) {
     SDL_Surface *snake_surface = SDL_LoadBMP("../res/snake/snake.bmp");
     if (!snake_surface) {
         fprintf(stderr, "SDL_LoadBMP(): %s\n", SDL_GetError());
         return false;
     }
-    snake_texture = SDL_CreateTextureFromSurface(get_renderer(), snake_surface);
+    snake_texture = SDL_CreateTextureFromSurface(renderer, snake_surface);
     if (!snake_texture) {
         fprintf(stderr, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         return false;
@@ -140,7 +140,7 @@ void snake_render_body(void *element) {
     SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
     SDL_Rect dst = {node->position.x - SNAKE_TEXTURE_SIZE_X / 2, node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
                     SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
-    if (SDL_RenderCopyEx(get_renderer(), snake_texture, NULL, &dst, node->angle, &center, SDL_FLIP_NONE))
+    if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, node->angle, &center, SDL_FLIP_NONE))
         fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
 }
 

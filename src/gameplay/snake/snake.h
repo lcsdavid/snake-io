@@ -8,12 +8,10 @@
 //#include <SDL_image.h>
 
 #include "../../standard/math/point.h"
-#include "../../standard/list/list.h"
+#include "../../standard/collection/list.h"
 
 #define SNAKE_TEXTURE_SIZE_X 32
 #define SNAKE_TEXTURE_SIZE_Y 32
-
-extern SDL_Renderer *get_renderer();
 
 typedef struct snake {
     list_t body;
@@ -52,8 +50,10 @@ bool snake_self_eating(snake_t *snake);
 
 /* SDL */
 
-bool snake_load_texture();
+bool snake_load_texture(SDL_Renderer *renderer);
 
-void snake_render(snake_t *snake);
+void snake_free_texture(SDL_Renderer *renderer);
+
+void snake_render(snake_t *snake, SDL_Renderer *renderer);
 
 #endif

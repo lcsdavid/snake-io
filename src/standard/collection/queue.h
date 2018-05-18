@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #include "../function/function.h"
-#include "../node/node.h"
+#include "node.h"
 
 /**
  * @typedef queue_t

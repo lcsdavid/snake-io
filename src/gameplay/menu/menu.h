@@ -8,7 +8,7 @@
 //#include <SDL_image.h>
 
 #include "button.h"
-#include "../../standard/list/list.h"
+#include "../../standard/collection/list.h"
 
 typedef enum menu_desc {
     MAIN, SCENARIO, SETTINGS

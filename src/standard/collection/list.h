@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdbool.h>
 
-#include "../node/node.h"
+#include "node.h"
 
 typedef struct list {
     node_t *front;

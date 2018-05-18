@@ -6,7 +6,6 @@
 #include <SDL_timer.h>
 #include <time.h>
 
-#include "input.h"
 #include "gameplay/snake/snake.h"
 
 typedef struct {
@@ -32,9 +31,8 @@ int main(int argc, char *argv[]) {
     appstate_t appstate;
     if (!init(&appstate))
         return EXIT_FAILURE;
-    if(!snake_load_texture())
-        return EXIT_FAILURE;
-    point_t start = {25, 25};
+
+    point_t start = {50, 50};
     snake_init(&appstate.gamestate.player_one, 3, &start, 0);
     unsigned int start_time, end_time;
     while (!appstate.end) {
@@ -70,12 +68,15 @@ bool init(appstate_t *appstate) {
     appstate->window = window;
     appstate->renderer = renderer;
     appstate->end = false;
+
+    if(!snake_load_texture(appstate->renderer))
+        return false;
     return true;
 }
 
 void loop(appstate_t *appstate) {
     input(appstate);
-    update(&appstate->gamestate);
+    // update(&appstate->gamestate);
     render(appstate);
 }
 
@@ -98,7 +99,7 @@ void input(appstate_t *appstate) {
                         snake_change_direction(&appstate->gamestate.player_one, true);
                         break;
                     case SDLK_RIGHT:
-                        snake_change_direction(&appstate->gamestate.player_two, false);
+                        snake_change_direction(&appstate->gamestate.player_one, false);
                         break;
                     default:
                         break;
@@ -116,7 +117,7 @@ void update(gamestate_t *gamestate) {
 void render(appstate_t *appstate) {
     SDL_RenderClear(appstate->renderer);
     SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
-    snake_render(&appstate->gamestate.player_one);
+    snake_render(&appstate->gamestate.player_one, appstate->renderer);
     SDL_RenderPresent(appstate->renderer);
 }
 
