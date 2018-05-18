@@ -1,7 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <unistd.h>
 
 #include <SDL.h>
 #include <SDL_timer.h>
@@ -10,42 +9,46 @@
 #include "input.h"
 #include "gameplay/snake/snake.h"
 
-#define TICKS 33
+typedef struct {
+    snake_t player_one;
+    snake_t player_two;
+} gamestate_t;
 
-SDL_Window* window;
-SDL_Renderer* renderer;
+typedef struct {
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    bool end;
+    gamestate_t gamestate;
+} appstate_t;
 
-snake_t snake_p1, snake_p2;
-
-bool init();
-void render();
-void update();
-void close_();
+bool init(appstate_t *appstate);
+void close(appstate_t *appstate);
+void loop(appstate_t *appstate);
+void input(appstate_t *appstate);
+void update(gamestate_t *gamestate);
+void render(appstate_t *appstate);
 
 int main(int argc, char *argv[]) {
-    bool end = false;
-    if (!init()) return -1;
-    if(!snake_load_texture()) return -1;
+    appstate_t appstate;
+    if (!init(&appstate))
+        return EXIT_FAILURE;
+    if(!snake_load_texture())
+        return EXIT_FAILURE;
     point_t start = {25, 25};
-    snake_init(&snake_p1, 3, &start, 0);
-    SDL_Event event;
+    snake_init(&appstate.gamestate.player_one, 3, &start, 0);
     unsigned int start_time, end_time;
-    while (!end) {
+    while (!appstate.end) {
         start_time = SDL_GetTicks();
-        SDL_PollEvent(&event);
-        end = event.window.event == SDL_WINDOWEVENT_CLOSE;
-        input();
-        update();
-        render();
+        loop(&appstate);
         end_time = SDL_GetTicks();
         if(end_time - start_time < 33)
-            SDL_Delay(33 - end_time + start_time);
+            SDL_Delay(10 - end_time + start_time);
     }
-    close_();
+    close(&appstate);
     return 0;
 }
 
-bool init() {
+bool init(appstate_t *appstate) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init(): %s\n", SDL_GetError());
         return false;
@@ -54,47 +57,71 @@ bool init() {
         fprintf(stderr, "IMG_Init(): %s\n", SDL_GetError());
         return false;
     }*/
-    window = SDL_CreateWindow("Test SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Test SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
     if (!window) {
         fprintf(stderr, "SDL_CreateWindow(): %s\n", SDL_GetError());
         return false;
     }
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         fprintf(stderr, "SDL_CreateRenderer(): %s\n", SDL_GetError());
         return false;
     }
-    SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
+    appstate->window = window;
+    appstate->renderer = renderer;
+    appstate->end = false;
     return true;
 }
 
-void render() {
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 15, 78, 234, 255);
-    snake_render(&snake_p1);
-    SDL_RenderPresent(renderer);
+void loop(appstate_t *appstate) {
+    input(appstate);
+    update(&appstate->gamestate);
+    render(appstate);
 }
 
-void update() {
-    snake_move(&snake_p1);
+void input(appstate_t *appstate) {
+    SDL_Event event;
+    if(SDL_PollEvent(&event))
+        switch(event.type) {
+            case SDL_WINDOWEVENT_CLOSE:
+                appstate->end = true;
+                break;
+            case SDL_QUIT:
+                appstate->end = true;
+                break;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        appstate->end = true;
+                        break;
+                    case SDLK_LEFT:
+                        snake_change_direction(&appstate->gamestate.player_one, true);
+                        break;
+                    case SDLK_RIGHT:
+                        snake_change_direction(&appstate->gamestate.player_two, false);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
 }
 
-void close_() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+void update(gamestate_t *gamestate) {
+    snake_move(&gamestate->player_one);
+}
+
+void render(appstate_t *appstate) {
+    SDL_RenderClear(appstate->renderer);
+    SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
+    snake_render(&appstate->gamestate.player_one);
+    SDL_RenderPresent(appstate->renderer);
+}
+
+void close(appstate_t *appstate) {
+    SDL_DestroyRenderer(appstate->renderer);
+    SDL_DestroyWindow(appstate->window);
     SDL_Quit();
-}
-
-SDL_Renderer *get_renderer() {
-    return renderer;
-}
-
-snake_t *get_player1() {
-    return &snake_p1;
-}
-
-snake_t *get_player2() {
-    return &snake_p2;
 }

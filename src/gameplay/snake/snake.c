@@ -1,7 +1,7 @@
 #include "snake.h"
 
 #define MAX_X 800
-#define MAX_Y 480
+#define MAX_Y 420
 
 SDL_Texture *snake_texture;
 
@@ -50,7 +50,7 @@ void snake_grow(snake_t *snake) {
 
 void snake_diminish(snake_t *snake) {
     assert(snake);
-    if(snake->lenght > 0) {
+    if (snake->lenght > 0) {
         list_pop_back(&snake->body);
         --snake->lenght;
     }
@@ -58,29 +58,29 @@ void snake_diminish(snake_t *snake) {
 
 //
 
-double snake_change_direction(bool gauche, double angle) {
-    if(gauche){
-        angle += M_PI/36;
-    }else{
-        angle -= M_PI/36;
-    }
-    return angle;
+void snake_change_direction(snake_t *snake, bool gauche) {
+    SDL_Log("%lf", snake_head(snake)->angle);
+    if (gauche)
+        snake_head(snake)->angle += M_PI / 36;
+    else
+        snake_head(snake)->angle -= M_PI / 36;
+    SDL_Log("%lf", snake_head(snake)->angle);
 }
 
 void snake_move(snake_t *snake) {
-    snake_head(snake)->position.x += (int)cos(-snake_head(snake)->angle);
-    snake_head(snake)->position.y += (int)sin(snake_head(snake)->angle);
+    snake_head(snake)->position.x += (int) cos(snake_head(snake)->angle);
+    snake_head(snake)->position.y += (int) sin(snake_head(snake)->angle);
     //snake_change_direction(&snake->direction, direction);
     //for(size_t i = snake->lenght; i > 1; i--) {
     //    ((snake_node_t *)list_element_at(&snake->body, i))->position = ((snake_node_t *)list_element_at(&snake->body, i - 1))->position;
-        //((snake_node_t *)list_element_at(&snake->body, i))->angle = ((snake_node_t *)list_element_at(&snake->body, i - 1))->angle;
+    //((snake_node_t *)list_element_at(&snake->body, i))->angle = ((snake_node_t *)list_element_at(&snake->body, i - 1))->angle;
     //}
     //snake_head(snake)->position = snake->direction;
     // /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
-    if (snake_head(snake)->position.x < 0) snake_head(snake)->position.x += MAX_X;
-    if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x -= 0;
-    if (snake_head(snake)->position.y < 0) snake_head(snake)->position.y += MAX_Y;
-    if (snake_head(snake)->position.y > MAX_Y) snake_head(snake)->position.y -= 0;
+    if (snake_head(snake)->position.x < 0) snake_head(snake)->position.x = MAX_X;
+    if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x = 0;
+    if (snake_head(snake)->position.y < 0) snake_head(snake)->position.y = MAX_Y;
+    if (snake_head(snake)->position.y > MAX_Y) snake_head(snake)->position.y = 0;
 }
 
 //
@@ -133,14 +133,15 @@ bool snake_load_texture() {
 }
 
 void snake_render_body(void *element) {
+    assert(element);
     snake_node_t *node = element;
-    if (!node)
-        return;
-    //SDL_Rect src = {node->position.x, node->position.y, 32, 32};
-    SDL_Rect dst = {node->position.x, node->position.y, 32, 32}; //deux dernier chiffres = taille texture
-    /*if(!SDL_RenderCopyEx(get_renderer(), snake_texture, &src, &dst, body->angle, NULL, SDL_FLIP_NONE))
-        fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());*/
-    SDL_RenderCopy(get_renderer(), snake_texture, NULL, &dst);
+    // SDL_Rect src = {node->position.x, node->position.y, 32, 32};
+    // Deux dernier nombres -> taille textures
+    SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
+    SDL_Rect dst = {node->position.x - SNAKE_TEXTURE_SIZE_X / 2, node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
+                    SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
+    if (SDL_RenderCopyEx(get_renderer(), snake_texture, NULL, &dst, node->angle, &center, SDL_FLIP_NONE))
+        fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
 }
 
 void snake_render(snake_t *snake) {

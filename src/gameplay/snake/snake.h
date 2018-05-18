@@ -10,6 +10,9 @@
 #include "../../standard/math/point.h"
 #include "../../standard/list/list.h"
 
+#define SNAKE_TEXTURE_SIZE_X 32
+#define SNAKE_TEXTURE_SIZE_Y 32
+
 extern SDL_Renderer *get_renderer();
 
 typedef struct snake {
@@ -34,7 +37,7 @@ void snake_grow(snake_t *snake);
 
 void snake_diminish(snake_t *snake);
 
-double snake_change_direction(bool gauche, double angle);
+void snake_change_direction(snake_t *snake, bool gauche);
 
 void snake_move(snake_t *snake);
 
