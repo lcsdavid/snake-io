@@ -34,6 +34,8 @@ void snake_grow(snake_t *snake);
 
 void snake_diminish(snake_t *snake);
 
+double snake_change_direction(bool gauche, double angle);
+
 void snake_move(snake_t *snake);
 
 bool snake_is_head(const snake_t* snake, const snake_node_t* node);

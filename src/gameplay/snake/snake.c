@@ -58,35 +58,13 @@ void snake_diminish(snake_t *snake) {
 
 //
 
-void snake_change_direction(point_t *direction, double angle) {
-    /* Certaines situations ne sont pas prises en compte, c'est normale hors des cas ci-dessous le serpent doit garder sa trajectoire précèdente. */
-if (new_direction == 'G' && direction->x <= 0 && direction->x > -36) {
-/* On part du principe que les directions sont modélisées par un cercle de 36 pixels de rayon. */
-direction->x -= 2;
-/* Le serpent doit à chaque tic se déplacer de 36 pixels en valeur absolue. */
-if (direction->y < 0) direction->y += 2;
-else direction->y -= 2;
-}
-if (new_direction == 'D' && direction->x >= 0 && direction->x < 36) {
-direction->x += 2;
-if (direction->y < 0) direction->y += 2;
-else direction->y -= 2;
-}
-if (new_direction == 'H' && direction->y <= 0 && direction->y > -36) {
-direction->y -= 2;
-if (direction->x < 0) direction->x += 2;
-else direction->x -= 2;
-}
-if (new_direction == 'B' && direction->y >= 0 && direction->y < 36) {
-direction->y += 2;
-if (direction->x < 0) direction->x += 2;
-else direction->x -= 2;
-}
-/* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
-if (direction->x < 0) direction->x += MAX_X;
-if (direction->x > MAX_X) direction->x -= 0;
-if (direction->y < 0) direction->y += MAX_Y;
-if (direction->y > MAX_Y) direction->y -= 0;
+double snake_change_direction(bool gauche, double angle) {
+    if(gauche){
+        angle += M_PI/36;
+    }else{
+        angle -= M_PI/36;
+    }
+    return angle;
 }
 
 void snake_move(snake_t *snake) {
@@ -98,6 +76,11 @@ void snake_move(snake_t *snake) {
         //((snake_node_t *)list_element_at(&snake->body, i))->angle = ((snake_node_t *)list_element_at(&snake->body, i - 1))->angle;
     //}
     //snake_head(snake)->position = snake->direction;
+    // /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
+    if (snake_head(snake)->position.x < 0) snake_head(snake)->position.x += MAX_X;
+    if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x -= 0;
+    if (snake_head(snake)->position.y < 0) snake_head(snake)->position.y += MAX_Y;
+    if (snake_head(snake)->position.y > MAX_Y) snake_head(snake)->position.y -= 0;
 }
 
 //
