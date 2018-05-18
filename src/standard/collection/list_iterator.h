@@ -1,10 +1,9 @@
 #ifndef LIST_ITERATOR_H
 #define LIST_ITERATOR_H
 
-typedef struct iterator iterator_t;
-typedef struct list list_t;
+#include "iterator.h"
 
-void list_iterator_init(iterator_t *iterator, list_t *list);
+typedef struct list list_t;
 
 iterator_t *list_iterator_create(list_t *list);
 

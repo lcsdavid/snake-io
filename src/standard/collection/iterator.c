@@ -1,7 +1,7 @@
-#include "iterator.h"
-
 #include <assert.h>
 #include <stdlib.h>
+
+#include "iterator.h"
 
 typedef struct iterator {
     const void *collection;
@@ -16,7 +16,7 @@ const size_t iterator_size = sizeof(iterator_t);
 
 void iterator_init(iterator_t *iterator, iterator_destroy_state_func destroy, iterator_has_data_func has_data,
                    iterator_data_func data, iterator_next_func next, const void *collection, void *state) {
-    assert(iterator && destroy && has_data && data && next && collection && state);
+    assert(iterator && has_data && data && next && collection && state);
     iterator->destroy = destroy;
     iterator->has_data = has_data;
     iterator->data = data;

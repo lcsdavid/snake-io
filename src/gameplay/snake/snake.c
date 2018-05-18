@@ -1,5 +1,7 @@
 #include "snake.h"
 
+#include "../../standard/collection/list_iterator.h"
+
 #define MAX_X 800
 #define MAX_Y 420
 
@@ -132,7 +134,7 @@ bool snake_load_texture(SDL_Renderer *renderer) {
     return true;
 }
 
-void snake_render_body(void *element) {
+/*void snake_render_body(void *element) {
     assert(element);
     snake_node_t *node = element;
     // SDL_Rect src = {node->position.x, node->position.y, 32, 32};
@@ -147,5 +149,17 @@ void snake_render_body(void *element) {
 void snake_render(snake_t *snake) {
     assert(snake);
     for_each(&snake->body, &snake_render_body);
-}
+} */
 
+void snake_render(snake_t *snake, SDL_Renderer *renderer) {
+    assert(snake && renderer);
+    iterator_t *it = list_iterator_create(&snake->body);
+    SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
+    for(size_t i = 0; i < snake->lenght; i++) {
+        snake_node_t *snake_node = iterator_data(it);
+        SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2, snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
+                        SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
+        if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, snake_node->angle, &center, SDL_FLIP_NONE))
+            fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
+    }
+}
