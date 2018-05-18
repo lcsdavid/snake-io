@@ -31,7 +31,6 @@ int main(int argc, char *argv[]) {
     appstate_t appstate;
     if (!init(&appstate))
         return EXIT_FAILURE;
-
     point_t start = {50, 50};
     snake_init(&appstate.gamestate.player_one, 3, &start, 0);
     unsigned int start_time, end_time;
@@ -76,7 +75,7 @@ bool init(appstate_t *appstate) {
 
 void loop(appstate_t *appstate) {
     input(appstate);
-    // update(&appstate->gamestate);
+    update(&appstate->gamestate);
     render(appstate);
 }
 

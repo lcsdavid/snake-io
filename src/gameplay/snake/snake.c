@@ -1,9 +1,12 @@
 #include "snake.h"
 
 #include "../../standard/collection/list_iterator.h"
+#include "../../standard/math/point.h"
 
 #define MAX_X 800
 #define MAX_Y 420
+
+#define SPEED 3
 
 SDL_Texture *snake_texture;
 
@@ -70,8 +73,11 @@ void snake_change_direction(snake_t *snake, bool gauche) {
 }
 
 void snake_move(snake_t *snake) {
-    snake_head(snake)->position.x += (int) cos(snake_head(snake)->angle);
-    snake_head(snake)->position.y += (int) sin(snake_head(snake)->angle);
+    SDL_Log("snake_move: head: x = %d, y = %d, angle = %lf", snake_head(snake)->position.x,
+            snake_head(snake)->position.y, snake_head(snake)->angle);
+    SDL_Log("cos: %lf sin: %lf", cos(snake_head(snake)->angle), sin(snake_head(snake)->angle));
+    snake_head(snake)->position.x += (int) SPEED * cos(snake_head(snake)->angle);
+    snake_head(snake)->position.y += (int) SPEED * sin(snake_head(snake)->angle);
     //snake_change_direction(&snake->direction, direction);
     //for(size_t i = snake->lenght; i > 1; i--) {
     //    ((snake_node_t *)list_element_at(&snake->body, i))->position = ((snake_node_t *)list_element_at(&snake->body, i - 1))->position;
@@ -134,23 +140,6 @@ bool snake_load_texture(SDL_Renderer *renderer) {
     return true;
 }
 
-/*void snake_render_body(void *element) {
-    assert(element);
-    snake_node_t *node = element;
-    // SDL_Rect src = {node->position.x, node->position.y, 32, 32};
-    // Deux dernier nombres -> taille textures
-    SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
-    SDL_Rect dst = {node->position.x - SNAKE_TEXTURE_SIZE_X / 2, node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
-                    SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
-    if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, node->angle, &center, SDL_FLIP_NONE))
-        fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
-}
-
-void snake_render(snake_t *snake) {
-    assert(snake);
-    for_each(&snake->body, &snake_render_body);
-} */
-
 void snake_render(snake_t *snake, SDL_Renderer *renderer) {
     assert(snake && renderer);
     iterator_t *it = list_iterator_create(&snake->body);
@@ -159,7 +148,8 @@ void snake_render(snake_t *snake, SDL_Renderer *renderer) {
         snake_node_t *snake_node = iterator_data(it);
         SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2, snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
                         SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
-        if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, snake_node->angle, &center, SDL_FLIP_NONE))
+        if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, snake_node->angle * 180 / M_PI, &center, SDL_FLIP_NONE))
             fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
     }
+    iterator_destroy(it);
 }
