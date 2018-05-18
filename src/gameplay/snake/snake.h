@@ -15,7 +15,6 @@ extern SDL_Renderer *get_renderer();
 typedef struct snake {
     list_t body;
     unsigned char lenght;
-    point_t direction;
 } snake_t ;
 
 typedef struct snake_node {
@@ -25,7 +24,7 @@ typedef struct snake_node {
 
 snake_node_t *snake_node_create(const point_t *point, double angle);
 
-void snake_init(snake_t *snake, size_t size, const point_t *position, const point_t *direction);
+void snake_init(snake_t *snake, size_t size, const point_t *position, double direction);
 
 snake_node_t* snake_head(const snake_t* snake);
 
@@ -35,7 +34,7 @@ void snake_grow(snake_t *snake);
 
 void snake_diminish(snake_t *snake);
 
-void snake_move(snake_t *snake, char direction);
+void snake_move(snake_t *snake);
 
 bool snake_is_head(const snake_t* snake, const snake_node_t* node);
 

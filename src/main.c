@@ -1,12 +1,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <unistd.h>
 
 #include <SDL.h>
+#include <SDL_timer.h>
 #include <time.h>
 #include "gameplay/snake/snake.h"
 
-time_t start_time, end_time;
+#define TICKS 33
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -17,25 +19,27 @@ bool init();
 void input();
 void render();
 void update();
-void close();
+void close_();
 
 int main(int argc, char *argv[]) {
     bool end = false;
     if (!init()) return -1;
     if(!snake_load_texture()) return -1;
-    point_t start = {5, 5};
-    point_t dir = {41, 5};
-    snake_init(&snake_1, 3, &start, &dir);
+    point_t start = {25, 25};
+    snake_init(&snake_1, 3, &start, 0);
     SDL_Event event;
+    unsigned int start_time, end_time;
     while (!end) {
-        time(&start_time);
-        SDL_WaitEvent(&event);
+        start_time = SDL_GetTicks();
+        SDL_PollEvent(&event);
         end = event.window.event == SDL_WINDOWEVENT_CLOSE;
         update();
         render();
-        do time(&start_time); while(difftime(end_time, start_time) <= 1);
+        end_time = SDL_GetTicks();
+        if(end_time - start_time < 33)
+            SDL_Delay(33 - end_time + start_time);
     }
-    close();
+    close_();
     return 0;
 }
 
@@ -75,16 +79,17 @@ void input() {
 }
 
 void render() {
+    SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 15, 78, 234, 255);
     snake_render(&snake_1);
     SDL_RenderPresent(renderer);
 }
 
 void update() {
-    snake_move(&snake_1, 'H');
+    snake_move(&snake_1);
 }
 
-void close() {
+void close_() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

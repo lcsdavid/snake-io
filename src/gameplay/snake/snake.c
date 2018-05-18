@@ -19,11 +19,10 @@ snake_node_t *snake_node_create(const point_t *point, double angle) {
 }
 
 //
-void snake_init(snake_t *snake, size_t size, const point_t *position, const point_t *direction) {
-    assert(snake && position && direction);
-    list_init(&snake->body, snake_node_create(position, 0));
+void snake_init(snake_t *snake, size_t size, const point_t *position, double direction) {
+    assert(snake && position);
+    list_init(&snake->body, snake_node_create(position, direction));
     snake->lenght = 1;
-    snake->direction = *direction;
     for (size_t i = 0; i < size - 1; i++)
         snake_grow(snake);
 }
@@ -44,7 +43,7 @@ snake_node_t *snake_tail(const snake_t *snake) {
 
 void snake_grow(snake_t *snake) {
     assert(snake && snake->lenght > 0);
-    snake_node_t *snake_node = snake_node_create(&snake->direction, 0);
+    snake_node_t *snake_node = snake_node_create(&snake_head(snake)->position, snake_head(snake)->angle);
     list_push_front(&snake->body, snake_node);
     ++snake->lenght;
 }
@@ -59,41 +58,46 @@ void snake_diminish(snake_t *snake) {
 
 //
 
-void snake_change_direction(point_t *direction, char new_direction) {
+void snake_change_direction(point_t *direction, double angle) {
     /* Certaines situations ne sont pas prises en compte, c'est normale hors des cas ci-dessous le serpent doit garder sa trajectoire précèdente. */
-    if (new_direction == 'G' && direction->x <= 0 && direction->x > -36) {
-        /* On part du principe que les directions sont modélisées par un cercle de 36 pixels de rayon. */
-        direction->x -= 2;
-        /* Le serpent doit à chaque tic se déplacer de 36 pixels en valeur absolue. */
-        if (direction->y < 0) direction->y += 2;
-        else direction->y -= 2;
-    }
-    if (new_direction == 'D' && direction->x >= 0 && direction->x < 36) {
-        direction->x += 2;
-        if (direction->y < 0) direction->y += 2;
-        else direction->y -= 2;
-    }
-    if (new_direction == 'H' && direction->y <= 0 && direction->y > -36) {
-        direction->y -= 2;
-        if (direction->x < 0) direction->x += 2;
-        else direction->x -= 2;
-    }
-    if (new_direction == 'B' && direction->y >= 0 && direction->y < 36) {
-        direction->y += 2;
-        if (direction->x < 0) direction->x += 2;
-        else direction->x -= 2;
-    }
-    /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
-    if (direction->x < 0) direction->x += MAX_X;
-    if (direction->x > MAX_X) direction->x -= 0;
-    if (direction->y < 0) direction->y += MAX_Y;
-    if (direction->y > MAX_Y) direction->y -= 0;
+if (new_direction == 'G' && direction->x <= 0 && direction->x > -36) {
+/* On part du principe que les directions sont modélisées par un cercle de 36 pixels de rayon. */
+direction->x -= 2;
+/* Le serpent doit à chaque tic se déplacer de 36 pixels en valeur absolue. */
+if (direction->y < 0) direction->y += 2;
+else direction->y -= 2;
+}
+if (new_direction == 'D' && direction->x >= 0 && direction->x < 36) {
+direction->x += 2;
+if (direction->y < 0) direction->y += 2;
+else direction->y -= 2;
+}
+if (new_direction == 'H' && direction->y <= 0 && direction->y > -36) {
+direction->y -= 2;
+if (direction->x < 0) direction->x += 2;
+else direction->x -= 2;
+}
+if (new_direction == 'B' && direction->y >= 0 && direction->y < 36) {
+direction->y += 2;
+if (direction->x < 0) direction->x += 2;
+else direction->x -= 2;
+}
+/* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
+if (direction->x < 0) direction->x += MAX_X;
+if (direction->x > MAX_X) direction->x -= 0;
+if (direction->y < 0) direction->y += MAX_Y;
+if (direction->y > MAX_Y) direction->y -= 0;
 }
 
-void snake_move(snake_t *snake, char direction) {
-    snake_change_direction(&snake->direction, direction);
-    snake_diminish(snake);
-    snake_grow(snake);
+void snake_move(snake_t *snake) {
+    snake_head(snake)->position.x += (int)cos(-snake_head(snake)->angle);
+    snake_head(snake)->position.y += (int)sin(snake_head(snake)->angle);
+    //snake_change_direction(&snake->direction, direction);
+    //for(size_t i = snake->lenght; i > 1; i--) {
+    //    ((snake_node_t *)list_element_at(&snake->body, i))->position = ((snake_node_t *)list_element_at(&snake->body, i - 1))->position;
+        //((snake_node_t *)list_element_at(&snake->body, i))->angle = ((snake_node_t *)list_element_at(&snake->body, i - 1))->angle;
+    //}
+    //snake_head(snake)->position = snake->direction;
 }
 
 //
