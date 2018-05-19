@@ -66,9 +66,6 @@ void *iterator_data(iterator_t *iterator) {
 iterator_t *iterator_next(iterator_t *iterator) {
     assert(iterator);
     void *state = iterator->next(iterator->state);
-    if (state)
-        iterator->state = state;
-    else
-        iterator = NULL;
+    iterator->state = state;
     return iterator;
 }

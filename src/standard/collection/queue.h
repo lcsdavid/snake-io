@@ -26,7 +26,9 @@ typedef struct queue {
 
 /* Dynamic memory functions */ // Utiles ?
 
-queue_t *queue_create(node_t *front, node_t *back);
+void queue_init(queue_t *queue);
+
+queue_t *queue_create();
 
 void queue_delete(queue_t *queue);
 

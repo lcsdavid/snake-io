@@ -6,11 +6,18 @@
 #define MAX_X 800
 #define MAX_Y 420
 
-#define SPEED 3
+#define SPEED 2
 
 SDL_Texture *snake_texture;
 
 //
+
+void snake_node_init(snake_node_t *snake_node, const point_t *point, double angle) {
+    assert(snake_node && point);
+    snake_node->position = *point;
+    snake_node->angle = angle;
+    queue_init(&snake_node->propagation);
+}
 
 snake_node_t *snake_node_create(const point_t *point, double angle) {
     snake_node_t *snake_node = calloc(1, sizeof(snake_node_t));
@@ -18,9 +25,13 @@ snake_node_t *snake_node_create(const point_t *point, double angle) {
         perror("calloc():");
         return NULL;
     }
-    snake_node->position = *point;
-    snake_node->angle = angle;
+    snake_node_init(snake_node, point, angle);
     return snake_node;
+}
+
+snake_node_t *snake_node_copy(const snake_node_t *snake_node) {
+    assert(snake_node);
+    return snake_node_create(&snake_node->position, snake_node->angle);
 }
 
 //
@@ -66,24 +77,31 @@ void snake_diminish(snake_t *snake) {
 void snake_change_direction(snake_t *snake, bool gauche) {
     SDL_Log("%lf", snake_head(snake)->angle);
     if (gauche)
-        snake_head(snake)->angle += M_PI / 36;
+        snake_head(snake)->angle += M_PI / 45;
     else
-        snake_head(snake)->angle -= M_PI / 36;
+        snake_head(snake)->angle -= M_PI / 45;
     SDL_Log("%lf", snake_head(snake)->angle);
 }
 
-void snake_move(snake_t *snake) {
-    SDL_Log("snake_move: head: x = %d, y = %d, angle = %lf", snake_head(snake)->position.x,
-            snake_head(snake)->position.y, snake_head(snake)->angle);
-    SDL_Log("cos: %lf sin: %lf", cos(snake_head(snake)->angle), sin(snake_head(snake)->angle));
-    snake_head(snake)->position.x += (int) SPEED * cos(snake_head(snake)->angle);
-    snake_head(snake)->position.y += (int) SPEED * sin(snake_head(snake)->angle);
-    //snake_change_direction(&snake->direction, direction);
-    //for(size_t i = snake->lenght; i > 1; i--) {
-    //    ((snake_node_t *)list_element_at(&snake->body, i))->position = ((snake_node_t *)list_element_at(&snake->body, i - 1))->position;
-    //((snake_node_t *)list_element_at(&snake->body, i))->angle = ((snake_node_t *)list_element_at(&snake->body, i - 1))->angle;
-    //}
-    //snake_head(snake)->position = snake->direction;
+void snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement
+    snake_node_t *prev_node, *current_node;
+    iterator_t *it = list_iterator_create(&snake->body);
+    prev_node = snake_head(snake);
+    queue_enqueue(&prev_node->propagation, snake_node_copy(prev_node));
+    prev_node->position.x += (int) SPEED * cos(prev_node->angle);
+    prev_node->position.y += (int) SPEED * sin(prev_node->angle);
+    it = iterator_next(it);
+    for (size_t i = 1; i < snake->lenght; i++) {
+        current_node = iterator_data(it);
+        if (point_distance(&prev_node->position, &current_node->position) >= 32) {
+            queue_enqueue(&current_node->propagation, snake_node_copy(current_node));
+            current_node->position = ((snake_node_t*)queue_front(&prev_node->propagation))->position;
+            current_node->angle = ((snake_node_t*)queue_front(&prev_node->propagation))->angle;
+            queue_dequeue(&prev_node->propagation);
+        }
+        prev_node = current_node;
+        it = iterator_next(it);
+    }
     // /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
     if (snake_head(snake)->position.x < 0) snake_head(snake)->position.x = MAX_X;
     if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x = 0;
@@ -144,12 +162,15 @@ void snake_render(snake_t *snake, SDL_Renderer *renderer) {
     assert(snake && renderer);
     iterator_t *it = list_iterator_create(&snake->body);
     SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
-    for(size_t i = 0; i < snake->lenght; i++) {
+    for (size_t i = 0; i < snake->lenght; i++) {
         snake_node_t *snake_node = iterator_data(it);
-        SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2, snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
+        SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2,
+                        snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
                         SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
-        if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, snake_node->angle * 180 / M_PI, &center, SDL_FLIP_NONE))
+        if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, snake_node->angle * 180 / M_PI, &center,
+                             SDL_FLIP_NONE))
             fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
+        it = iterator_next(it);
     }
     iterator_destroy(it);
 }

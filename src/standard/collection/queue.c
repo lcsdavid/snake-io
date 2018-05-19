@@ -2,13 +2,19 @@
 
 /* Dynamic memory functions */
 
-queue_t *queue_create(node_t *front, node_t *back) {
+void queue_init(queue_t *queue) {
+    assert(queue);
+    queue->front = NULL;
+    queue->back = NULL;
+}
+
+queue_t *queue_create() {
     queue_t *queue = calloc(1, sizeof(queue_t));
     if (!queue) {
         perror("calloc()");
         return NULL;
     }
-    *queue = (queue_t) {front, back};
+    queue_init(queue);
     return queue;
 }
 
