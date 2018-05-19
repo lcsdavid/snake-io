@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
         start_time = SDL_GetTicks();
         loop(&appstate);
         end_time = SDL_GetTicks();
-        if(end_time - start_time < 33)
-            SDL_Delay(10 - end_time + start_time);
+        if(end_time - start_time < 200)
+            SDL_Delay(200 - end_time + start_time);
     }
     close(&appstate);
     return 0;

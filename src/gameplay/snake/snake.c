@@ -17,6 +17,7 @@ void snake_node_init(snake_node_t *snake_node, const point_t *point, double angl
     snake_node->position = *point;
     snake_node->angle = angle;
     queue_init(&snake_node->propagation);
+    snake_node->go = false;
 }
 
 snake_node_t *snake_node_create(const point_t *point, double angle) {
@@ -41,6 +42,7 @@ void snake_init(snake_t *snake, size_t size, const point_t *position, double dir
     snake->lenght = 1;
     for (size_t i = 0; i < size - 1; i++)
         snake_grow(snake);
+    snake_head(snake)->go = true;
 }
 
 //
@@ -93,16 +95,20 @@ void snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doi
     it = iterator_next(it);
     for (size_t i = 1; i < snake->lenght; i++) {
         current_node = iterator_data(it);
-        if (point_distance(&prev_node->position, &current_node->position) >= 32) {
+        if(current_node->go) {
             queue_enqueue(&current_node->propagation, snake_node_copy(current_node));
             current_node->position = ((snake_node_t*)queue_front(&prev_node->propagation))->position;
             current_node->angle = ((snake_node_t*)queue_front(&prev_node->propagation))->angle;
+            queue_dequeue(&prev_node->propagation);
+        } else if (point_distance(&prev_node->position, &current_node->position) > SNAKE_BODY_DIAMETER) {
+            current_node->go = true;
+            queue_enqueue(&current_node->propagation, snake_node_copy(current_node));
             queue_dequeue(&prev_node->propagation);
         }
         prev_node = current_node;
         it = iterator_next(it);
     }
-    // /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
+    /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
     if (snake_head(snake)->position.x < 0) snake_head(snake)->position.x = MAX_X;
     if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x = 0;
     if (snake_head(snake)->position.y < 0) snake_head(snake)->position.y = MAX_Y;

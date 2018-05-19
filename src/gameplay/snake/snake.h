@@ -13,6 +13,7 @@
 
 #define SNAKE_TEXTURE_SIZE_X 32
 #define SNAKE_TEXTURE_SIZE_Y 32
+#define SNAKE_BODY_DIAMETER 32
 
 typedef struct snake {
     list_t body;
@@ -23,6 +24,7 @@ typedef struct snake_node {
     point_t position;
     double angle;
     queue_t propagation;
+    bool go;
 } snake_node_t ;
 
 snake_node_t *snake_node_create(const point_t *point, double angle);
