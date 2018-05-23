@@ -6,7 +6,7 @@
 #define MAX_X 800
 #define MAX_Y 600
 
-#define SPEED 8
+#define SPEED 4
 
 SDL_Texture *snake_texture;
 
@@ -79,9 +79,9 @@ void snake_diminish(snake_t *snake) {
 void snake_change_direction(snake_t *snake, bool gauche) {
     SDL_Log("%lf", snake_head(snake)->angle);
     if (gauche)
-        snake_head(snake)->angle += M_PI / 36;
-    else
         snake_head(snake)->angle -= M_PI / 36;
+    else
+        snake_head(snake)->angle += M_PI / 36;
     SDL_Log("%lf", snake_head(snake)->angle);
 }
 
@@ -150,14 +150,14 @@ bool snake_self_eating(snake_t *snake) {
 /* SDL */
 
 bool snake_load_texture(SDL_Renderer *renderer) {
-    SDL_Surface *snake_surface = SDL_LoadBMP("../res/snake/snake.bmp");
+    SDL_Surface *snake_surface = IMG_Load("../res/snake/snake.png");
     if (!snake_surface) {
-        fprintf(stderr, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
         return false;
     }
     snake_texture = SDL_CreateTextureFromSurface(renderer, snake_surface);
     if (!snake_texture) {
-        fprintf(stderr, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         return false;
     }
     SDL_FreeSurface(snake_surface);
@@ -170,10 +170,17 @@ void snake_render(snake_t *snake, SDL_Renderer *renderer) {
     SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
     for (size_t i = 0; i < snake->lenght; i++) {
         snake_node_t *snake_node = iterator_data(it);
+        SDL_Rect src;
+        if(i == 0)
+            src = (SDL_Rect){0, 0, 50, 50};
+        else if(i == snake->lenght - 1)
+            src = (SDL_Rect){100, 0, 50, 50};
+        else
+            src = (SDL_Rect){50, 0, 50, 50};
         SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2,
                         snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
                         SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
-        if (SDL_RenderCopyEx(renderer, snake_texture, NULL, &dst, snake_node->angle * 180 / M_PI, &center,
+        if (SDL_RenderCopyEx(renderer, snake_texture, &src, &dst, snake_node->angle * 180 / M_PI + 90, &center,
                              SDL_FLIP_NONE))
             fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
         it = iterator_next(it);
