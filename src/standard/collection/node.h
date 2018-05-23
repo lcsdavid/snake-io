@@ -9,12 +9,13 @@ typedef struct node node_t;
 
 typedef struct node {
     node_t *next;
+    node_t *previous;
     void *data;
 } node_t;
 
 /* Principal */
 
-node_t *node_create(node_t *next, void *data);
+node_t *node_create(node_t *next, node_t *previous, void *data);
 
 node_t *node_copy(const node_t *node);
 

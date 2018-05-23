@@ -28,7 +28,7 @@ double point_distance(const point_t *A, const point_t *B) {
 
 void point_norm(point_t *point) {
     assert(point);
-    long d = (long)sqrt(point->x * point->x + point->y * point->y);
+    double d = sqrt(point->x * point->x + point->y * point->y);
     point->x /= d;
     point->y /= d;
 }

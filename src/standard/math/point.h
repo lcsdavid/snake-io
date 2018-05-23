@@ -7,8 +7,8 @@
 #include <math.h>
 
 typedef struct {
-	int x;
-	int y;
+	double x;
+	double y;
 } point_t;
 
 point_t* point_create(int x, int y);
