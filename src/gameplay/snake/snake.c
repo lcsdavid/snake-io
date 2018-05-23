@@ -61,9 +61,11 @@ snake_node_t *snake_tail(const snake_t *snake) {
 
 void snake_grow(snake_t *snake) {
     assert(snake && snake->lenght > 0);
-    snake_node_t *snake_node = snake_node_create(&snake_head(snake)->position, snake_head(snake)->angle);
-    list_push_front(&snake->body, snake_node);
-    ++snake->lenght;
+    snake_node_t *tail = snake_tail(snake);
+    point_t pos = {tail->position.x - cos(tail->angle) * SNAKE_BODY_DIAMETER,
+                   tail->position.y - sin(tail->angle) * SNAKE_BODY_DIAMETER};
+    list_push_back(&snake->body, snake_node_create(&pos, tail->angle));
+    snake->lenght++;
 }
 
 void snake_diminish(snake_t *snake) {
@@ -77,37 +79,27 @@ void snake_diminish(snake_t *snake) {
 //
 
 void snake_change_direction(snake_t *snake, bool gauche) {
-    SDL_Log("%lf", snake_head(snake)->angle);
     if (gauche)
         snake_head(snake)->angle -= M_PI / 36;
     else
         snake_head(snake)->angle += M_PI / 36;
-    SDL_Log("%lf", snake_head(snake)->angle);
 }
 
 void snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement
     snake_node_t *prev_node, *current_node;
     iterator_t *it = list_iterator_create(&snake->body);
     prev_node = snake_head(snake);
-    queue_enqueue(&prev_node->propagation, snake_node_copy(prev_node));
-    prev_node->position.x += (int) SPEED * cos(prev_node->angle);
-    prev_node->position.y += (int) SPEED * sin(prev_node->angle);
+
     it = iterator_next(it);
     for (size_t i = 1; i < snake->lenght; i++) {
         current_node = iterator_data(it);
-        if(current_node->go) {
-            queue_enqueue(&current_node->propagation, snake_node_copy(current_node));
-            current_node->position = ((snake_node_t*)queue_front(&prev_node->propagation))->position;
-            current_node->angle = ((snake_node_t*)queue_front(&prev_node->propagation))->angle;
-            queue_dequeue(&prev_node->propagation);
-        } else if (point_distance(&prev_node->position, &current_node->position) > SNAKE_BODY_DIAMETER) {
-            current_node->go = true;
-            queue_enqueue(&current_node->propagation, snake_node_copy(current_node));
-            queue_dequeue(&prev_node->propagation);
-        }
+        prev_node->position = current_node->position;
+        prev_node->angle = current_node->angle;
         prev_node = current_node;
         it = iterator_next(it);
     }
+    prev_node->position.x += SNAKE_BODY_DIAMETER * cos(prev_node->angle);
+    prev_node->position.y += SNAKE_BODY_DIAMETER * sin(prev_node->angle);
     /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
     if (snake_head(snake)->position.x < 0) snake_head(snake)->position.x = MAX_X;
     if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x = 0;

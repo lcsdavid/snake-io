@@ -1,19 +1,66 @@
 #include "list.h"
 
-void list_init(list_t *list, void *first_element) {
+typedef struct node node_t;
+
+typedef struct node {
+    node_t *next;
+    node_t *previous;
+    void *data;
+} node_t;
+
+/* Principal */
+
+void node_init(node_t *node, node_t *next, node_t *previous, void *data) {
+    assert(node);
+    node->next = next;
+    node->previous = previous;
+    node->data = data;
+}
+
+node_t *node_create(node_t *next, node_t *previous, void *data) {
+    node_t *node = calloc(1, sizeof(node_t));
+    if(!node) {
+        perror("calloc():");
+        return NULL;
+    }
+    node_init(node, next, previous, data);
+    return node;
+}
+
+node_t *node_copy(const node_t *node) {
+    assert(node);
+    return node_create(NULL, NULL, node->data);
+}
+
+void node_delete(node_t *node) {
+    assert(node);
+    free(node->data);
+    free(node);
+}
+
+/* Complements */
+
+bool node_empty(const node_t *node) {
+    assert(node);
+    return node->data == NULL;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void list_init(list_t *list) {
     assert(list);
-    list->front = list->back = node_create(NULL, first_element);
+    list->front = list->back = NULL;
 }
 
 /* Access */
 
 void* list_front(const list_t *list) {
-    assert(list);
+    assert(list && list_empty(list));
     return list->front->data;
 }
 
 void* list_back(const list_t *list) {
-    assert(list);
+    assert(list && list_empty(list));
     return list->back->data;
 }
 
