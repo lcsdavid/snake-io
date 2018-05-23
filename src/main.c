@@ -132,6 +132,11 @@ bool init(appstate_t *appstate) {
     appstate->window = window;
     appstate->renderer = renderer;
     appstate->end = false;
+    appstate->player2 = false;
+
+    point_t point = new_point(*appstate);
+
+    //TODO initialiser les elements
 
     if(!snake_load_texture(appstate->renderer))
         return false;
@@ -182,6 +187,7 @@ void input(appstate_t *appstate) {
 
 void update(gamestate_t *gamestate) {
     snake_move(&gamestate->player_one);
+    
 }
 
 void render(appstate_t *appstate) {
