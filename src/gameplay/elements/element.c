@@ -4,7 +4,6 @@
 #include "element.h"
 
 
-
 void init_bombe(element_t *element, point_t position){
     element->element_effet = effet_bombe;
     element->position = position;
@@ -17,15 +16,23 @@ void init_mur(element_t *element, point_t position){
 }
 
 void init_pomme(element_t *element, point_t position){
-    element->element_effet = effet_pomme;
+    element->element_effet = &effet_pomme;
     element->position = position;
-    element->element_render = render_pomme;
+    element->element_render = &render_pomme;
 }
 
 
-void render_bombe(void);
-void render_mur(void);
-void render_pomme(void);
+void render_bombe(void){
+    //TODO
+}
+
+void render_mur(void){
+    //TODO
+}
+
+void render_pomme(void){
+    //TODO
+}
 
 void effet_bombe(void *snake){
     snake_t *snake_1 = (snake_t *)snake;

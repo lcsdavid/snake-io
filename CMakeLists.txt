@@ -15,7 +15,7 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
         #${SDL2_IMAGE_INCLUDE_DIR})
 
-add_executable(snake_io ${SOURCE_FILES} src/standard/collection/iterator.h src/gameplay/elements/element.h src/gameplay/elements/element.cpp)
+add_executable(snake_io ${SOURCE_FILES} src/standard/collection/iterator.h src/gameplay/elements/element.h src/gameplay/elements/element.c)
 
 target_link_libraries(snake_io ${SDL2_LIBRARY})
      #   ${SDL2_IMAGE_LIBRARIES})
