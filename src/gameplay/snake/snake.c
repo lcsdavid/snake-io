@@ -113,6 +113,10 @@ void snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doi
     if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x = 0;
     if (snake_head(snake)->position.y < 0) snake_head(snake)->position.y = MAX_Y;
     if (snake_head(snake)->position.y > MAX_Y) snake_head(snake)->position.y = 0;
+
+    if (snake_self_eating(snake)) {
+        //TODO gérer la propagation du game over
+    }
 }
 
 //
@@ -128,10 +132,14 @@ bool snake_is_tail(const snake_t *snake, const snake_node_t *node) {
 }
 
 bool snake_collision(snake_t *snake, point_t *point) {
-    if (snake_self_eating(snake)) {
-        return true;
+    iterator_t *it = list_iterator_create(&snake->body);
+    for(int i = 0; i < snake->lenght; i++) {
+        snake_node_t* current = iterator_data(it);
+        if(point_distance(&point, &current->position) < 32){//une partie du serpent rentre dans l'obstacle
+            return true;
+        }
+        it = iterator_next(it);
     }
-    //TODO ajouter les différents éléments (missiles, mur, pièges, deuxieme joueur ...
     return false;
 }
 

@@ -35,6 +35,7 @@ void render_pomme(void){
 }
 
 void effet_bombe(void *snake){
+
     snake_t *snake_1 = (snake_t *)snake;
     snake_diminish(snake_1);
 }

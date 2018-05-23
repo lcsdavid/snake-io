@@ -25,6 +25,8 @@ typedef struct {
     SDL_Renderer* renderer;
     bool end;
     gamestate_t gamestate;
+    list_t elements;
+    bool player2; //est a true s'il y a un deuxieme joueur, false sinon
 } appstate_t;
 
 bool point_taken(point_t point, appstate_t appstate);
@@ -36,9 +38,6 @@ void input(appstate_t *appstate);
 void update(gamestate_t *gamestate);
 void render(appstate_t *appstate);
 
-//TODO mettre dans appstate
-list_t elements;
-bool player2; //est a true s'il y a un deuxieme joueur, false sinon
 
 
 int main(int argc, char *argv[]) {
@@ -73,7 +72,7 @@ bool point_taken(point_t point, appstate_t appstate){
         it = iterator_next(it);
     }
     iterator_destroy(it);
-    if(player2){
+    if(appstate.player2){
         iterator_t *it = list_iterator_create(&snake2.body);
         for(int i = 0; i < snake2.lenght; i++) {
             snake_node_t* current = iterator_data(it);
@@ -84,8 +83,8 @@ bool point_taken(point_t point, appstate_t appstate){
         }
         iterator_destroy(it);
     }
-    iterator_t *iterator1 = list_iterator_create(&elements);
-    for(int i =0; i < list_size(&elements); i++){//on vérifie ensuite que le point n'est pas situé sur un  autre élément
+    iterator_t *iterator1 = list_iterator_create(&appstate.elements);
+    for(int i =0; i < list_size(&appstate.elements); i++){//on vérifie ensuite que le point n'est pas situé sur un  autre élément
         element_t *current = iterator_data(it);
         if(point_distance(&point, &current->position) < 32){
             return true;
@@ -190,6 +189,7 @@ void render(appstate_t *appstate) {
     SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
     snake_render(&appstate->gamestate.player_one, appstate->renderer);
     SDL_RenderPresent(appstate->renderer);
+    //TODO ajouter un deuxieme joueur
 }
 
 void close(appstate_t *appstate) {
