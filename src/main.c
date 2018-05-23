@@ -9,6 +9,9 @@
 
 #include "gameplay/snake/snake.h"
 
+#define FRAME_PER_SEC 60
+#define TICKS_PER_SEC 30
+
 typedef struct {
     snake_t player_one;
     snake_t player_two;
@@ -33,14 +36,14 @@ int main(int argc, char *argv[]) {
     if (!init(&appstate))
         return EXIT_FAILURE;
     point_t start = {50, 50};
-    snake_init(&appstate.gamestate.player_one, 3, &start, 0);
+    snake_init(&appstate.gamestate.player_one, 1, &start, 0);
     unsigned int start_time, end_time;
     while (!appstate.end) {
         start_time = SDL_GetTicks();
         loop(&appstate);
         end_time = SDL_GetTicks();
-        if(end_time - start_time < 16)
-            SDL_Delay(16 - end_time + start_time);
+        if(end_time - start_time < 200)
+            SDL_Delay(200 - end_time + start_time);
     }
     close(&appstate);
     return 0;
@@ -100,6 +103,12 @@ void input(appstate_t *appstate) {
                         break;
                     case SDLK_RIGHT:
                         snake_change_direction(&appstate->gamestate.player_one, false);
+                        break;
+                    case SDLK_g:
+                        snake_grow(&appstate->gamestate.player_one);
+                        break;
+                    case SDLK_h:
+                        snake_diminish(&appstate->gamestate.player_one);
                         break;
                     default:
                         break;
