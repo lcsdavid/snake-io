@@ -8,6 +8,7 @@
 #include <time.h>
 
 #include "gameplay/snake/snake.h"
+#include "standard/math/point.h"
 
 typedef struct {
     snake_t player_one;
@@ -21,12 +22,17 @@ typedef struct {
     gamestate_t gamestate;
 } appstate_t;
 
+bool point_taken(point_t point);
+point_t new_point();
 bool init(appstate_t *appstate);
 void close(appstate_t *appstate);
 void loop(appstate_t *appstate);
 void input(appstate_t *appstate);
 void update(gamestate_t *gamestate);
 void render(appstate_t *appstate);
+
+list_t elements;
+
 
 int main(int argc, char *argv[]) {
     appstate_t appstate;
@@ -44,6 +50,28 @@ int main(int argc, char *argv[]) {
     }
     close(&appstate);
     return 0;
+}
+
+bool point_taken(point_t point){
+
+    for(int i =0; i < )
+}
+
+point_t new_point(){ //indique un point disponible pour placer un element
+    int a,b;
+    point_t point;
+    srand(time(NULL));
+    a = rand();
+    b = rand();
+    point.x = a;
+    point.y = b;
+    while(point_taken(point)){
+        a = rand();
+        b = rand();
+        point.x = a;
+        point.y = b;
+    }
+    return point;
 }
 
 bool init(appstate_t *appstate) {
