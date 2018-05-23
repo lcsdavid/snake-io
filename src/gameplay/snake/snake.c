@@ -4,9 +4,9 @@
 #include "../../standard/math/point.h"
 
 #define MAX_X 800
-#define MAX_Y 420
+#define MAX_Y 600
 
-#define SPEED 2
+#define SPEED 8
 
 SDL_Texture *snake_texture;
 
@@ -79,9 +79,9 @@ void snake_diminish(snake_t *snake) {
 void snake_change_direction(snake_t *snake, bool gauche) {
     SDL_Log("%lf", snake_head(snake)->angle);
     if (gauche)
-        snake_head(snake)->angle += M_PI / 45;
+        snake_head(snake)->angle += M_PI / 36;
     else
-        snake_head(snake)->angle -= M_PI / 45;
+        snake_head(snake)->angle -= M_PI / 36;
     SDL_Log("%lf", snake_head(snake)->angle);
 }
 
