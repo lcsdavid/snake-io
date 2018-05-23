@@ -3,15 +3,16 @@
 
 #include <assert.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
-#include "node.h"
+typedef struct node node_t;
 
 typedef struct list {
     node_t *front;
     node_t *back;
 } list_t ;
 
-void list_init(list_t *list, void *first_element);
+void list_init(list_t *list);
 
 /* Access */
 
