@@ -4,6 +4,7 @@
 
 #include <SDL.h>
 #include <SDL_timer.h>
+#include <SDL_image.h>
 #include <time.h>
 
 #include "gameplay/snake/snake.h"
@@ -47,21 +48,21 @@ int main(int argc, char *argv[]) {
 
 bool init(appstate_t *appstate) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "SDL_Init(): %s\n", SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init(): %s\n", SDL_GetError());
         return false;
     }
-    /*if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
-        fprintf(stderr, "IMG_Init(): %s\n", SDL_GetError());
+    if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init(): %s\n", SDL_GetError());
         return false;
-    }*/
+    }
     SDL_Window *window = SDL_CreateWindow("Test SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
     if (!window) {
-        fprintf(stderr, "SDL_CreateWindow(): %s\n", SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateWindow(): %s\n", SDL_GetError());
         return false;
     }
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
-        fprintf(stderr, "SDL_CreateRenderer(): %s\n", SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateRenderer(): %s\n", SDL_GetError());
         return false;
     }
     appstate->window = window;
