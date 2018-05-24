@@ -36,7 +36,7 @@ bool init(appstate_t *appstate);
 void close(appstate_t *appstate);
 void loop(appstate_t *appstate);
 void input(appstate_t *appstate);
-void update(gamestate_t *gamestate);
+void update(appstate_t *appstate);
 void render(appstate_t *appstate);
 
 
@@ -205,7 +205,7 @@ void render(appstate_t *appstate) {
     SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
     snake_render(&appstate->gamestate.player_one, appstate->renderer);
     SDL_RenderPresent(appstate->renderer);
-    //TODO ajouter un deuxieme joueur
+    //TODO ajouter un deuxieme joueur et les différents éléments
 }
 
 void close(appstate_t *appstate) {
