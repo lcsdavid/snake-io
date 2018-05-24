@@ -10,6 +10,7 @@
 #include "gameplay/snake/snake.h"
 #include "standard/math/point.h"
 #include "standard/collection/list_iterator.h"
+#include "standard/collection/list.h"
 #include "gameplay/elements/element.h"
 
 #define FRAME_PER_SEC 60
@@ -134,8 +135,14 @@ bool init(appstate_t *appstate) {
     appstate->end = false;
     appstate->player2 = false;
 
+    //TODO regler les probelems d allocations
     point_t point = new_point(*appstate);
+    element_t elem;
+    init_pomme(&elem, point);
+    node_t *node = node_create(NULL, NULL, &elem);
 
+    appstate->elements.back = node;
+    appstate->elements.front = node;
     //TODO initialiser les elements
 
     if(!snake_load_texture(appstate->renderer))
@@ -145,7 +152,7 @@ bool init(appstate_t *appstate) {
 
 void loop(appstate_t *appstate) {
     input(appstate);
-    update(&appstate->gamestate);
+    update(appstate);
     render(appstate);
 }
 
@@ -185,9 +192,9 @@ void input(appstate_t *appstate) {
         }
 }
 
-void update(gamestate_t *gamestate) {
-    snake_move(&gamestate->player_one);
-    
+void update(appstate_t *appstate) {
+    snake_move(&appstate->gamestate.player_one);
+
 }
 
 void render(appstate_t *appstate) {
