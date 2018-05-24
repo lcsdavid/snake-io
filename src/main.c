@@ -194,7 +194,10 @@ void input(appstate_t *appstate) {
 
 void update(appstate_t *appstate) {
     snake_move(&appstate->gamestate.player_one);
-
+    for(int i = 0; i < list_size(&appstate->elements); i++){
+        element_t *elem = list_element_at(&appstate->elements, i);
+        collision(&appstate->gamestate.player_one, elem);
+    }
 }
 
 void render(appstate_t *appstate) {
