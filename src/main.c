@@ -12,6 +12,7 @@
 #include "standard/collection/list_iterator.h"
 #include "standard/collection/list.h"
 #include "gameplay/elements/element.h"
+#include "standard/collection/node.h"
 
 #define FRAME_PER_SEC 60
 #define TICKS_PER_SEC 30
@@ -60,12 +61,12 @@ int main(int argc, char *argv[]) {
 }
 
 
-
+/* TODO iterateur fail
 bool point_taken(point_t point, appstate_t appstate){
     snake_t snake1 = appstate.gamestate.player_one;
     snake_t snake2 = appstate.gamestate.player_two;
     iterator_t *it = list_iterator_create(&snake1.body);
-    for(int i = 0; i < snake1.lenght; i++) {
+    for(int i = 0; i < snake1.lenght && iterator_has_data(it); i++) {
         snake_node_t* current = iterator_data(it);
         if(point_distance(&point, &current->position) < 32){//le point est déjà pris
             return true;
@@ -93,7 +94,9 @@ bool point_taken(point_t point, appstate_t appstate){
     }
     return false;
 }
+*/
 
+/* TODO cf au dessus
 point_t new_point(appstate_t appstate){ //indique un point disponible pour placer un element
     int a,b;
     point_t point;
@@ -109,7 +112,7 @@ point_t new_point(appstate_t appstate){ //indique un point disponible pour place
         point.y = b;
     }
     return point;
-}
+}*/
 
 bool init(appstate_t *appstate) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -134,7 +137,7 @@ bool init(appstate_t *appstate) {
     appstate->renderer = renderer;
     appstate->end = false;
     appstate->player2 = false;
-
+    /* TODO pb iterator
     //TODO regler les probelems d allocations
     point_t point = new_point(*appstate);
     element_t elem;
@@ -144,6 +147,7 @@ bool init(appstate_t *appstate) {
     appstate->elements.back = node;
     appstate->elements.front = node;
     //TODO initialiser les elements
+    */
 
     if(!snake_load_texture(appstate->renderer))
         return false;

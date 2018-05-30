@@ -1,36 +1,49 @@
 #include "list_iterator.h"
 
 #include "list.h"
+#include "node.h"
 
-void *list_iterator_state_create(const list_t *list, va_list ap) {
+#define START_FRONT 0
+#define START_BACK 1
+
+void *list_iterator_state_create(const void *list, va_list ap) {
     assert(list);
-    return list->front;
+    int start = va_arg(ap, int);
+    if(start == START_FRONT)
+        return ((list_t*) list)->front;
+    if(start == START_BACK)
+        return ((list_t*) list)->back;
 }
 
-static bool list_iterator_has_data(const node_t *state) {
+static bool list_iterator_has_data(const void *state) {
     return state != NULL;
 }
 
-void *list_iterator_data(node_t *state) {
+static void *list_iterator_data(void *state) {
     if (state)
-        return state->data;
+        return ((node_t*) state)->data;
     else
         return NULL;
 }
 
-static void *list_iterator_next(node_t *state) {
+static void *list_iterator_previous(void *state) {
     assert(state);
-    return state->next;
+    return ((node_t*) state)->next;
 }
 
-void list_iterator_init(iterator_t *iterator, list_t *list) {
-    iterator_init(iterator, NULL, (iterator_has_data_func) list_iterator_has_data,
-                  (iterator_data_func) list_iterator_data, (iterator_next_func) list_iterator_next,
-                  NULL, list);
+static void *list_iterator_next(void *state) {
+    assert(state);
+    return ((node_t*) state)->next;
 }
+
+/* */
 
 iterator_t *list_iterator_create(list_t *list) {
-    return iterator_create((iterator_create_state_func) list_iterator_state_create, NULL,
-                           (iterator_has_data_func) list_iterator_has_data, (iterator_data_func) list_iterator_data,
-                           (iterator_next_func) list_iterator_next, list);
+    return iterator_create(list_iterator_state_create, NULL, list_iterator_has_data, list_iterator_data,
+                           list_iterator_previous, list_iterator_next, list, START_FRONT);
+}
+
+iterator_t *list_back_iterator_create(list_t *list) {
+    return iterator_create(list_iterator_state_create, NULL, list_iterator_has_data, list_iterator_data,
+                           list_iterator_previous, list_iterator_next, list, START_BACK);
 }

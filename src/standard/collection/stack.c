@@ -1,5 +1,7 @@
 #include "stack.h"
 
+#include "forward_node.h"
+
 /* Access */
 
 void *stack_top(stack_t stack) {
@@ -16,15 +18,15 @@ bool stack_empty(stack_t stack) { return stack == NULL; }
 
 void stack_push(stack_t *stack, void *data) {
     assert(stack);
-    *stack = node_create(*stack, data);
+    *stack = forward_node_create(*stack, data);
 }
 
 void stack_pop(stack_t *stack) {
     assert(stack);
     if(*stack != NULL) {
-        node_t *node = *stack;
+        forward_node_t *node = *stack;
         *stack = node->next;
-        node_delete(node);
+        forward_node_delete(node);
     }
 }
 

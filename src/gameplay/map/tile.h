@@ -1,7 +1,7 @@
 #ifndef SNAKE_IO_TILE_H
 #define SNAKE_IO_TILE_H
 
-#include <cassert>
+#include <assert.h>
 
 #include <SDL_render.h>
 

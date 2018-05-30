@@ -10,6 +10,7 @@ typedef struct node node_t;
 typedef struct list {
     node_t *front;
     node_t *back;
+    size_t size;
 } list_t ;
 
 void list_init(list_t *list);

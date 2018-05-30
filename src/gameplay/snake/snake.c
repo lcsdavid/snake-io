@@ -38,7 +38,8 @@ snake_node_t *snake_node_copy(const snake_node_t *snake_node) {
 //
 void snake_init(snake_t *snake, size_t size, const point_t *position, double direction) {
     assert(snake && position);
-    list_init(&snake->body, snake_node_create(position, direction));
+    list_init(&snake->body);
+    list_push_back(&snake->body, snake_node_create(position, direction));
     snake->lenght = 1;
     for (size_t i = 0; i < size - 1; i++)
         snake_grow(snake);

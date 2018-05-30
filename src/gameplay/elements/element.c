@@ -39,7 +39,7 @@ void render_pomme(void){
 
 bool collision(void *snake, element_t *elem){//retourne vraie si la collision a lieu
     snake_t *snake_1 = (snake_t *)snake;
-    point_t *point = (point_t *)snake_1->body.front->data;
+    point_t *point = (point_t *)&snake_head(snake_1)->position;
     if(point_distance(point, &elem->position) < 32){
         elem->element_effet(snake);
         return true;

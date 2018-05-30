@@ -7,7 +7,8 @@
 #include <stdlib.h>
 
 #include "../function/function.h"
-#include "node.h"
+
+typedef struct forward_node forward_node_t;
 
 /**
  * @typedef stack_t
@@ -18,7 +19,7 @@
  *   - push, which adds an element to the collection,
  *   - pop, which removes the most recently added element that was not yet removed.
  */
-typedef node_t* stack_t;
+typedef forward_node_t* stack_t;
 
 /* Access */
 
@@ -94,9 +95,5 @@ bool stack_equal(stack_t *first_stack, stack_t *second_stack, bool (*_type_equal
 size_t stack_height(stack_t *stack);
 
 void stack_insert_at(stack_t *stack, void *element, size_t at);
-
-
-
-
 
 #endif

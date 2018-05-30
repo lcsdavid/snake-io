@@ -1,5 +1,7 @@
 #include "queue.h"
 
+#include "forward_node.h"
+
 /* Dynamic memory functions */
 
 void queue_init(queue_t *queue) {
@@ -39,24 +41,24 @@ bool queue_empty(const queue_t *queue) { return queue->front || queue->back; }
 
 void queue_enqueue(queue_t *queue, void *data) {
     assert(queue);
-    node_t *node = node_create(NULL, data);
-    assert(node);
+    forward_node_t *forward_node = forward_node_create(NULL, data);
+    assert(forward_node);
     if (queue->front == NULL || queue->back == NULL)
-        queue->front = node;
+        queue->front = forward_node;
     else
-        queue->back->next = node;
-    queue->back = node;
+        queue->back->next = forward_node;
+    queue->back = forward_node;
 }
 
 void queue_dequeue(queue_t *queue) {
     assert(queue);
     if (queue->front != NULL && queue->back != NULL) {
-        node_t *node = queue->front;
+        forward_node_t *forward_node = queue->front;
         if (queue->front == queue->back)
             queue->front = queue->back = NULL;
         else
-            queue->front = node->next;
-        node_delete(node);
+            queue->front = forward_node->next;
+        forward_node_delete(forward_node);
     }
 }
 

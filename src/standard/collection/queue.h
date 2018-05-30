@@ -7,7 +7,8 @@
 #include <stdlib.h>
 
 #include "../function/function.h"
-#include "node.h"
+
+typedef struct forward_node forward_node_t;
 
 /**
  * @typedef queue_t
@@ -20,8 +21,8 @@
  *   - dequeue, which removes the least recently added element that was not yet removed.
  */
 typedef struct queue {
-    node_t *front;
-    node_t *back;
+    forward_node_t *front;
+    forward_node_t *back;
 } queue_t;
 
 /* Dynamic memory functions */ // Utiles ?
