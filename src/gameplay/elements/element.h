@@ -19,9 +19,9 @@ void element_init(element_t *element, const point_t* position, int type);
 
 element_t *element_create(const point_t* position, int type);
 
-void element_effect_apple(snake_t *snake);
-void element_effect_bombe(snake_t *snake);
-void element_effect_wall(snake_t *snake);
+void element_effect_apple(element_t *element, snake_t *snake);
+void element_effect_bombe(element_t *element, snake_t *snake);
+void element_effect_wall(element_t *element, snake_t *snake);
 
 bool collision(snake_t *snake, element_t *elem);
 
