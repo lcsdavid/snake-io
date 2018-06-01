@@ -26,6 +26,10 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     iterator_destroy(it);
 }
 
+
+
+
+/*
 void collision(gamestate_t *gamestate) {
     assert(gamestate);
     for(int s = 0; s < 1; s++) {
@@ -37,7 +41,7 @@ void collision(gamestate_t *gamestate) {
         }
         iterator_destroy(it);
     }
-}
+} */
 
 bool point_taken(const gamestate_t* gamestate, const point_t* point) {
     iterator_t *it = NULL;

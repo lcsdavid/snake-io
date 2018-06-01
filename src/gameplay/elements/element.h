@@ -26,7 +26,7 @@ void element_effect_apple(element_t *element, const gamestate_t *gamestate, snak
 void element_effect_bombe(element_t *element, const gamestate_t *gamestate, snake_t *snake);
 void element_effect_wall(element_t *element, const gamestate_t *gamestate, snake_t *snake);
 
-bool collision(snake_t *snake, element_t *elem);
+// bool collision(snake_t *snake, element_t *elem);
 
 void element_render(element_t* element, SDL_Renderer* renderer);
 

@@ -64,6 +64,14 @@ void input(appstate_t *appstate) {
                     case SDLK_h:
                         snake_diminish(&appstate->gamestate.player_one);
                         break;
+                    case SDLK_f:
+                        if(appstate->gamestate.fullscreen == false){
+                            appstate->gamestate.fullscreen = true;
+                            SDL_SetWindowFullscreen(appstate->window, SDL_WINDOW_FULLSCREEN);
+                        }else{
+                            appstate->gamestate.fullscreen = false;
+                            SDL_SetWindowFullscreen(appstate->window, 0);
+                        }
                     default:
                         break;
                 }

@@ -58,9 +58,10 @@ void element_render_wall(SDL_Renderer* renderer) {
     //TODO
 }
 
+/*
 
 bool collision(snake_t *snake, element_t *element){ /* Retourne vrai si la collision a lieu */
-    assert(snake && element);
+   /* assert(snake && element);
     snake_t *snake_1 = (snake_t *)snake;
     point_t *point = (point_t *)&snake_head(snake_1)->position;
     if(point_distance(point, &element->position) < 32){
@@ -68,11 +69,11 @@ bool collision(snake_t *snake, element_t *element){ /* Retourne vrai si la colli
         return true;
     }
     return false;
-}
+} */
 
 void element_effect_apple(element_t *element, const gamestate_t *gamestate, snake_t *snake) {
     assert(element && snake);
-    if(collision(snake, element)){
+    if(true) {//collision(snake, element)){
         snake_grow(snake);
     }
 
