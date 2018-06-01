@@ -26,9 +26,11 @@ void element_effect_wall(snake_t *snake);
 bool collision(snake_t *snake, element_t *elem);
 
 void element_render_apple(SDL_Renderer* renderer);
+
 void element_render_bombe(SDL_Renderer* renderer);
+
 void element_render_wall(SDL_Renderer* renderer);
 
-
+void element_load_texture(SDL_Renderer *renderer);
 
 #endif

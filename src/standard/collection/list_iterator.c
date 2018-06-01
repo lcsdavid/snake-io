@@ -39,7 +39,7 @@ static void *list_iterator_next(void *state) {
 
 /* */
 
-iterator_t *list_iterator_create(list_t *list) {
+iterator_t *list_iterator_create(const list_t *list) {
     return iterator_create(list_iterator_state_create, NULL, list_iterator_has_data, list_iterator_data,
                            list_iterator_previous, list_iterator_next, list, START_FRONT);
 }

@@ -1,7 +1,6 @@
-//
-// Created by user on 23/05/2018.
-//
 #include "element.h"
+
+SDL_Texture *element_texture;
 
 void init_apple(element_t *element, const point_t* position){
     element->position = *position;
@@ -85,6 +84,19 @@ void element_effect_wall(snake_t *snake) {
     }
 }
 
-
+void element_load_texture(SDL_Renderer *renderer) {
+    assert(renderer);
+    SDL_Surface *element_surface = IMG_Load("../res/element/apple.png");
+    if (!element_surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        assert(element_surface);
+    }
+    element_texture = SDL_CreateTextureFromSurface(renderer, element_surface);
+    if (!element_texture) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        assert(element_surface);
+    }
+    SDL_FreeSurface(element_surface);
+}
 
 
