@@ -67,19 +67,20 @@ bool collision(snake_t *snake, element_t *element){ /* Retourne vrai si la colli
     return false;
 }
 
-void element_effect_apple(element_t *element, snake_t *snake) {
+void element_effect_apple(element_t *element, const gamestate_t *gamestate, snake_t *snake) {
     assert(element && snake);
     if(collision(snake, element)){
         snake_grow(snake);
     }
+
 }
 
-void element_effect_bombe(element_t *element, snake_t *snake) {
+void element_effect_bombe(element_t *element, const gamestate_t *gamestate, snake_t *snake) {
     assert(element && snake);
     snake_diminish(snake);
 }
 
-void element_effect_wall(element_t *element, snake_t *snake) {
+void element_effect_wall(element_t *element, const gamestate_t *gamestate, snake_t *snake) {
     assert(element && snake);
     while(snake->lenght < 0){
         snake_diminish(snake);
