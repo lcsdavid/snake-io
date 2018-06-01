@@ -14,6 +14,31 @@ void gamestate_init(gamestate_t *gamestate) {
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
 }
 
+void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
+    snake_render(&gamestate->player_one, renderer);
+
+    iterator_t *it = list_iterator_create(&gamestate->elements);
+    while (iterator_has_data(it)) {
+        element_t *element = iterator_data(it);
+        element_render(element, renderer);
+        it = iterator_next(it);
+    }
+    iterator_destroy(it);
+}
+
+void collision(gamestate_t *gamestate) {
+    assert(gamestate);
+    for(int s = 0; s < 1; s++) {
+        iterator_t *it = list_iterator_create(&gamestate->elements);
+        while (iterator_has_data(it)) {
+            element_t *element = iterator_data(it);
+            point_distance(element->position, po)
+            it = iterator_next(it);
+        }
+        iterator_destroy(it);
+    }
+}
+
 bool point_taken(const gamestate_t* gamestate, const point_t* point) {
     iterator_t *it = NULL;
 
@@ -44,7 +69,7 @@ bool point_taken(const gamestate_t* gamestate, const point_t* point) {
 point_t new_point(const gamestate_t *gamestate) { /* Indique un point disponible pour placer un element */
     point_t point;
     do {
-        point_init(&point, rand(), rand());
+        point_init(&point, rand() % 500, rand() % 500);
     } while(point_taken(gamestate, &point));
     return point;
 }

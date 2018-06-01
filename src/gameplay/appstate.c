@@ -33,6 +33,7 @@ bool appstate_init(appstate_t *appstate) {
 
     if(!snake_load_texture(appstate->renderer))
         return false;
+    element_load_texture(appstate->renderer);
     return true;
 }
 
@@ -75,25 +76,23 @@ void input(appstate_t *appstate) {
 void render(appstate_t *appstate) {
     SDL_RenderClear(appstate->renderer);
     SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
-    snake_render(&appstate->gamestate.player_one, appstate->renderer);
-    iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
-    while (iterator_has_data(it)) {
-        element_t *element = iterator_data(it);
-        element_render_apple(element, appstate->renderer);
-        it = iterator_next(it);
-    }
+
+    /* If game running */
+    gamestate_render(&appstate->gamestate, appstate->renderer);
+
     SDL_RenderPresent(appstate->renderer);
     //TODO ajouter un deuxieme joueur et les différents éléments
 }
 
 void update(appstate_t *appstate) {
     snake_move(&appstate->gamestate.player_one);
-    iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
+
+    /*iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);
         // collision(&appstate->gamestate.player_one, elem);
         it = iterator_next(it);
-    }
+    }*/
 }
 
 

@@ -7,7 +7,7 @@ void init_apple(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_APPLE;
     //element->element_effect = &element_effect_apple;
-    element->element_render = &element_render_apple;
+    //element->element_render = &element_render_apple;
 }
 
 void init_bombe(element_t *element, const point_t* position){
@@ -44,7 +44,8 @@ element_t *element_create(const point_t* position, int type) {
     return element;
 }
 
-void element_render_apple(element_t* element, SDL_Renderer* renderer) {
+void element_render(element_t* element, SDL_Renderer* renderer) {
+    SDL_Log("%lf %lf", element->position.x, element->position.y);
     SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
     SDL_RenderCopy(renderer, element_texture, NULL, &dst);
 }
