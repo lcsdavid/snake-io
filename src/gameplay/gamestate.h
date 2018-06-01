@@ -8,6 +8,7 @@ typedef struct {
     snake_t player_two;
     list_t elements;
     bool multiplayer;
+    bool fullscreen;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);
