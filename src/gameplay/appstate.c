@@ -1,5 +1,7 @@
 #include "appstate.h"
 
+#include "../standard/collection/list_iterator.h"
+
 #include "elements/element.h"
 
 bool appstate_init(appstate_t *appstate) {
@@ -33,3 +35,65 @@ bool appstate_init(appstate_t *appstate) {
         return false;
     return true;
 }
+
+void input(appstate_t *appstate) {
+    SDL_Event event;
+    if(SDL_PollEvent(&event))
+        switch(event.type) {
+            case SDL_WINDOWEVENT_CLOSE:
+                appstate->end = true;
+                break;
+            case SDL_QUIT:
+                appstate->end = true;
+                break;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        appstate->end = true;
+                        break;
+                    case SDLK_LEFT:
+                        snake_change_direction(&appstate->gamestate.player_one, true);
+                        break;
+                    case SDLK_RIGHT:
+                        snake_change_direction(&appstate->gamestate.player_one, false);
+                        break;
+                    case SDLK_g:
+                        snake_grow(&appstate->gamestate.player_one);
+                        break;
+                    case SDLK_h:
+                        snake_diminish(&appstate->gamestate.player_one);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+}
+
+void render(appstate_t *appstate) {
+    SDL_RenderClear(appstate->renderer);
+    SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
+    snake_render(&appstate->gamestate.player_one, appstate->renderer);
+    iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
+    while (iterator_has_data(it)) {
+        element_t *element = iterator_data(it);
+        element_render_apple(element, appstate->renderer);
+        it = iterator_next(it);
+    }
+    SDL_RenderPresent(appstate->renderer);
+    //TODO ajouter un deuxieme joueur et les différents éléments
+}
+
+void update(appstate_t *appstate) {
+    snake_move(&appstate->gamestate.player_one);
+    iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
+    while (iterator_has_data(it)) {
+        element_t *element = iterator_data(it);
+        // collision(&appstate->gamestate.player_one, elem);
+        it = iterator_next(it);
+    }
+}
+
+

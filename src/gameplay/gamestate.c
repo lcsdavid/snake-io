@@ -14,7 +14,6 @@ void gamestate_init(gamestate_t *gamestate) {
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
 }
 
-
 bool point_taken(const gamestate_t* gamestate, const point_t* point) {
     iterator_t *it = NULL;
 

@@ -20,15 +20,8 @@
 #include "gameplay/appstate.h"
 #include "gameplay/gamestate.h"
 
-bool point_taken(const gamestate_t* gamestate, const point_t* point);
-point_t new_point(const gamestate_t *appstate);
-
-bool init(appstate_t *appstate);
 void close(appstate_t *appstate);
 void loop(appstate_t *appstate);
-void input(appstate_t *appstate);
-void update(appstate_t *appstate);
-void render(appstate_t *appstate);
 
 int main(int argc, char *argv[]) {
     appstate_t appstate;
@@ -46,16 +39,13 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-
-
-
-
 void loop(appstate_t *appstate) {
     input(appstate);
     update(appstate);
     render(appstate);
 }
 
+<<<<<<< HEAD
 void input(appstate_t *appstate) {
     SDL_Event event;
     if(SDL_PollEvent(&event))
@@ -116,6 +106,8 @@ void render(appstate_t *appstate) {
     //TODO ajouter un deuxieme joueur et les différents éléments
 }
 
+=======
+>>>>>>> cbc7308e7e59b2f776f01af33e531359ea1b5f7e
 void close(appstate_t *appstate) {
     SDL_DestroyRenderer(appstate->renderer);
     SDL_DestroyWindow(appstate->window);

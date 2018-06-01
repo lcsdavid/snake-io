@@ -9,11 +9,13 @@
 #define ELEMENT_BOMBE 2
 #define ELEMENT_WALL 3
 
+typedef struct element element_t;
+
 typedef struct element {
     point_t position;
     int type;
     void (*element_effect)(snake_t *);
-    void (*element_render)(SDL_Renderer*);
+    void (*element_render)(element_t*, SDL_Renderer*);
 } element_t;
 
 void element_init(element_t *element, const point_t* position, int type);
@@ -26,7 +28,7 @@ void element_effect_wall(element_t *element, const gamestate_t *gamestate, snake
 
 bool collision(snake_t *snake, element_t *elem);
 
-void element_render_apple(SDL_Renderer* renderer);
+void element_render_apple(element_t* element, SDL_Renderer* renderer);
 
 void element_render_bombe(SDL_Renderer* renderer);
 

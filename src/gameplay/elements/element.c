@@ -1,26 +1,27 @@
 #include "element.h"
+#include "../../standard/math/point.h"
 
 SDL_Texture *element_texture;
 
 void init_apple(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_APPLE;
-    element->element_effect = &element_effect_apple;
+    //element->element_effect = &element_effect_apple;
     element->element_render = &element_render_apple;
 }
 
 void init_bombe(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_BOMBE;
-    element->element_effect = &element_effect_bombe;
-    element->element_render = &element_render_bombe;
+    //element->element_effect = &element_effect_bombe;
+    //element->element_render = &element_render_bombe;
 }
 
 void init_wall(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_WALL;
-    element->element_effect = &element_effect_wall;
-    element->element_render = &element_render_wall;
+    //element->element_effect = &element_effect_wall;
+    //element->element_render = &element_render_wall;
 }
 
 void element_init(element_t *element, const point_t* position, int type) {
@@ -43,8 +44,9 @@ element_t *element_create(const point_t* position, int type) {
     return element;
 }
 
-void element_render_apple(SDL_Renderer* renderer) {
-    //TODO
+void element_render_apple(element_t* element, SDL_Renderer* renderer) {
+    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
+    SDL_RenderCopy(renderer, element_texture, NULL, &dst);
 }
 
 void element_render_bombe(SDL_Renderer* renderer) {
