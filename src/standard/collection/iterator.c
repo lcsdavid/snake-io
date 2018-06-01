@@ -57,8 +57,7 @@ void iterator_destroy(iterator_t *iterator) {
 }
 
 bool iterator_has_data(const iterator_t *iterator) {
-    assert(iterator);
-    return iterator->has_data(iterator->state);
+    return iterator && iterator->has_data(iterator->state);
 }
 
 void *iterator_data(iterator_t *iterator) {

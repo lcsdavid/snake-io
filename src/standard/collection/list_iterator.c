@@ -13,6 +13,7 @@ void *list_iterator_state_create(const void *list, va_list ap) {
         return ((list_t*) list)->front;
     if(start == START_BACK)
         return ((list_t*) list)->back;
+    return ((list_t*) list)->front;
 }
 
 static bool list_iterator_has_data(const void *state) {

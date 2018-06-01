@@ -3,63 +3,88 @@
 //
 #include "element.h"
 
-
-void init_bombe(element_t *element, point_t position){
-    element->element_effet = effet_bombe;
-    element->position = position;
-    element->element_render = render_bombe;
-    element->type = 2;
-}
-void init_mur(element_t *element, point_t position){
-    element->element_effet = effet_mur;
-    element->position = position;
-    element->element_render = render_mur;
-    element->type = 3;
+void init_apple(element_t *element, const point_t* position){
+    element->position = *position;
+    element->type = ELEMENT_APPLE;
+    element->element_effect = &element_effect_apple;
+    element->element_render = &element_render_apple;
 }
 
-void init_pomme(element_t *element, point_t position){
-    element->element_effet = &effet_pomme;
-    element->position = position;
-    element->element_render = &render_pomme;
-    element->type = 1;
+void init_bombe(element_t *element, const point_t* position){
+    element->position = *position;
+    element->type = ELEMENT_BOMBE;
+    element->element_effect = &element_effect_bombe;
+    element->element_render = &element_render_bombe;
 }
 
+void init_wall(element_t *element, const point_t* position){
+    element->position = *position;
+    element->type = ELEMENT_WALL;
+    element->element_effect = &element_effect_wall;
+    element->element_render = &element_render_wall;
+}
 
-void render_bombe(void){
+void element_init(element_t *element, const point_t* position, int type) {
+    assert(element);
+    if(type == ELEMENT_APPLE)
+        init_apple(element, position);
+    else if (type == ELEMENT_BOMBE)
+        init_bombe(element, position);
+    else if(type == ELEMENT_WALL)
+        init_wall(element, position);
+}
+
+element_t *element_create(const point_t* position, int type) {
+    element_t *element = calloc(1, sizeof(element_t));
+    if (!element) {
+        perror("calloc():");
+        return NULL;
+    }
+    element_init(element, position, type);
+    return element;
+}
+
+void element_render_apple(SDL_Renderer* renderer) {
     //TODO
 }
 
-void render_mur(void){
+void element_render_bombe(SDL_Renderer* renderer) {
     //TODO
 }
 
-void render_pomme(void){
+void element_render_wall(SDL_Renderer* renderer) {
     //TODO
 }
 
-bool collision(void *snake, element_t *elem){//retourne vraie si la collision a lieu
+
+bool collision(snake_t *snake, element_t *element){ /* Retourne vrai si la collision a lieu */
+    assert(snake && element);
     snake_t *snake_1 = (snake_t *)snake;
     point_t *point = (point_t *)&snake_head(snake_1)->position;
-    if(point_distance(point, &elem->position) < 32){
-        elem->element_effet(snake);
+    if(point_distance(point, &element->position) < 32){
+        element->element_effect(snake);
         return true;
     }
     return false;
 }
 
-void effet_bombe(void *snake){
-    snake_t *snake_1 = (snake_t *)snake;
-    snake_diminish(snake_1);
+void element_effect_apple(snake_t *snake) {
+    assert(snake);
+    snake_grow(snake);
 }
 
-void effet_mur(void *snake){
-    snake_t *snake_1 = (snake_t *)snake;
-    while(snake_1->lenght < 0){
-        snake_diminish(snake_1);
+void element_effect_bombe(snake_t *snake) {
+    assert(snake);
+    snake_diminish(snake);
+}
+
+void element_effect_wall(snake_t *snake) {
+    assert(snake);
+    while(snake->lenght < 0){
+        snake_diminish(snake);
     }
 }
 
-void effet_pomme(void *snake){
-    snake_t *snake_1 = (snake_t *)snake;
-    snake_grow(snake_1);
-}
+
+
+

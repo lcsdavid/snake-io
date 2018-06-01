@@ -23,13 +23,11 @@ typedef struct snake {
 typedef struct snake_node {
     point_t position;
     double angle;
-    queue_t propagation;
-    bool go;
 } snake_node_t ;
 
 snake_node_t *snake_node_create(const point_t *point, double angle);
 
-void snake_init(snake_t *snake, size_t size, const point_t *position, double direction);
+void snake_init(snake_t *snake, const point_t *position, double direction);
 
 snake_node_t* snake_head(const snake_t* snake);
 

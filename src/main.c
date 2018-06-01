@@ -20,6 +20,8 @@
 typedef struct {
     snake_t player_one;
     snake_t player_two;
+    list_t elements;
+    bool multiplayer;
 } gamestate_t;
 
 typedef struct {
@@ -27,11 +29,9 @@ typedef struct {
     SDL_Renderer* renderer;
     bool end;
     gamestate_t gamestate;
-    list_t elements;
-    bool player2; //est a true s'il y a un deuxieme joueur, false sinon
 } appstate_t;
 
-bool point_taken(point_t point, appstate_t appstate);
+bool point_taken(gamestate_t* gamestate, const point_t* point);
 point_t new_point(appstate_t appstate);
 bool init(appstate_t *appstate);
 void close(appstate_t *appstate);
@@ -46,8 +46,6 @@ int main(int argc, char *argv[]) {
     appstate_t appstate;
     if (!init(&appstate))
         return EXIT_FAILURE;
-    point_t start = {50, 50};
-    snake_init(&appstate.gamestate.player_one, 1, &start, 0);
     unsigned int start_time, end_time;
     while (!appstate.end) {
         start_time = SDL_GetTicks();
@@ -60,61 +58,45 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+bool point_taken(gamestate_t* gamestate, const point_t* point) {
+    iterator_t *it = NULL;
 
-/* TODO iterateur fail
-bool point_taken(point_t point, appstate_t appstate){
-    snake_t snake1 = appstate.gamestate.player_one;
-    snake_t snake2 = appstate.gamestate.player_two;
-    iterator_t *it = list_iterator_create(&snake1.body);
-    for(int i = 0; i < snake1.lenght && iterator_has_data(it); i++) {
-        snake_node_t* current = iterator_data(it);
-        if(point_distance(&point, &current->position) < 32){//le point est déjà pris
-            return true;
-        }
-        it = iterator_next(it);
-    }
-    iterator_destroy(it);
-    if(appstate.player2){
-        iterator_t *it = list_iterator_create(&snake2.body);
-        for(int i = 0; i < snake2.lenght; i++) {
-            snake_node_t* current = iterator_data(it);
-            if(point_distance(&point, &current->position) < 32){//le point est déjà pris
+    for(int s = 0; s < 1; s++) {
+        if(s == 0)
+            it = list_iterator_create(&gamestate->player_one.body);
+        else if (s == 1)
+            it = list_iterator_create(&gamestate->player_two.body);
+
+        while (iterator_has_data(it)) {
+            snake_node_t *current = iterator_data(it);
+            if (point_distance(point, &current->position) < 64) /* Le point est déjà pris */
                 return true;
-            }
             it = iterator_next(it);
         }
         iterator_destroy(it);
     }
-    iterator_t *iterator1 = list_iterator_create(&appstate.elements);
-    for(int i =0; i < list_size(&appstate.elements); i++){//on vérifie ensuite que le point n'est pas situé sur un  autre élément
+
+    it = list_iterator_create(&gamestate->elements);
+    while (iterator_has_data(it)) {//on vérifie ensuite que le point n'est pas situé sur un  autre élément
         element_t *current = iterator_data(it);
-        if(point_distance(&point, &current->position) < 32){
+        if (point_distance(point, &current->position) < 32)
             return true;
-        }
     }
     return false;
 }
-*/
 
-/* TODO cf au dessus
-point_t new_point(appstate_t appstate){ //indique un point disponible pour placer un element
-    int a,b;
+
+point_t new_point(appstate_t appstate) { /* Indique un point disponible pour placer un element */
     point_t point;
-    srand(time(NULL));
-    a = rand();
-    b = rand();
-    point.x = a;
-    point.y = b;
-    while(point_taken(point, appstate)){
-        a = rand();
-        b = rand();
-        point.x = a;
-        point.y = b;
-    }
+    do {
+        point_init(&point, rand(), rand());
+    } while(point_taken(&appstate.gamestate, &point));
     return point;
-}*/
+}
 
 bool init(appstate_t *appstate) {
+    srand((unsigned int) time(NULL));
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init(): %s\n", SDL_GetError());
         return false;
@@ -136,18 +118,18 @@ bool init(appstate_t *appstate) {
     appstate->window = window;
     appstate->renderer = renderer;
     appstate->end = false;
-    appstate->player2 = false;
-    /* TODO pb iterator
-    //TODO regler les probelems d allocations
+
+    point_t start = {10, 10};
+    snake_init(&appstate->gamestate.player_one, &start, 0);
+    list_init(&appstate->gamestate.elements);
+    appstate->gamestate.multiplayer = false;
+
     point_t point = new_point(*appstate);
     element_t elem;
-    init_pomme(&elem, point);
-    node_t *node = node_create(NULL, NULL, &elem);
 
-    appstate->elements.back = node;
-    appstate->elements.front = node;
-    //TODO initialiser les elements
-    */
+    element_init(&elem, &point, ELEMENT_APPLE);
+
+    list_push_front(&appstate->gamestate.elements, node_create(NULL, NULL, &elem));
 
     if(!snake_load_texture(appstate->renderer))
         return false;
@@ -198,10 +180,10 @@ void input(appstate_t *appstate) {
 
 void update(appstate_t *appstate) {
     snake_move(&appstate->gamestate.player_one);
-    for(int i = 0; i < list_size(&appstate->elements); i++){
-        element_t *elem = list_element_at(&appstate->elements, i);
+    /*for(size_t i = 0; i < list_size(&appstate->gamestate.elements); i++){
+        element_t *elem = list_element_at(&appstate->gamestate.elements, i);
         collision(&appstate->gamestate.player_one, elem);
-    }
+    }*/
 }
 
 void render(appstate_t *appstate) {

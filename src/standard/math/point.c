@@ -1,12 +1,18 @@
 #include "point.h"
 
-point_t *point_create(int x, int y) {
+void point_init(point_t *point, double x, double y) {
+    assert(point);
+    point->x = x;
+    point->y = y;
+}
+
+point_t *point_create(double x, double y) {
     point_t *point = calloc(1, sizeof(point_t));
-    if (point == (void *) 0) {
+    if (point == NULL) {
         perror("calloc()");
-        return (void *) 0;
+        return NULL;
     }
-    *point = (point_t){x, y};
+    point_init(point, x, y);
     return point;
 }
 

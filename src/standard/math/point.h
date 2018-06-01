@@ -11,7 +11,9 @@ typedef struct {
 	double y;
 } point_t;
 
-point_t* point_create(int x, int y);
+void point_init(point_t *point, double x, double y);
+
+point_t* point_create(double x, double y);
 
 point_t* point_copy(const point_t *point);
 

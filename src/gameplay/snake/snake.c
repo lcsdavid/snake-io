@@ -16,8 +16,6 @@ void snake_node_init(snake_node_t *snake_node, const point_t *point, double angl
     assert(snake_node && point);
     snake_node->position = *point;
     snake_node->angle = angle;
-    queue_init(&snake_node->propagation);
-    snake_node->go = false;
 }
 
 snake_node_t *snake_node_create(const point_t *point, double angle) {
@@ -36,14 +34,11 @@ snake_node_t *snake_node_copy(const snake_node_t *snake_node) {
 }
 
 //
-void snake_init(snake_t *snake, size_t size, const point_t *position, double direction) {
+void snake_init(snake_t *snake, const point_t *position, double direction) {
     assert(snake && position);
     list_init(&snake->body);
     list_push_back(&snake->body, snake_node_create(position, direction));
     snake->lenght = 1;
-    for (size_t i = 0; i < size - 1; i++)
-        snake_grow(snake);
-    snake_head(snake)->go = true;
 }
 
 //
@@ -128,7 +123,7 @@ bool snake_collision(snake_t *snake, point_t *point) {
     iterator_t *it = list_iterator_create(&snake->body);
     for(int i = 0; i < snake->lenght; i++) {
         snake_node_t* current = iterator_data(it);
-        if(point_distance(&point, &current->position) < 32){//une partie du serpent rentre dans l'obstacle
+        if(point_distance(point, &current->position) < 32) { /* Une partie du serpent rentre dans l'obstacle */
             return true;
         }
         it = iterator_next(it);
