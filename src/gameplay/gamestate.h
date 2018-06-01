@@ -11,6 +11,7 @@ typedef struct {
 <<<<<<< HEAD
     bool gameover;
 =======
+    bool fullscreen;
 >>>>>>> 68444a2d4960643e0cc70d5ca7ae832785b682ac
 } gamestate_t;
 
