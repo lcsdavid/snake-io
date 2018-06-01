@@ -8,9 +8,15 @@ typedef struct {
     snake_t player_two;
     list_t elements;
     bool multiplayer;
+    bool gameover;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);
+
+void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer);
+
+void collision(gamestate_t *gamestate);
+
 
 bool point_taken(const gamestate_t* gamestate, const point_t* point);
 
