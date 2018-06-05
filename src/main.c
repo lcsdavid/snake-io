@@ -24,6 +24,7 @@ void close(appstate_t *appstate);
 void loop(appstate_t *appstate);
 
 int main(int argc, char *argv[]) {
+
     appstate_t appstate;
     if (!appstate_init(&appstate))
         return EXIT_FAILURE;

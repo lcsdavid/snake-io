@@ -8,6 +8,9 @@
 #define ELEMENT_APPLE 1
 #define ELEMENT_BOMBE 2
 #define ELEMENT_WALL 3
+#define ELEMENT_HEAD 4
+#define ELEMENT_BODY 5
+#define ELEMENT_QUEUE 6
 
 typedef struct element element_t;
 
