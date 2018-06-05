@@ -3,6 +3,7 @@
 #include "elements/element.h"
 
 #include "../standard/collection/list_iterator.h"
+#include "../standard/collection/node.h"
 
 void gamestate_init(gamestate_t *gamestate) {
     point_t start = {10, 10};
@@ -37,7 +38,7 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 void collision(gamestate_t *gamestate) {
     assert(gamestate);
     float distance; // floattant pour mesurer la distance
-    point_t *po = gamestate->player_one.body.front;
+    point_t *po = (point_t *)gamestate->player_one.body.front->data;
     for(int s = 0; s < 1; s++) {
         iterator_t *it = list_iterator_create(&gamestate->elements);
         while (iterator_has_data(it)) {
@@ -79,10 +80,8 @@ bool point_taken(const gamestate_t* gamestate, const point_t* point) {
             iterator_destroy(it);
             return true;
         }
-        it = iterator_next(it);
     }
 
-    iterator_destroy(it);
     return false;
 }
 
