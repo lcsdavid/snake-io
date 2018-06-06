@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <pthread.h>
 
 #include <SDL.h>
 #include <SDL_timer.h>
@@ -15,7 +16,11 @@
 #include "standard/collection/node.h"
 
 #define FRAME_PER_SEC 60
+#define MILLIS_PER_FRAME 17
+
+/* Game Ticks */
 #define TICKS_PER_SEC 30
+#define MILLIS_PER_TICKS 100
 
 #include "gameplay/appstate.h"
 #include "gameplay/gamestate.h"
@@ -23,18 +28,37 @@
 void close(appstate_t *appstate);
 void loop(appstate_t *appstate);
 
-int main(int argc, char *argv[]) {
+static void render_thread(void *arg) {
+    appstate_t* appstate = arg;
+    while (!appstate->end) {
+        unsigned int start_time, end_time;
+        start_time = SDL_GetTicks();
+        SDL_mutexP(appstate->lock);
+        render(appstate);
+        SDL_mutexV(appstate->lock);
+        end_time = SDL_GetTicks();
+        if (end_time - start_time < MILLIS_PER_FRAME) {
+            SDL_Delay(MILLIS_PER_FRAME - end_time + start_time);
+        }
+    }
+}
 
+int main(int argc, char *argv[]) {
     appstate_t appstate;
     if (!appstate_init(&appstate))
         return EXIT_FAILURE;
-    unsigned int start_time, end_time;
+    appstate.lock = SDL_CreateMutex();
+    SDL_Thread *r_thread = SDL_CreateThread(&render_thread, "RenderingThread", &appstate);
     while (!appstate.end) {
+        unsigned int start_time, end_time;
         start_time = SDL_GetTicks();
-        loop(&appstate);
+        SDL_mutexP(appstate.lock);
+        update(&appstate);
+        input(&appstate);
+        SDL_mutexV(appstate.lock);
         end_time = SDL_GetTicks();
-        if(end_time - start_time < 100)
-            SDL_Delay(100 - end_time + start_time);
+        if (end_time - start_time < MILLIS_PER_TICKS)
+            SDL_Delay(MILLIS_PER_TICKS - end_time + start_time);
     }
     close(&appstate);
     return 0;
