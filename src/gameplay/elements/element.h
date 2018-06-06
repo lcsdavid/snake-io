@@ -25,7 +25,7 @@ void element_init(element_t *element, const point_t* position, int type);
 
 element_t *element_create(const point_t* position, int type);
 
-void element_effect_apple(element_t *element, const gamestate_t *gamestate, snake_t *snake);
+void element_effect_apple(snake_t *snake);
 void element_effect_bombe(element_t *element, const gamestate_t *gamestate, snake_t *snake);
 void element_effect_wall(element_t *element, const gamestate_t *gamestate, snake_t *snake);
 

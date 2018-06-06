@@ -6,7 +6,7 @@ SDL_Texture *element_texture;
 void init_apple(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_APPLE;
-    //element->element_effect = &element_effect_apple;
+    element->element_effect = &element_effect_apple;
     //element->element_render = &element_render_apple;
 }
 
@@ -71,8 +71,8 @@ bool collision(snake_t *snake, element_t *element){ /* Retourne vrai si la colli
     return false;
 } */
 
-void element_effect_apple(element_t *element, const gamestate_t *gamestate, snake_t *snake) {
-    assert(element && snake);
+void element_effect_apple( snake_t *snake) {
+    assert(snake);
     if(true) {//collision(snake, element)){
         snake_grow(snake);
     }

@@ -4,6 +4,7 @@
 
 #include "../standard/collection/list_iterator.h"
 #include "../standard/collection/node.h"
+#include "../standard/math/point.h"
 
 void gamestate_init(gamestate_t *gamestate) {
     point_t start = {10, 10};
@@ -44,9 +45,13 @@ void collision(gamestate_t *gamestate) {
         while (iterator_has_data(it)) {
             element_t *element = iterator_data(it);
             if(element != po){ //si on a bien affaire a deux points différents
-                distance = point_distance(&element->position, po);
+                point_t point = element->position;
+                point.x -= 8;
+                point.y += 8; //les coordonnées originelles d'un element désignent le coin en heut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
+                distance = point_distance(&point, po);
                 if(distance <= 30){//on prends 30 et pas 32 pour avoir une hit box un peu plus petite
                     element->element_effect(&gamestate->player_one);
+
                 }
             }
             it = iterator_next(it);
@@ -80,6 +85,7 @@ bool point_taken(const gamestate_t* gamestate, const point_t* point) {
             iterator_destroy(it);
             return true;
         }
+        it = iterator_next(it);
     }
 
     return false;
