@@ -95,7 +95,7 @@ void render(appstate_t *appstate) {
 void update(appstate_t *appstate) {
     snake_move(&appstate->gamestate.player_one);
 
-    collision(&appstate->gamestate);
+    //collision(&appstate->gamestate);
     /*iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);

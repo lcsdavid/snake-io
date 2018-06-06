@@ -58,8 +58,8 @@ snake_node_t *snake_tail(const snake_t *snake) {
 void snake_grow(snake_t *snake) {
     assert(snake && snake->lenght > 0);
     snake_node_t *tail = snake_tail(snake);
-    point_t pos = {tail->position.x - cos(tail->angle) * SNAKE_BODY_DIAMETER,
-                   tail->position.y - sin(tail->angle) * SNAKE_BODY_DIAMETER};
+    point_t pos = {tail->position.x + cos(tail->angle) * SNAKE_BODY_DIAMETER,
+                   tail->position.y + sin(tail->angle) * SNAKE_BODY_DIAMETER};
     list_push_back(&snake->body, snake_node_create(&pos, tail->angle));
     snake->lenght++;
 }

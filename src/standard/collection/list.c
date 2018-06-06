@@ -16,7 +16,7 @@ void* list_front(const list_t *list) {
 }
 
 void* list_back(const list_t *list) {
-    assert(list && list_empty(list));
+    assert(list && !list_empty(list));
     return list->back->data;
 }
 
