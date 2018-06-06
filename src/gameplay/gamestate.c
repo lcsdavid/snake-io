@@ -46,10 +46,10 @@ void collision(gamestate_t *gamestate) {
             element_t *element = iterator_data(it);
             if(element != po){ //si on a bien affaire a deux points différents
                 point_t point = element->position;
-                point.x -= 8;
-                point.y += 8; //les coordonnées originelles d'un element désignent le coin en heut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
+                point.x += 16;
+                point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
                 distance = point_distance(&point, po);
-                if(distance <= 30){//on prends 30 et pas 32 pour avoir une hit box un peu plus petite
+                if(distance <= 32){
                     element->element_effect(&gamestate->player_one);
 
                 }
