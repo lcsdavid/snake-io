@@ -69,13 +69,29 @@ void list_clear(list_t *list) {
 }
 
 void list_insert_at(list_t *list, void *element, size_t at) {
-    assert(list && at < list->size);
+    assert(list);
+    if (at < list->size)
+        return;
     // TODO
 }
 
 void list_erase_at(list_t *list, size_t at) {
-    assert(list && at < list->size);
-    // TODO
+    assert(list);
+    if(at < list->size)
+        return;
+    node_t *current_node;
+    if(at * 2 <= list->size) {
+        current_node = list->front;
+        for(size_t i = 1; i < at; i++)
+            current_node = current_node->next;
+    } else {
+        current_node = list->back;
+        for(size_t i = list->size - 1; i > at; i--)
+            current_node = current_node->previous;
+    }
+    current_node->previous->next = current_node->next;
+    current_node->next->previous = current_node->previous;
+    node_delete(current_node);
 }
 
 void list_push_back(list_t *list, void *element) {
