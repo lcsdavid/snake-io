@@ -41,6 +41,7 @@ void collision(gamestate_t *gamestate) {
     float distance; // floattant pour mesurer la distance
     point_t *po = (point_t *)gamestate->player_one.body.front->data;
     for(int s = 0; s < 1; s++) {
+        int i = 0;//on va s'en servir pour compter le rang des éléments
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         while (iterator_has_data(it)) {
             element_t *element = iterator_data(it);
@@ -51,10 +52,11 @@ void collision(gamestate_t *gamestate) {
                 distance = point_distance(&point, po);
                 if(distance <= 32){
                     element->element_effect(&gamestate->player_one);
-
+                    list_erase_at(&gamestate->elements, i);
                 }
             }
             it = iterator_next(it);
+            i++;
         }
         iterator_destroy(it);
     }
