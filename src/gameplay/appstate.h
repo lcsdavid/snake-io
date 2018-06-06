@@ -8,6 +8,7 @@
 typedef struct {
     SDL_Window* window;
     SDL_Renderer* renderer;
+    SDL_mutex* lock;
     bool end;
     gamestate_t gamestate;
 } appstate_t;

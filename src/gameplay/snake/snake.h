@@ -14,6 +14,7 @@
 #define SNAKE_TEXTURE_SIZE_X 32
 #define SNAKE_TEXTURE_SIZE_Y 32
 #define SNAKE_BODY_DIAMETER 32
+#define SPEED 5
 
 typedef struct snake {
     list_t body;
