@@ -39,7 +39,7 @@ void snake_diminish(snake_t *snake);
 
 void snake_change_direction(snake_t *snake, bool gauche);
 
-void snake_move(snake_t *snake);
+bool snake_move(snake_t *snake);
 
 bool snake_is_head(const snake_t* snake, const snake_node_t* node);
 

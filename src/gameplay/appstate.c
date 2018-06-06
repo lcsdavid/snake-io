@@ -93,9 +93,11 @@ void render(appstate_t *appstate) {
 }
 
 void update(appstate_t *appstate) {
-    snake_move(&appstate->gamestate.player_one);
-
-    collision(&appstate->gamestate);
+    if(!snake_move(&appstate->gamestate.player_one)){
+        appstate->end = true; //on sort de l'application
+        return;
+    }//si le serpent se mange lui même
+    appstate->end = collision(&appstate->gamestate);
     /*iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);

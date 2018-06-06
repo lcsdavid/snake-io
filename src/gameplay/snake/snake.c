@@ -81,7 +81,7 @@ void snake_change_direction(snake_t *snake, bool gauche) {
         snake_head(snake)->angle += M_PI / 36;
 }
 
-void snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement
+bool snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement
     snake_node_t *prev_node, *current_node;
     iterator_t *it = list_iterator_create(&snake->body, START_BACK);
     prev_node = iterator_data(it);
@@ -102,8 +102,9 @@ void snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doi
     if (snake_head(snake)->position.y > MAX_Y) snake_head(snake)->position.y = 0;
 
     if (snake_self_eating(snake)) {
-        //TODO gérer la propagation du game over
+        return false;
     }
+    return true;
 }
 
 //
@@ -136,8 +137,10 @@ bool snake_self_eating(snake_t *snake) {
     snake_node_t *body_part;
     for (size_t i = 1; i < snake->lenght; i++) {
         body_part = list_element_at(&snake->body, i);
-        if (point_distance(&head->position, &body_part->position) < 18)
-            return true;
+        if (point_distance(&head->position, &body_part->position) < 8){
+            //return true;
+
+        }
     }
     return false;
 }

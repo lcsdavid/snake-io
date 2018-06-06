@@ -10,13 +10,14 @@ typedef struct {
     bool multiplayer;
     bool gameover;
     bool fullscreen;
+    int pommes;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);
 
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer);
 
-void collision(gamestate_t *gamestate);
+bool collision(gamestate_t *gamestate);
 
 
 bool point_taken(const gamestate_t* gamestate, const point_t* point);

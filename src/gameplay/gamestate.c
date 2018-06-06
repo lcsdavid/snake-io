@@ -8,16 +8,13 @@
 
 void gamestate_init(gamestate_t *gamestate) {
     point_t start = {10, 10};
+    gamestate->pommes = 0;
     snake_init(&gamestate->player_one, &start, 0);
     list_init(&gamestate->elements);
     gamestate->multiplayer = false;
     gamestate->fullscreen = false;
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
-    point_t point1 = new_point(gamestate);
-    list_push_front(&gamestate->elements, element_create(&point1, ELEMENT_APPLE));
-    point_t point2 = new_point(gamestate);
-    list_push_front(&gamestate->elements, element_create(&point2, ELEMENT_APPLE));
 }
 
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
@@ -36,7 +33,7 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 
 
 
-void collision(gamestate_t *gamestate) {
+bool collision(gamestate_t *gamestate) {
     assert(gamestate);
     float distance; // floattant pour mesurer la distance
     point_t *po = (point_t *)gamestate->player_one.body.front->data;
@@ -52,14 +49,20 @@ void collision(gamestate_t *gamestate) {
                 distance = point_distance(&point, po);
                 if(distance <= 32){
                     element->element_effect(&gamestate->player_one);
+                    if(element->type == 1){//si c'est une pomme
+                        gamestate->pommes += 1;
+                        //mettre l'apparition d'obstacles
+                        point_t point1 = new_point(gamestate);
+                        list_push_front(&gamestate->elements, element_create(&point1, ELEMENT_APPLE));
+                    }
                     list_erase_at(&gamestate->elements, i);
                 }
             }
             it = iterator_next(it);
             i++;
         }
-        iterator_destroy(it);
     }
+    return  false;
 }
 
 bool point_taken(const gamestate_t* gamestate, const point_t* point) {
