@@ -23,7 +23,7 @@ void gamestate_init(gamestate_t *gamestate) {
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     snake_render(&gamestate->player_one, renderer);
 
-    iterator_t *it = list_iterator_create(&gamestate->elements);
+    iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);
         element_render(element, renderer);
@@ -41,7 +41,7 @@ void collision(gamestate_t *gamestate) {
     float distance; // floattant pour mesurer la distance
     point_t *po = (point_t *)gamestate->player_one.body.front->data;
     for(int s = 0; s < 1; s++) {
-        iterator_t *it = list_iterator_create(&gamestate->elements);
+        iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         while (iterator_has_data(it)) {
             element_t *element = iterator_data(it);
             if(element != po){ //si on a bien affaire a deux points différents
@@ -65,9 +65,9 @@ bool point_taken(const gamestate_t* gamestate, const point_t* point) {
 
     for(int s = 0; s < 1; s++) {
         if(s == 0)
-            it = list_iterator_create(&gamestate->player_one.body);
+            it = list_iterator_create(&gamestate->player_one.body, START_FRONT);
         else if (s == 1)
-            it = list_iterator_create(&gamestate->player_two.body);
+            it = list_iterator_create(&gamestate->player_two.body, START_FRONT);
 
         while (iterator_has_data(it)) {
             snake_node_t *current = iterator_data(it);
@@ -78,7 +78,7 @@ bool point_taken(const gamestate_t* gamestate, const point_t* point) {
         iterator_destroy(it);
     }
 
-    it = list_iterator_create(&gamestate->elements);
+    it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {//on vérifie ensuite que le point n'est pas situé sur un  autre élément
         element_t *current = iterator_data(it);
         if (point_distance(point, &current->position) < 32){

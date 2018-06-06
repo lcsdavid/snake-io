@@ -58,8 +58,8 @@ snake_node_t *snake_tail(const snake_t *snake) {
 void snake_grow(snake_t *snake) {
     assert(snake && snake->lenght > 0);
     snake_node_t *tail = snake_tail(snake);
-    point_t pos = {tail->position.x + cos(tail->angle) * SNAKE_BODY_DIAMETER,
-                   tail->position.y + sin(tail->angle) * SNAKE_BODY_DIAMETER};
+    point_t pos = {tail->position.x - cos(tail->angle) * SNAKE_BODY_DIAMETER,
+                   tail->position.y - sin(tail->angle) * SNAKE_BODY_DIAMETER};
     list_push_back(&snake->body, snake_node_create(&pos, tail->angle));
     snake->lenght++;
 }
@@ -83,16 +83,15 @@ void snake_change_direction(snake_t *snake, bool gauche) {
 
 void snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement
     snake_node_t *prev_node, *current_node;
-    iterator_t *it = list_iterator_create(&snake->body);
-    prev_node = snake_head(snake);
-
-    it = iterator_next(it);
-    for (size_t i = 1; i < snake->lenght; i++) {
+    iterator_t *it = list_iterator_create(&snake->body, START_BACK);
+    prev_node = iterator_data(it);
+    it = iterator_previous(it);
+    for (size_t i = 0; i < snake->lenght - 1; i++) {
         current_node = iterator_data(it);
         prev_node->position = current_node->position;
         prev_node->angle = current_node->angle;
         prev_node = current_node;
-        it = iterator_next(it);
+        it = iterator_previous(it);
     }
     prev_node->position.x += SNAKE_BODY_DIAMETER * cos(prev_node->angle);
     prev_node->position.y += SNAKE_BODY_DIAMETER * sin(prev_node->angle);
@@ -120,7 +119,7 @@ bool snake_is_tail(const snake_t *snake, const snake_node_t *node) {
 }
 
 bool snake_collision(snake_t *snake, point_t *point) {
-    iterator_t *it = list_iterator_create(&snake->body);
+    iterator_t *it = list_iterator_create(&snake->body, START_FRONT);
     for(int i = 0; i < snake->lenght; i++) {
         snake_node_t* current = iterator_data(it);
         if(point_distance(point, &current->position) < 32) { /* Une partie du serpent rentre dans l'obstacle */
@@ -162,7 +161,7 @@ bool snake_load_texture(SDL_Renderer *renderer) {
 
 void snake_render(snake_t *snake, SDL_Renderer *renderer) {
     assert(snake && renderer);
-    iterator_t *it = list_iterator_create(&snake->body);
+    iterator_t *it = list_iterator_create(&snake->body, START_FRONT);
     SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
     for (size_t i = 0; i < snake->lenght; i++) {
         snake_node_t *snake_node = iterator_data(it);

@@ -16,10 +16,10 @@ typedef void *(*iterator_next_func)(void *);
 
 
 void iterator_init(iterator_t *iterator, iterator_destroy_state_func destroy, iterator_has_data_func has_data,
-                   iterator_data_func data, iterator_previous_func previous, iterator_next_func next, const void *collection, void *state);
+                   iterator_data_func data, iterator_next_func next, iterator_previous_func previous, const void *collection, void *state);
 
 iterator_t *iterator_create(iterator_create_state_func create, iterator_destroy_state_func destroy, iterator_has_data_func has_data,
-                            iterator_data_func data, iterator_previous_func previous, iterator_next_func next, const void *collection, ...);
+                            iterator_data_func data, iterator_next_func next, iterator_previous_func previous, const void *collection, ...);
 
 void iterator_destroy(iterator_t *iterator);
 
@@ -27,9 +27,9 @@ bool iterator_has_data(const iterator_t *iterator);
 
 void *iterator_data(iterator_t *iterator);
 
-iterator_t *iterator_previous(iterator_t *iterator);
-
 iterator_t *iterator_next(iterator_t *iterator);
+
+iterator_t *iterator_previous(iterator_t *iterator);
 
 extern const size_t iterator_size;
 

@@ -3,17 +3,9 @@
 #include "list.h"
 #include "node.h"
 
-#define START_FRONT 0
-#define START_BACK 1
-
-void *list_iterator_state_create(const void *list, va_list ap) {
+void *list_front_iterator_state_create(const void *list, va_list ap) {
     assert(list);
-    int start = va_arg(ap, int);
-    if(start == START_FRONT)
-        return ((list_t*) list)->front;
-    if(start == START_BACK)
-        return ((list_t*) list)->back;
-    return ((list_t*) list)->front;
+    return (void *) list;
 }
 
 static bool list_iterator_has_data(const void *state) {
@@ -27,24 +19,27 @@ static void *list_iterator_data(void *state) {
         return NULL;
 }
 
-static void *list_iterator_previous(void *state) {
-    assert(state);
-    return ((node_t*) state)->next;
-}
-
 static void *list_iterator_next(void *state) {
     assert(state);
     return ((node_t*) state)->next;
 }
 
-/* */
-
-iterator_t *list_iterator_create(const list_t *list) {
-    return iterator_create(list_iterator_state_create, NULL, list_iterator_has_data, list_iterator_data,
-                           list_iterator_previous, list_iterator_next, list, START_FRONT);
+static void *list_iterator_previous(void *state) {
+    assert(state);
+    return ((node_t*) state)->previous;
 }
 
-iterator_t *list_back_iterator_create(list_t *list) {
-    return iterator_create(list_iterator_state_create, NULL, list_iterator_has_data, list_iterator_data,
-                           list_iterator_previous, list_iterator_next, list, START_BACK);
+/* */
+
+iterator_t *list_iterator_create(const list_t *list, int start) {
+    if(list_empty(list))
+        return NULL;
+    if(start == START_FRONT)
+        return iterator_create(list_front_iterator_state_create, NULL, list_iterator_has_data, list_iterator_data,
+                           list_iterator_next, list_iterator_previous, list->front);
+    else if(start == START_BACK)
+        return iterator_create(list_front_iterator_state_create, NULL, list_iterator_has_data, list_iterator_data,
+                               list_iterator_next, list_iterator_previous, list->back);
+    else
+        return NULL;
 }

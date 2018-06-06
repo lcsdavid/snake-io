@@ -31,7 +31,11 @@ void iterator_init(iterator_t *iterator, iterator_destroy_state_func destroy, it
 iterator_t *iterator_create(iterator_create_state_func create, iterator_destroy_state_func destroy,
                             iterator_has_data_func has_data, iterator_data_func data, iterator_previous_func previous,
                             iterator_next_func next, const void *collection, ...) {
-    assert(create && has_data && data && next && collection);
+    assert(create);
+    assert(has_data);
+    assert(data);
+    assert(next);
+    assert(collection);
     iterator_t *iterator = calloc(1, sizeof(*iterator));
     if (iterator) {
         va_list ap;
@@ -40,7 +44,7 @@ iterator_t *iterator_create(iterator_create_state_func create, iterator_destroy_
         state = create(collection, ap);
         va_end(ap);
         if (state) {
-            iterator_init(iterator, destroy, has_data, data, previous, next, collection, state);
+            iterator_init(iterator, destroy, has_data, data, next, previous, collection, state);
         } else {
             free(iterator);
             iterator = NULL;
@@ -65,15 +69,15 @@ void *iterator_data(iterator_t *iterator) {
     return iterator->data(iterator->state);
 }
 
+iterator_t *iterator_next(iterator_t *iterator) {
+    assert(iterator);
+    iterator->state = iterator->next(iterator->state);
+    return iterator;
+}
+
 iterator_t *iterator_previous(iterator_t *iterator) {
     assert(iterator);
     if(iterator->previous)
         iterator->state = iterator->previous(iterator->state);
-    return iterator;
-}
-
-iterator_t *iterator_next(iterator_t *iterator) {
-    assert(iterator);
-    iterator->state = iterator->next(iterator->state);
     return iterator;
 }
