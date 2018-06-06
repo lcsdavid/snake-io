@@ -135,10 +135,10 @@ bool snake_self_eating(snake_t *snake) {
     assert(snake);
     snake_node_t *head = snake_head(snake);
     snake_node_t *body_part;
-    for (size_t i = 1; i < snake->lenght; i++) {
+    for (size_t i = 5; i < snake->lenght; i++) {
         body_part = list_element_at(&snake->body, i);
         if (point_distance(&head->position, &body_part->position) < 8){
-            //return true;
+            return true;
 
         }
     }
