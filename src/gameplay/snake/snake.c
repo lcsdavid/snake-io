@@ -3,8 +3,8 @@
 #include "../../standard/collection/list_iterator.h"
 #include "../../standard/math/point.h"
 
-#define MAX_X 800
-#define MAX_Y 600
+#define MAX_X 1200
+#define MAX_Y 800
 
 #define SPEED 4
 
@@ -76,9 +76,9 @@ void snake_diminish(snake_t *snake) {
 
 void snake_change_direction(snake_t *snake, bool gauche) {
     if (gauche)
-        snake_head(snake)->angle -= M_PI / 18;
+        snake_head(snake)->angle -= M_PI / 9;
     else
-        snake_head(snake)->angle += M_PI / 18;
+        snake_head(snake)->angle += M_PI / 9;
 }
 
 bool snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement

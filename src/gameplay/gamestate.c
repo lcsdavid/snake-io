@@ -121,8 +121,8 @@ point_t new_point(const gamestate_t *gamestate) { /* Indique un point disponible
     point_t point;
     int compteur = 0;
     do {
-        point_init(&point, rand() % 800, rand() % 600);
+        point_init(&point, rand() % 1150, rand() % 750);
         compteur++;
-    } while(point_taken(gamestate, &point) && compteur < 50);
+    } while(point_taken(gamestate, &point) && compteur < 77);
     return point;
 }
