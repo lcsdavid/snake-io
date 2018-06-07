@@ -55,7 +55,7 @@ bool collision(gamestate_t *gamestate) {
                         point_t point1 = new_point(gamestate);
                         list_push_front(&gamestate->elements, element_create(&point1, ELEMENT_APPLE));
                     }
-                    list_erase_at(&gamestate->elements, i);
+                    element->position = new_point(gamestate);
                 }
             }
             it = iterator_next(it);
