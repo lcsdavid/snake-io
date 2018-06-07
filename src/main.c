@@ -1,7 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <pthread.h>
 
 #include <SDL.h>
 #include <SDL_timer.h>
@@ -28,7 +27,7 @@
 void close(appstate_t *appstate);
 void loop(appstate_t *appstate);
 
-static void render_thread(void *arg) {
+static int render_thread(void *arg) {
     appstate_t* appstate = arg;
     while (!appstate->end) {
         unsigned int start_time, end_time;
@@ -41,6 +40,7 @@ static void render_thread(void *arg) {
             SDL_Delay(MILLIS_PER_FRAME - end_time + start_time);
         }
     }
+    return 0;
 }
 
 int main(int argc, char *argv[]) {

@@ -54,7 +54,10 @@ bool map_load_from_file(map_t* map, char file_path[]) {
     FILE* file = fopen(file_path, "r");
     int x, y;
     fscanf(file, "%d %d\n", &x, &y);
-    map_init(map, x, y);
+    if(!map_init(map, x, y)) {
+        perror("map_init():");
+        return false;
+    }
     int c;
     x = 0;
     y = 0;
@@ -70,4 +73,5 @@ bool map_load_from_file(map_t* map, char file_path[]) {
         }
     } while(c == EOF);
     fclose(file);
+    return true;
 }

@@ -3,20 +3,27 @@
 
 #include "snake/snake.h"
 #include "elements/element.h"
+#include "map/map.h"
 
-typedef struct {
+typedef struct gamestate {
+    map_t map;
+
     snake_t player_one;
     snake_t player_two;
+
     list_t elements;
+
     bool multiplayer;
     bool gameover;
+
     bool fullscreen;
+
     int difficulte;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);
 
-void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer);
+gamestate_t* gamestate_create();
 
 bool collision(gamestate_t *gamestate);
 

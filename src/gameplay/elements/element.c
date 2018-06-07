@@ -1,42 +1,47 @@
 #include "element.h"
+
+#include "../appstate.h"
+#include "../gamestate.h"
+
 #include "../../standard/math/point.h"
 
 SDL_Texture *element_texture_apple;
 SDL_Texture *element_texture_bombe;
 SDL_Texture *element_texture_wall;
 
-void init_apple(element_t *element, const point_t* position){
+/* Initialize */
+
+static void init_apple(element_t *element, const point_t *position) {
+    assert(element);
     element->position = *position;
     element->type = ELEMENT_APPLE;
-    element->element_effect = &element_effect_apple;
-    element->element_render = &element_render_apple;
 }
 
-void init_bombe(element_t *element, const point_t* position){
+static void init_bombe(element_t *element, const point_t *position) {
+    assert(element);
     element->position = *position;
     element->type = ELEMENT_BOMBE;
-    element->element_effect = &element_effect_bombe;
-    element->element_render = &element_render_bombe;
 }
 
-void init_wall(element_t *element, const point_t* position){
+static void init_wall(element_t *element, const point_t *position) {
+    assert(element);
     element->position = *position;
     element->type = ELEMENT_WALL;
-    element->element_effect = &element_effect_wall;
-    element->element_render = &element_render_wall;
 }
 
-void element_init(element_t *element, const point_t* position, int type) {
+void element_init(element_t *element, const point_t *position, int type) {
     assert(element);
-    if(type == ELEMENT_APPLE)
+    if (type == ELEMENT_APPLE)
         init_apple(element, position);
     else if (type == ELEMENT_BOMBE)
         init_bombe(element, position);
-    else if(type == ELEMENT_WALL)
+    else if (type == ELEMENT_WALL)
         init_wall(element, position);
 }
 
-element_t *element_create(const point_t* position, int type) {
+/* Create */
+
+element_t *element_create(const point_t *position, int type) {
     element_t *element = calloc(1, sizeof(element_t));
     if (!element) {
         perror("calloc():");
@@ -46,56 +51,92 @@ element_t *element_create(const point_t* position, int type) {
     return element;
 }
 
-void element_render_apple(element_t* element, SDL_Renderer* renderer) {
-    SDL_Log("%lf %lf", element->position.x, element->position.y);
-    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture_apple, NULL, &dst);
+/* Render */
+
+static void element_render_apple(element_t *element, appstate_t* appstate) {
+    int padding_x, padding_y;
+    SDL_GetWindowSize(appstate->window, &padding_x, &padding_y);
+    padding_x = (padding_x - appstate->gamestate->map.size_x) / 2;
+    padding_y = (padding_y - appstate->gamestate->map.size_y) / 2;
+    SDL_Rect dst = {(int) (padding_x + element->position.x),
+                    (int) (padding_y + element->position.y), 32, 32};
+    SDL_RenderCopy(appstate->renderer, element_texture_apple, NULL, &dst);
 }
 
-void element_render_bombe(element_t* element, SDL_Renderer* renderer) {
-    SDL_Log("%lf %lf", element->position.x, element->position.y);
-    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture_bombe, NULL, &dst);
+static void element_render_bombe(element_t *element, appstate_t* appstate) {
+    int padding_x, padding_y;
+    SDL_GetWindowSize(appstate->window, &padding_x, &padding_y);
+    padding_x = (padding_x - appstate->gamestate->map.size_x) / 2;
+    padding_y = (padding_y - appstate->gamestate->map.size_y) / 2;
+    SDL_Rect dst = {(int) (padding_x + element->position.x),
+                    (int) (padding_y + element->position.y), 32, 32};
+    SDL_RenderCopy(appstate->renderer, element_texture_bombe, NULL, &dst);
 }
 
-void element_render_wall(element_t* element, SDL_Renderer* renderer) {
-    SDL_Log("%lf %lf", element->position.x, element->position.y);
-    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture_wall, NULL, &dst);
+static void element_render_wall(element_t *element, appstate_t* appstate) {
+    int padding_x, padding_y;
+    SDL_GetWindowSize(appstate->window, &padding_x, &padding_y);
+    padding_x = (padding_x - appstate->gamestate->map.size_x) / 2;
+    padding_y = (padding_y - appstate->gamestate->map.size_y) / 2;
+    SDL_Rect dst = {(int) (padding_x + element->position.x),
+                    (int) (padding_y + element->position.y), 32, 32};
+    SDL_RenderCopy(appstate->renderer, element_texture_wall, NULL, &dst);
 }
 
-/*
-
-bool collision(snake_t *snake, element_t *element){ /* Retourne vrai si la collision a lieu */
-   /* assert(snake && element);
-    snake_t *snake_1 = (snake_t *)snake;
-    point_t *point = (point_t *)&snake_head(snake_1)->position;
-    if(point_distance(point, &element->position) < 32){
-        element->element_effect(snake);
-        return true;
+void element_render(element_t* element, appstate_t* appstate) {
+    assert(element);
+    switch (element->type) {
+        case ELEMENT_APPLE:
+            element_render_apple(element, appstate);
+            break;
+        case ELEMENT_BOMBE:
+            element_render_bombe(element, appstate);
+            break;
+        case ELEMENT_WALL:
+            element_render_wall(element, appstate);
+            break;
+        default:
+            break;
     }
-    return false;
-} */
-
-   void element_effect_apple( snake_t *snake) {
-    assert(snake);
-    if(true) {//collision(snake, element)){
-        snake_grow(snake);
-    }
-
 }
 
-void element_effect_bombe(snake_t *snake) {
+/* Action */
+
+static void element_effect_apple(snake_t *snake) {
     assert(snake);
+    snake_grow(snake);
+}
+
+static bool element_effect_bombe(snake_t *snake) {
+    assert(snake);
+    if(snake->lenght == 1)
+        return false;
     snake_diminish(snake);
+    return true;
 }
 
-void element_effect_wall(snake_t *snake) {
+static bool element_effect_wall(snake_t *snake) {
     assert(snake);
-    while(snake->lenght < 0){
-        snake_diminish(snake);
-    }
+    return false;
 }
+
+bool element_effect(element_t* element, snake_t* snake) {
+    assert(element);
+    switch (element->type) {
+        case ELEMENT_APPLE:
+            element_effect_apple(snake);
+            break;
+        case ELEMENT_BOMBE:
+            return element_effect_bombe(snake);
+        case ELEMENT_WALL:
+            return element_effect_wall(snake);
+        default:
+            break;
+    }
+    return true;
+}
+
+/* Load texture */
 
 void element_load_texture(SDL_Renderer *renderer) {
     assert(renderer);

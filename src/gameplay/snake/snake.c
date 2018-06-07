@@ -2,11 +2,11 @@
 
 #include "../../standard/collection/list_iterator.h"
 #include "../../standard/math/point.h"
+#include "../appstate.h"
+#include "../gamestate.h"
 
 #define MAX_X 800
 #define MAX_Y 600
-
-#define SPEED 4
 
 SDL_Texture *snake_texture;
 
@@ -108,7 +108,7 @@ bool snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doi
     return true;
 }
 
-//
+/* Conditions */
 
 bool snake_is_head(const snake_t *snake, const snake_node_t *node) {
     assert(snake && node);
@@ -164,12 +164,21 @@ bool snake_load_texture(SDL_Renderer *renderer) {
     return true;
 }
 
-void snake_render(snake_t *snake, SDL_Renderer *renderer) {
-    assert(snake && renderer);
+void snake_render(snake_t *snake, appstate_t *appstate) {
+    assert(snake && appstate);
+
+    int pad_x, pad_y;
+    SDL_GetWindowSize(appstate->window, &pad_x, &pad_y);
+    SDL_Log("%d %d %d %d", pad_x, pad_y, appstate->gamestate->map.size_x,
+            appstate->gamestate->map.size_y);
+    pad_x = (pad_x - appstate->gamestate->map.size_x * 8) / 2;
+    pad_y = (pad_y - appstate->gamestate->map.size_y * 8) / 2;
+
     iterator_t *it = list_iterator_create(&snake->body, START_FRONT);
     SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
     for (size_t i = 0; i < snake->lenght; i++) {
         snake_node_t *snake_node = iterator_data(it);
+
         SDL_Rect src;
         if(i == 0)
             src = (SDL_Rect){0, 0, 50, 50};
@@ -177,11 +186,13 @@ void snake_render(snake_t *snake, SDL_Renderer *renderer) {
             src = (SDL_Rect){100, 0, 50, 50};
         else
             src = (SDL_Rect){50, 0, 50, 50};
-        SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2,
-                        snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
+
+        SDL_Rect dst = {(int) (pad_x + snake_node->position.x - SNAKE_TEXTURE_SIZE_Y / 2),
+                        (int) (pad_y + snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2),
                         SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
-        if (SDL_RenderCopyEx(renderer, snake_texture, &src, &dst, snake_node->angle * 180 / M_PI + 90, &center,
-                             SDL_FLIP_NONE))
+
+        if (SDL_RenderCopyEx(appstate->renderer, snake_texture, &src, &dst, snake_node->angle * 180 / M_PI + 90,
+                             &center, SDL_FLIP_NONE))
             fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
         it = iterator_next(it);
     }

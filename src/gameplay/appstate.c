@@ -1,8 +1,8 @@
 #include "appstate.h"
 
-#include "../standard/collection/list_iterator.h"
-
 #include "elements/element.h"
+#include "gamestate.h"
+#include "../standard/collection/list_iterator.h"
 
 bool appstate_init(appstate_t *appstate) {
     srand((unsigned int) time(NULL));
@@ -29,7 +29,7 @@ bool appstate_init(appstate_t *appstate) {
     appstate->renderer = renderer;
     appstate->end = false;
 
-    gamestate_init(&appstate->gamestate);
+    appstate->gamestate = gamestate_create();
 
     if(!snake_load_texture(appstate->renderer))
         return false;
@@ -53,23 +53,23 @@ void input(appstate_t *appstate) {
                         appstate->end = true;
                         break;
                     case SDLK_LEFT:
-                        snake_change_direction(&appstate->gamestate.player_one, true);
+                        snake_change_direction(&appstate->gamestate->player_one, true);
                         break;
                     case SDLK_RIGHT:
-                        snake_change_direction(&appstate->gamestate.player_one, false);
+                        snake_change_direction(&appstate->gamestate->player_one, false);
                         break;
                     case SDLK_g:
-                        snake_grow(&appstate->gamestate.player_one);
+                        snake_grow(&appstate->gamestate->player_one);
                         break;
                     case SDLK_h:
-                        snake_diminish(&appstate->gamestate.player_one);
+                        snake_diminish(&appstate->gamestate->player_one);
                         break;
                     case SDLK_f:
-                        if(appstate->gamestate.fullscreen == false){
-                            appstate->gamestate.fullscreen = true;
+                        if(appstate->gamestate->fullscreen == false){
+                            appstate->gamestate->fullscreen = true;
                             SDL_SetWindowFullscreen(appstate->window, SDL_WINDOW_FULLSCREEN);
                         }else{
-                            appstate->gamestate.fullscreen = false;
+                            appstate->gamestate->fullscreen = false;
                             SDL_SetWindowFullscreen(appstate->window, 0);
                         }
                     default:
@@ -86,24 +86,29 @@ void render(appstate_t *appstate) {
     SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
 
     /* If game running */
-    gamestate_render(&appstate->gamestate, appstate->renderer);
+    snake_render(&appstate->gamestate->player_one, appstate);
+    if(appstate->gamestate->multiplayer)
+        snake_render(&appstate->gamestate->player_two, appstate);
+
+    iterator_t *it = list_iterator_create(&appstate->gamestate->elements, START_FRONT);
+    while (iterator_has_data(it)) {
+        element_t *element = iterator_data(it);
+        element_render(element, appstate);
+        it = iterator_next(it);
+    }
+    iterator_destroy(it);
 
     SDL_RenderPresent(appstate->renderer);
     //TODO ajouter un deuxieme joueur et les différents éléments
 }
 
 void update(appstate_t *appstate) {
-    if(!snake_move(&appstate->gamestate.player_one)){
+    if(!snake_move(&appstate->gamestate->player_one)){
         appstate->end = true; //on sort de l'application
         return;
-    }//si le serpent se mange lui même
-    appstate->end = collision(&appstate->gamestate);
-    /*iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
-    while (iterator_has_data(it)) {
-        element_t *element = iterator_data(it);
-        // collision(&appstate->gamestate.player_one, elem);
-        it = iterator_next(it);
-    }*/
+    }
+    // Si le serpent se mange lui même
+    appstate->end = collision(appstate->gamestate);
 }
 
 

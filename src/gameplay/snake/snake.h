@@ -16,6 +16,8 @@
 #define SNAKE_BODY_DIAMETER 32
 #define SPEED 5
 
+typedef struct appstate appstate_t;
+
 typedef struct snake {
     list_t body;
     unsigned char lenght;
@@ -57,6 +59,6 @@ bool snake_load_texture(SDL_Renderer *renderer);
 
 void snake_free_texture(SDL_Renderer *renderer);
 
-void snake_render(snake_t *snake, SDL_Renderer *renderer);
+void snake_render(snake_t *snake, appstate_t* appstate);
 
 #endif

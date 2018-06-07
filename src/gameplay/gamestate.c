@@ -7,48 +7,51 @@
 #include "../standard/math/point.h"
 
 void gamestate_init(gamestate_t *gamestate) {
+    assert(gamestate);
+
+    map_init(&gamestate->map, 50, 50);
+
     point_t start = {10, 10};
-    gamestate->difficulte = 0;
     snake_init(&gamestate->player_one, &start, 0);
+
     list_init(&gamestate->elements);
+
     gamestate->multiplayer = false;
+    gamestate->gameover = false;
+
     gamestate->fullscreen = false;
+
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
+
+    gamestate->difficulte = 0;
 }
 
-void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
-    snake_render(&gamestate->player_one, renderer);
-
-    iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
-    while (iterator_has_data(it)) {
-        element_t *element = iterator_data(it);
-        element->element_render(element, renderer);
-        it = iterator_next(it);
+gamestate_t* gamestate_create() {
+    gamestate_t* gamestate = calloc(1, sizeof(gamestate_t));
+    if(!gamestate) {
+        perror("calloc():");
+        return NULL;
     }
-    iterator_destroy(it);
+    gamestate_init(gamestate);
+    return gamestate;
 }
 
-bool gestion_collision(gamestate_t *gamestate, element_t *element){
+
+bool gestion_collision(gamestate_t *gamestate, element_t *element) {
     gamestate->difficulte += 1;
-    if(element->type == 1){//si c'est une pomme
-        element->element_effect(&gamestate->player_one);
-        element->position = new_point(gamestate);
-        //mettre l'apparition d'obstacles
-    }else if(element->type == 2){
-        if(gamestate->player_one.lenght <= 1){//mort du joueur
-            return false;
-        }
-        element->element_effect(&gamestate->player_one);
-        element->position = new_point(gamestate);
-    }else if(element->type == 3){
+
+    if (element->type == ELEMENT_WALL) {
         return false;
     }
-    if(gamestate->difficulte%3 == 0){//toutes les trois difficulte on fait apparaitre une bombe
+    element_effect(element, &gamestate->player_one);
+    element->position = new_point(gamestate);
+
+    if (gamestate->difficulte % 3 == 0) {//toutes les trois difficulte on fait apparaitre une bombe
         point_t point = new_point(gamestate);
         list_push_front(&gamestate->elements, element_create(&point, ELEMENT_BOMBE));
     }
-    if(gamestate->difficulte%7 == 0){///tous les 7 éléments un mur apparait
+    if (gamestate->difficulte % 7 == 0) {///tous les 7 éléments un mur apparait
         point_t point = new_point(gamestate);
         list_push_front(&gamestate->elements, element_create(&point, ELEMENT_WALL));
 
@@ -57,23 +60,22 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element){
 }
 
 
-
 bool collision(gamestate_t *gamestate) {
     assert(gamestate);
-    float distance; // floattant pour mesurer la distance
-    point_t *po = (point_t *)gamestate->player_one.body.front->data;
-    for(int s = 0; s < 1; s++) {
+    double distance; // floattant pour mesurer la distance
+    point_t *po = (point_t *) gamestate->player_one.body.front->data;
+    for (int s = 0; s < 1; s++) {
         int i = 0;//on va s'en servir pour compter le rang des éléments
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         while (iterator_has_data(it)) {
             element_t *element = iterator_data(it);
-            if(element != po){ //si on a bien affaire a deux points différents
+            if (&element->position != po) { //si on a bien affaire a deux points différents
                 point_t point = element->position;
                 point.x += 16;
                 point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
                 distance = point_distance(&point, po);
-                if(distance <= 32){
-                    if(!gestion_collision(gamestate, element)){
+                if (distance <= 32) {
+                    if (!gestion_collision(gamestate, element)) {
                         return true;
                     }
 
@@ -83,14 +85,14 @@ bool collision(gamestate_t *gamestate) {
             i++;
         }
     }
-    return  false;
+    return false;
 }
 
-bool point_taken(const gamestate_t* gamestate, const point_t* point) {
+bool point_taken(const gamestate_t *gamestate, const point_t *point) {
     iterator_t *it = NULL;
 
-    for(int s = 0; s < 1; s++) {
-        if(s == 0)
+    for (int s = 0; s < 1; s++) {
+        if (s == 0)
             it = list_iterator_create(&gamestate->player_one.body, START_FRONT);
         else if (s == 1)
             it = list_iterator_create(&gamestate->player_two.body, START_FRONT);
@@ -107,7 +109,7 @@ bool point_taken(const gamestate_t* gamestate, const point_t* point) {
     it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {//on vérifie ensuite que le point n'est pas situé sur un  autre élément
         element_t *current = iterator_data(it);
-        if (point_distance(point, &current->position) < 32){
+        if (point_distance(point, &current->position) < 32) {
             iterator_destroy(it);
             return true;
         }
@@ -123,6 +125,6 @@ point_t new_point(const gamestate_t *gamestate) { /* Indique un point disponible
     do {
         point_init(&point, rand() % 800, rand() % 600);
         compteur++;
-    } while(point_taken(gamestate, &point) && compteur < 50);
+    } while (point_taken(gamestate, &point) && compteur < 50);
     return point;
 }
