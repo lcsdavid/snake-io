@@ -67,9 +67,14 @@ int main(int argc, char *argv[]) {
     SDL_Thread *r_thread = SDL_CreateThread(&render_thread, "RenderingThread", &appstate);
     SDL_Thread *i_thread = SDL_CreateThread(&update_thread, "UpdateThread", &appstate);
     while (!appstate.end) {
+        unsigned int start_time, end_time;
+        start_time = SDL_GetTicks();
         SDL_mutexP(appstate.lock);
         input(&appstate);
         SDL_mutexV(appstate.lock);
+        end_time = SDL_GetTicks();
+        if (end_time - start_time < 5)
+            SDL_Delay(5 - end_time + start_time);
     }
     close(&appstate);
     return 0;
