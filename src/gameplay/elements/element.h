@@ -3,7 +3,6 @@
 
 #include "../../standard/math/point.h"
 #include "../snake/snake.h"
-#include "../../gameplay/gamestate.h"
 
 #define ELEMENT_APPLE 1
 #define ELEMENT_BOMBE 2

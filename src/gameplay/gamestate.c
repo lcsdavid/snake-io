@@ -30,15 +30,18 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 }
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element){
-    element->element_effect(&gamestate->player_one);
     if(element->type == 1){//si c'est une pomme
+
+        element->element_effect(&gamestate->player_one);
         gamestate->pommes += 1;
         element->position = new_point(gamestate);
         //mettre l'apparition d'obstacles
     }else{
-        if(gamestate->player_one.lenght < 1){
+        if(gamestate->player_one.lenght <= 1){
             return false;
         }
+
+        element->element_effect(&gamestate->player_one);
         element->position.y += 800;
         element->position.x += 800;
     }
@@ -66,7 +69,9 @@ bool collision(gamestate_t *gamestate) {
                 point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
                 distance = point_distance(&point, po);
                 if(distance <= 32){
-                    gestion_collision(gamestate, element);
+                    if(!gestion_collision(gamestate, element)){
+                        return true;
+                    }
 
                 }
             }
