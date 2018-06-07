@@ -40,7 +40,13 @@ bool map_init(map_t* map, unsigned short size_x, unsigned short size_y) {
 }
 
 map_t *map_create(unsigned short size_x, unsigned short size_y) {
-    return NULL;
+    map_t* map = calloc(1, sizeof(map_t));
+    if(!map) {
+        perror("calloc():");
+        return NULL;
+    }
+    map_init(map, size_x, size_y);
+    return map;
 }
 
 bool map_load_from_file(map_t* map, char file_path[]) {
