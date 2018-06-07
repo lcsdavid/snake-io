@@ -67,11 +67,12 @@ void input(appstate_t *appstate) {
                     case SDLK_f:
                         if(appstate->gamestate.fullscreen == false){
                             appstate->gamestate.fullscreen = true;
-                            SDL_SetWindowFullscreen(appstate->window, SDL_WINDOW_FULLSCREEN);
+                            SDL_SetWindowFullscreen(appstate->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
                         }else{
                             appstate->gamestate.fullscreen = false;
                             SDL_SetWindowFullscreen(appstate->window, 0);
                         }
+                        break;
                     default:
                         break;
                 }
