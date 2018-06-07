@@ -11,7 +11,7 @@ typedef struct {
     bool multiplayer;
     bool gameover;
     bool fullscreen;
-    int pommes;
+    int difficulte;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);

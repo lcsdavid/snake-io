@@ -3,6 +3,7 @@
 
 SDL_Texture *element_texture_apple;
 SDL_Texture *element_texture_bombe;
+SDL_Texture *element_texture_wall;
 
 void init_apple(element_t *element, const point_t* position){
     element->position = *position;
@@ -21,8 +22,8 @@ void init_bombe(element_t *element, const point_t* position){
 void init_wall(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_WALL;
-    //element->element_effect = &element_effect_wall;
-    //element->element_render = &element_render_wall;
+    element->element_effect = &element_effect_wall;
+    element->element_render = &element_render_wall;
 }
 
 void element_init(element_t *element, const point_t* position, int type) {
@@ -58,7 +59,9 @@ void element_render_bombe(element_t* element, SDL_Renderer* renderer) {
 }
 
 void element_render_wall(element_t* element, SDL_Renderer* renderer) {
-    //TODO
+    SDL_Log("%lf %lf", element->position.x, element->position.y);
+    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
+    SDL_RenderCopy(renderer, element_texture_wall, NULL, &dst);
 }
 
 /*
@@ -107,6 +110,8 @@ void element_load_texture(SDL_Renderer *renderer) {
         assert(element_surface);
     }
     SDL_FreeSurface(element_surface);
+
+    //chargement des bombes
     element_surface = IMG_Load("../res/element/bombe.png");
     if (!element_surface) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
@@ -114,6 +119,19 @@ void element_load_texture(SDL_Renderer *renderer) {
     }
     element_texture_bombe = SDL_CreateTextureFromSurface(renderer, element_surface);
     if (!element_texture_bombe) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        assert(element_surface);
+    }
+    SDL_FreeSurface(element_surface);
+
+    //chargement des murs
+    element_surface = IMG_Load("../res/element/wall.png");
+    if (!element_surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        assert(element_surface);
+    }
+    element_texture_wall = SDL_CreateTextureFromSurface(renderer, element_surface);
+    if (!element_texture_wall) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         assert(element_surface);
     }

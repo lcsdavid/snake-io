@@ -8,7 +8,7 @@
 
 void gamestate_init(gamestate_t *gamestate) {
     point_t start = {10, 10};
-    gamestate->pommes = 0;
+    gamestate->difficulte = 0;
     snake_init(&gamestate->player_one, &start, 0);
     list_init(&gamestate->elements);
     gamestate->multiplayer = false;
@@ -30,24 +30,28 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 }
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element){
+    gamestate->difficulte += 1;
     if(element->type == 1){//si c'est une pomme
-
         element->element_effect(&gamestate->player_one);
-        gamestate->pommes += 1;
         element->position = new_point(gamestate);
         //mettre l'apparition d'obstacles
-    }else{
-        if(gamestate->player_one.lenght <= 1){
+    }else if(element->type == 2){
+        if(gamestate->player_one.lenght <= 1){//mort du joueur
             return false;
         }
-
         element->element_effect(&gamestate->player_one);
-        element->position.y += 800;
-        element->position.x += 800;
+        element->position = new_point(gamestate);
+    }else if(element->type == 3){
+        return false;
     }
-    if(gamestate->pommes%3 == 1){//toutes les trois pommes on fait apparaitre une bombe
+    if(gamestate->difficulte%3 == 0){//toutes les trois difficulte on fait apparaitre une bombe
         point_t point = new_point(gamestate);
         list_push_front(&gamestate->elements, element_create(&point, ELEMENT_BOMBE));
+    }
+    if(gamestate->difficulte%7 == 0){///tous les 7 éléments un mur apparait
+        point_t point = new_point(gamestate);
+        list_push_front(&gamestate->elements, element_create(&point, ELEMENT_WALL));
+
     }
     return true;
 }
