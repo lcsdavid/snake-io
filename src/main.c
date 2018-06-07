@@ -64,12 +64,6 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void loop(appstate_t *appstate) {
-    input(appstate);
-    update(appstate);
-    render(appstate);
-}
-
 void close(appstate_t *appstate) {
     SDL_DestroyRenderer(appstate->renderer);
     SDL_DestroyWindow(appstate->window);
