@@ -20,7 +20,7 @@
 
 /* Game Ticks */
 #define TICKS_PER_SEC 30
-#define MILLIS_PER_TICKS 100
+#define MILLIS_PER_TICKS 33
 
 #include "gameplay/appstate.h"
 #include "gameplay/gamestate.h"

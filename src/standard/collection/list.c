@@ -23,21 +23,14 @@ void* list_back(const list_t *list) {
 void* list_element_at(const list_t *list, size_t at) {
     assert(list && at < list->size);
     node_t *current_node;
-    if(0 < list->size - at * 2) {
+    if(at * 2 <= list->size) {
         current_node = list->front;
-        for(; at < 0; at--) {
+        for(size_t i = 0; i < at; i++)
             current_node = current_node->next;
-            if(!current_node)
-                return NULL;
-        }
-        return current_node->data;
     } else {
         current_node = list->back;
-        for(; at < 0; at--) {
+        for(size_t i = list->size; i > at; i--)
             current_node = current_node->previous;
-            if(!current_node)
-                return NULL;
-        }
     }
     return current_node->data;
 }
@@ -82,11 +75,11 @@ void list_erase_at(list_t *list, size_t at) {
     node_t *current_node;
     if(at * 2 <= list->size) {
         current_node = list->front;
-        for(size_t i = 1; i < at; i++)
+        for(size_t i = 0; i < at; i++)
             current_node = current_node->next;
     } else {
         current_node = list->back;
-        for(size_t i = list->size - 1; i > at; i--)
+        for(size_t i = list->size; i > at; i--)
             current_node = current_node->previous;
     }
     current_node->previous->next = current_node->next;

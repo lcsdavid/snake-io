@@ -95,6 +95,7 @@ bool snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doi
     }
     prev_node->position.x += SNAKE_BODY_DIAMETER * cos(prev_node->angle);
     prev_node->position.y += SNAKE_BODY_DIAMETER * sin(prev_node->angle);
+
     /* Si on passe à travers l'un des bords de la map on apparait de l'autre cote. */
     if (snake_head(snake)->position.x < 0) snake_head(snake)->position.x = MAX_X;
     if (snake_head(snake)->position.x > MAX_X) snake_head(snake)->position.x = 0;
@@ -137,7 +138,8 @@ bool snake_self_eating(snake_t *snake) {
     snake_node_t *body_part;
     for (size_t i = 5; i < snake->lenght-1; i++) {
         body_part = list_element_at(&snake->body, i);
-        if (point_distance(&head->position, &body_part->position) < 8){
+        SDL_Log("%p %p Distance %lf", head, body_part, point_distance(&head->position, &body_part->position));
+        if (point_distance(&head->position, &body_part->position) < SNAKE_BODY_DIAMETER - 1){
             return true;
 
         }
