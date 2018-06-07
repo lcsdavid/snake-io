@@ -13,7 +13,7 @@ void init_apple(element_t *element, const point_t* position){
 void init_bombe(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_BOMBE;
-    //element->element_effect = &element_effect_bombe;
+    element->element_effect = &element_effect_bombe;
     //element->element_render = &element_render_bombe;
 }
 

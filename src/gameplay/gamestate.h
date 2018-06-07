@@ -2,6 +2,7 @@
 #define GAMESTATE_H
 
 #include "snake/snake.h"
+#include "elements/element.h"
 
 typedef struct {
     snake_t player_one;
@@ -19,6 +20,7 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer);
 
 bool collision(gamestate_t *gamestate);
 
+bool gestion_collision(gamestate_t *gamestate, element_t *element);
 
 bool point_taken(const gamestate_t* gamestate, const point_t* point);
 
