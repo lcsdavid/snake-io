@@ -3,6 +3,7 @@
 #include "../standard/collection/list_iterator.h"
 
 #include "elements/element.h"
+#include "gamestate.h"
 
 bool appstate_init(appstate_t *appstate) {
     srand((unsigned int) time(NULL));
@@ -39,6 +40,7 @@ bool appstate_init(appstate_t *appstate) {
 
 void input(appstate_t *appstate) {
     SDL_Event event;
+    SDL_event
     if(SDL_PollEvent(&event))
         switch(event.type) {
             case SDL_WINDOWEVENT_CLOSE:
@@ -72,6 +74,16 @@ void input(appstate_t *appstate) {
                             appstate->gamestate.fullscreen = false;
                             SDL_SetWindowFullscreen(appstate->window, 0);
                         }
+                    case SDLK_n:
+                        appstate->gamestate.multiplayer = true;
+                        point_t start = new_point(&appstate->gamestate);
+                        snake_init(&appstate->gamestate.player_two, &start, 0);
+                    case SDLK_q:
+                        if(appstate->gamestate.multiplayer)
+                            snake_change_direction(&appstate->gamestate.player_two, true);
+                    case SDLK_d:
+                        if(appstate->gamestate.multiplayer)
+                            snake_change_direction(&appstate->gamestate.player_two, false);
                     default:
                         break;
                 }
@@ -97,13 +109,10 @@ void update(appstate_t *appstate) {
         appstate->end = true; //on sort de l'application
         return;
     }//si le serpent se mange lui même
+    if(appstate->gamestate.multiplayer)
+        if(!snake_move(&appstate->gamestate.player_two))
+            appstate->end = true;
     appstate->end = collision(&appstate->gamestate);
-    /*iterator_t *it = list_iterator_create(&appstate->gamestate.elements);
-    while (iterator_has_data(it)) {
-        element_t *element = iterator_data(it);
-        // collision(&appstate->gamestate.player_one, elem);
-        it = iterator_next(it);
-    }*/
 }
 
 
