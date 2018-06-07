@@ -6,8 +6,6 @@
 #define MAX_X 1200
 #define MAX_Y 800
 
-#define SPEED 4
-
 SDL_Texture *snake_texture;
 
 //

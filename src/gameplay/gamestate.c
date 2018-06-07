@@ -62,14 +62,14 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element){
 
 bool collision(gamestate_t *gamestate) {
     assert(gamestate);
-    float distance; // floattant pour mesurer la distance
+    double distance; // floattant pour mesurer la distance
     point_t *po = (point_t *)gamestate->player_one.body.front->data;
     for(int s = 0; s < 1; s++) {
         int i = 0;//on va s'en servir pour compter le rang des éléments
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         while (iterator_has_data(it)) {
             element_t *element = iterator_data(it);
-            if(element != po){ //si on a bien affaire a deux points différents
+            if(&element->position != po){ //si on a bien affaire a deux points différents
                 point_t point = element->position;
                 point.x += 16;
                 point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)

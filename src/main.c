@@ -28,7 +28,7 @@
 void close(appstate_t *appstate);
 void loop(appstate_t *appstate);
 
-static void render_thread(void *arg) {
+static int render_thread(void *arg) {
     appstate_t* appstate = arg;
     while (!appstate->end) {
         unsigned int start_time, end_time;
@@ -41,6 +41,22 @@ static void render_thread(void *arg) {
             SDL_Delay(MILLIS_PER_FRAME - end_time + start_time);
         }
     }
+    return 0;
+}
+
+static int update_thread(void *arg) {
+    appstate_t* appstate = arg;
+    while (!appstate->end) {
+        unsigned int start_time, end_time;
+        start_time = SDL_GetTicks();
+        SDL_mutexP(appstate->lock);
+        update(appstate);
+        SDL_mutexV(appstate->lock);
+        end_time = SDL_GetTicks();
+        if (end_time - start_time < MILLIS_PER_TICKS)
+            SDL_Delay(MILLIS_PER_TICKS - end_time + start_time);
+    }
+    return 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -49,16 +65,11 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     appstate.lock = SDL_CreateMutex();
     SDL_Thread *r_thread = SDL_CreateThread(&render_thread, "RenderingThread", &appstate);
+    SDL_Thread *i_thread = SDL_CreateThread(&update_thread, "UpdateThread", &appstate);
     while (!appstate.end) {
-        unsigned int start_time, end_time;
-        start_time = SDL_GetTicks();
         SDL_mutexP(appstate.lock);
-        update(&appstate);
         input(&appstate);
         SDL_mutexV(appstate.lock);
-        end_time = SDL_GetTicks();
-        if (end_time - start_time < MILLIS_PER_TICKS)
-            SDL_Delay(MILLIS_PER_TICKS - end_time + start_time);
     }
     close(&appstate);
     return 0;
