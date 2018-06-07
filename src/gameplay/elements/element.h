@@ -3,7 +3,6 @@
 
 #include "../../standard/math/point.h"
 #include "../snake/snake.h"
-#include "../../gameplay/gamestate.h"
 
 #define ELEMENT_APPLE 1
 #define ELEMENT_BOMBE 2
@@ -35,9 +34,9 @@ void element_render(element_t* element, SDL_Renderer* renderer);
 
 void element_render_apple(element_t* element, SDL_Renderer* renderer);
 
-void element_render_bombe(SDL_Renderer* renderer);
+void element_render_bombe(element_t* element, SDL_Renderer* renderer);
 
-void element_render_wall(SDL_Renderer* renderer);
+void element_render_wall(element_t* element, SDL_Renderer* renderer);
 
 void element_load_texture(SDL_Renderer *renderer);
 

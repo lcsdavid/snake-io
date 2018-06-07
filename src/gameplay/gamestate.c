@@ -8,7 +8,7 @@
 
 void gamestate_init(gamestate_t *gamestate) {
     point_t start = {10, 10};
-    gamestate->pommes = 0;
+    gamestate->difficulte = 0;
     snake_init(&gamestate->player_one, &start, 0);
     list_init(&gamestate->elements);
     gamestate->multiplayer = false;
@@ -23,13 +23,38 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);
-        element_render(element, renderer);
+        element->element_render(element, renderer);
         it = iterator_next(it);
     }
     iterator_destroy(it);
 }
 
+bool gestion_collision(gamestate_t *gamestate, element_t *element){
+    gamestate->difficulte += 1;
+    if(element->type == 1){//si c'est une pomme
+        element->element_effect(&gamestate->player_one);
+        element->position = new_point(gamestate);
+        //mettre l'apparition d'obstacles
+    }else if(element->type == 2){
+        if(gamestate->player_one.lenght <= 1){//mort du joueur
+            return false;
+        }
+        element->element_effect(&gamestate->player_one);
+        element->position = new_point(gamestate);
+    }else if(element->type == 3){
+        return false;
+    }
+    if(gamestate->difficulte%3 == 0){//toutes les trois difficulte on fait apparaitre une bombe
+        point_t point = new_point(gamestate);
+        list_push_front(&gamestate->elements, element_create(&point, ELEMENT_BOMBE));
+    }
+    if(gamestate->difficulte%7 == 0){///tous les 7 éléments un mur apparait
+        point_t point = new_point(gamestate);
+        list_push_front(&gamestate->elements, element_create(&point, ELEMENT_WALL));
 
+    }
+    return true;
+}
 
 
 
@@ -48,14 +73,10 @@ bool collision(gamestate_t *gamestate) {
                 point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
                 distance = point_distance(&point, po);
                 if(distance <= 32){
-                    element->element_effect(&gamestate->player_one);
-                    if(element->type == 1){//si c'est une pomme
-                        gamestate->pommes += 1;
-                        //mettre l'apparition d'obstacles
-                        point_t point1 = new_point(gamestate);
-                        list_push_front(&gamestate->elements, element_create(&point1, ELEMENT_APPLE));
+                    if(!gestion_collision(gamestate, element)){
+                        return true;
                     }
-                    list_erase_at(&gamestate->elements, i);
+
                 }
             }
             it = iterator_next(it);

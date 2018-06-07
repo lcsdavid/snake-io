@@ -76,9 +76,9 @@ void snake_diminish(snake_t *snake) {
 
 void snake_change_direction(snake_t *snake, bool gauche) {
     if (gauche)
-        snake_head(snake)->angle -= M_PI / 36;
+        snake_head(snake)->angle -= M_PI / 18;
     else
-        snake_head(snake)->angle += M_PI / 36;
+        snake_head(snake)->angle += M_PI / 18;
 }
 
 bool snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement
@@ -136,7 +136,7 @@ bool snake_self_eating(snake_t *snake) {
     assert(snake);
     snake_node_t *head = snake_head(snake);
     snake_node_t *body_part;
-    for (size_t i = 1; i < snake->lenght; i++) {
+    for (size_t i = 5; i < snake->lenght-1; i++) {
         body_part = list_element_at(&snake->body, i);
         SDL_Log("%p %p Distance %lf", head, body_part, point_distance(&head->position, &body_part->position));
         if (point_distance(&head->position, &body_part->position) < SNAKE_BODY_DIAMETER - 1){
