@@ -23,7 +23,7 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);
-        element_render(element, renderer);
+        element->element_render(element, renderer);
         it = iterator_next(it);
     }
     iterator_destroy(it);

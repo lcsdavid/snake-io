@@ -1,20 +1,21 @@
 #include "element.h"
 #include "../../standard/math/point.h"
 
-SDL_Texture *element_texture;
+SDL_Texture *element_texture_apple;
+SDL_Texture *element_texture_bombe;
 
 void init_apple(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_APPLE;
     element->element_effect = &element_effect_apple;
-    //element->element_render = &element_render_apple;
+    element->element_render = &element_render_apple;
 }
 
 void init_bombe(element_t *element, const point_t* position){
     element->position = *position;
     element->type = ELEMENT_BOMBE;
     element->element_effect = &element_effect_bombe;
-    //element->element_render = &element_render_bombe;
+    element->element_render = &element_render_bombe;
 }
 
 void init_wall(element_t *element, const point_t* position){
@@ -44,17 +45,19 @@ element_t *element_create(const point_t* position, int type) {
     return element;
 }
 
-void element_render(element_t* element, SDL_Renderer* renderer) {
+void element_render_apple(element_t* element, SDL_Renderer* renderer) {
     SDL_Log("%lf %lf", element->position.x, element->position.y);
     SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture, NULL, &dst);
+    SDL_RenderCopy(renderer, element_texture_apple, NULL, &dst);
 }
 
-void element_render_bombe(SDL_Renderer* renderer) {
-    //TODO
+void element_render_bombe(element_t* element, SDL_Renderer* renderer) {
+    SDL_Log("%lf %lf", element->position.x, element->position.y);
+    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
+    SDL_RenderCopy(renderer, element_texture_bombe, NULL, &dst);
 }
 
-void element_render_wall(SDL_Renderer* renderer) {
+void element_render_wall(element_t* element, SDL_Renderer* renderer) {
     //TODO
 }
 
@@ -98,8 +101,19 @@ void element_load_texture(SDL_Renderer *renderer) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
         assert(element_surface);
     }
-    element_texture = SDL_CreateTextureFromSurface(renderer, element_surface);
-    if (!element_texture) {
+    element_texture_apple = SDL_CreateTextureFromSurface(renderer, element_surface);
+    if (!element_texture_apple) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        assert(element_surface);
+    }
+    SDL_FreeSurface(element_surface);
+    element_surface = IMG_Load("../res/element/bombe.png");
+    if (!element_surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        assert(element_surface);
+    }
+    element_texture_bombe = SDL_CreateTextureFromSurface(renderer, element_surface);
+    if (!element_texture_bombe) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         assert(element_surface);
     }
