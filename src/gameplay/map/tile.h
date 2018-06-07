@@ -16,8 +16,6 @@ typedef enum {
     TILE_UNDEFINED
 } tile_t;
 
-
-
 void tile_render(tile_t tile, SDL_Renderer* renderer);
 
 #endif
