@@ -38,11 +38,14 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
         it = iterator_next(it);
     }
     iterator_destroy(it);
+
+    
+
 }
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake) {
     gamestate->difficulte += 1;
-    if (element->type == 1) {//si c'est une pomme
+    if (element->type == ELEMENT_APPLE) {//si c'est une pomme
         element->element_effect(snake);
         point_t point = new_point(gamestate);
         if(gamestate->modeArcade){
@@ -50,13 +53,25 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snak
         }else{
             element->position = point;
         }
-    } else if (element->type == 2) {
+        if(&gamestate->player_one == snake)
+            gamestate->score_player_one += 100;
+        if(&gamestate->player_two == snake)
+            gamestate->score_player_two += 100;
+    } else if (element->type == ELEMENT_BOMBE) {
         if (snake->lenght <= 1) {//mort du joueur
             return false;
         }
         element->element_effect(snake);
         element->position = new_point(gamestate);
-    } else if (element->type == 3) {
+        if(&gamestate->player_one == snake)
+            gamestate->score_player_one -= 50;
+        if(&gamestate->player_two == snake)
+            gamestate->score_player_two -= 50;
+    } else if (element->type == ELEMENT_WALL) {
+        if(&gamestate->player_one == snake)
+            gamestate->score_player_one -= 5000;
+        if(&gamestate->player_two == snake)
+            gamestate->score_player_two -= 5000;
         return false;
     }
     if (gamestate->difficulte % 3 == 0) {//toutes les trois difficulte on fait apparaitre une bombe
