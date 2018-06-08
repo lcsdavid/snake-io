@@ -3,9 +3,22 @@
 
 #include <stdint.h>
 #include <stdio.h>
+
+#ifdef __unix__
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_image.h>
+
+#else
+
 #include <SDL.h>
 #include <SDL_render.h>
 #include <SDL_image.h>
+
+#endif
+
+
 
 #include "../../standard/math/point.h"
 #include "../../standard/collection/list.h"

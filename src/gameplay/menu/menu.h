@@ -3,9 +3,6 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <SDL_surface.h>
-#include <SDL_render.h>
-//#include <SDL_image.h>
 
 #include "button.h"
 #include "../../standard/collection/list.h"

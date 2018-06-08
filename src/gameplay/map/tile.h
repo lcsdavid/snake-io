@@ -3,8 +3,6 @@
 
 #include <assert.h>
 
-#include <SDL_render.h>
-
 #define TILE_SIZE 16
 
 typedef enum {
@@ -15,7 +13,5 @@ typedef enum {
     TILE_WALL,
     TILE_UNDEFINED
 } tile_t;
-
-void tile_render(tile_t tile, SDL_Renderer* renderer);
 
 #endif

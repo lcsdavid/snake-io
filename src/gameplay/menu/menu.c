@@ -1,6 +1,6 @@
 #include "menu.h"
 
-SDL_Texture* menu_texture;
+// SDL_Texture* menu_texture;
 
 menu_t *menu_create(menu_desc_t descriptor, bool displayed) {
     menu_t *menu = calloc(1, sizeof(menu_t));

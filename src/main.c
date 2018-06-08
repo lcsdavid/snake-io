@@ -1,12 +1,21 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <pthread.h>
+#include <time.h>
+
+#ifdef __unix__
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_image.h>
+
+#else
 
 #include <SDL.h>
 #include <SDL_timer.h>
 #include <SDL_image.h>
-#include <time.h>
+
+#endif
 
 #include "gameplay/snake/snake.h"
 #include "standard/math/point.h"
@@ -26,10 +35,11 @@
 #include "gameplay/gamestate.h"
 
 void close(appstate_t *appstate);
+
 void loop(appstate_t *appstate);
 
 static int render_thread(void *arg) {
-    appstate_t* appstate = arg;
+    appstate_t *appstate = arg;
     while (!appstate->end) {
         unsigned int start_time, end_time;
         start_time = SDL_GetTicks();
@@ -45,7 +55,7 @@ static int render_thread(void *arg) {
 }
 
 static int update_thread(void *arg) {
-    appstate_t* appstate = arg;
+    appstate_t *appstate = arg;
     while (!appstate->end) {
         unsigned int start_time, end_time;
         start_time = SDL_GetTicks();
@@ -76,7 +86,7 @@ int main(int argc, char *argv[]) {
         if (end_time - start_time < 5)
             SDL_Delay(5 - end_time + start_time);
     }
-    if(appstate.gamestate.multiplayer) {
+    if (appstate.gamestate.multiplayer) {
         if (appstate.gamestate.player_one.score > appstate.gamestate.player_two.score)
             SDL_Log("Score joueur 1: %ld\nScore joueur 2: %ld\n Joueur 1 gagne!", appstate.gamestate.player_one.score,
                     appstate.gamestate.player_two.score);
