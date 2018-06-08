@@ -35,7 +35,6 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snak
     if(element->type == 1){//si c'est une pomme
         element->element_effect(snake);
         element->position = new_point(gamestate);
-        //mettre l'apparition d'obstacles
     }else if(element->type == 2){
         if(snake->lenght <= 1){//mort du joueur
             return false;
