@@ -1,5 +1,6 @@
 #include "appstate.h"
 #include "gamestate.h"
+#include "../standard/collection/node.h"
 
 SDL_Texture *texture_water;
 TTF_Font *font;
@@ -80,6 +81,12 @@ void input(appstate_t *appstate) {
         snake_grow(&appstate->gamestate.player_one);
     if (state[SDL_GetScancodeFromKey(SDLK_9)]) /* Test diminish() */
         snake_diminish(&appstate->gamestate.player_one);
+    if (state[SDL_GetScancodeFromKey(SDLK_UP)]){
+        snake_node_t * node = (snake_node_t *)appstate->gamestate.player_one.body.front->data;
+        appstate->gamestate.laser1->position = node->position;
+        appstate->gamestate.angle_laser1 = node->angle;
+    }
+
     /* Player Two */
     if (state[SDL_GetScancodeFromKey(SDLK_q)])
         if (appstate->gamestate.multiplayer)

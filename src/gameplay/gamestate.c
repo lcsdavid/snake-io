@@ -147,7 +147,7 @@ bool collision(gamestate_t *gamestate) {
         po->y += SNAKE_BODY_DIAMETER * 2 * sin(angle);
         while(iterator_has_data(it)){
             element_t * element = iterator_data(it);
-            if(element->type != ELEMENT_LASER){
+            if(element->type != ELEMENT_LASER && element->type != ELEMENT_APPLE){//on ignore les autres laser et les autres bombes
                 point_t point = element->position;
                 point.x += 16;
                 point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
