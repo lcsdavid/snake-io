@@ -16,7 +16,7 @@ static bool load_texture(appstate_t *appstate) {
 bool appstate_init(appstate_t *appstate) {
     srand((unsigned int) time(NULL));
 
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init(): %s\n", SDL_GetError());
         return false;
     }
@@ -24,6 +24,14 @@ bool appstate_init(appstate_t *appstate) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init(): %s\n", SDL_GetError());
         return false;
     }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+        return -1;
+    Mix_Music *music = Mix_LoadMUS("../res/music.mp3");
+    if (music == NULL)
+        return false;
+    if (Mix_PlayMusic(music, -1) == -1)
+        return -1;
+
     SDL_Window *window = SDL_CreateWindow("Test SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1200, 800,
                                           SDL_WINDOW_SHOWN);
     if (!window) {

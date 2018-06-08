@@ -3,6 +3,8 @@
 
 #include <time.h>
 
+#include <SDL_mixer.h>
+
 #include "gamestate.h"
 
 typedef struct {

@@ -70,4 +70,5 @@ bool map_load_from_file(map_t* map, char file_path[]) {
         }
     } while(c == EOF);
     fclose(file);
+    return true;
 }
