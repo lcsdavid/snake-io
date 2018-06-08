@@ -39,7 +39,7 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     }
     iterator_destroy(it);
 
-
+    
 
 }
 
