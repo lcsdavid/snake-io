@@ -1,8 +1,10 @@
 #ifndef APPSTATE_H
 #define APPSTATE_H
 
-#include <SDL2/time.h>
-#include <SDL_ttf.h>
+#include <time.h>
+
+#include <SDL2/SDL_ttf.h>
+
 #include "gamestate.h"
 
 typedef struct {

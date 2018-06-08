@@ -1,8 +1,8 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "snake/snake.h"
 #include "elements/element.h"
+#include "snake/snake.h"
 
 typedef struct {
     snake_t player_one;

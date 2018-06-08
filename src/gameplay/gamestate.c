@@ -1,7 +1,5 @@
 #include "gamestate.h"
 
-#include "elements/element.h"
-
 #include "../standard/collection/list_iterator.h"
 #include "../standard/collection/node.h"
 #include "../standard/math/point.h"

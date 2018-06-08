@@ -1,12 +1,11 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <pthread.h>
-
-#include <SDL.h>
-#include <SDL_timer.h>
-#include <SDL_image.h>
 #include <time.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_image.h>
 
 #include "gameplay/snake/snake.h"
 #include "standard/math/point.h"
@@ -15,6 +14,7 @@
 #include "gameplay/elements/element.h"
 #include "standard/collection/node.h"
 
+/* FPS */
 #define FRAME_PER_SEC 60
 #define MILLIS_PER_FRAME 5
 
@@ -23,7 +23,6 @@
 #define MILLIS_PER_TICKS 100
 
 #include "gameplay/appstate.h"
-#include "gameplay/gamestate.h"
 
 void close(appstate_t *appstate);
 void loop(appstate_t *appstate);

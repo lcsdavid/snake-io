@@ -12,7 +12,6 @@ static bool load_texture(appstate_t *appstate) {
     return true;
 }
 
-
 bool appstate_init(appstate_t *appstate) {
     srand((unsigned int) time(NULL));
 
