@@ -16,13 +16,11 @@ void gamestate_init(gamestate_t *gamestate) {
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
     point = new_point(gamestate);
-    point.x = 100;
-    point.y = 100;
+    point.x = 1350;
     element_create(&point, ELEMENT_LASER);
     gamestate->laser1 = element_create(&point, ELEMENT_LASER);
     point = new_point(gamestate);
-    point.x = 100;
-    point.y = 200;
+    point.x = 1250;
     element_create(&point, ELEMENT_LASER);
     gamestate->laser2 = element_create(&point, ELEMENT_LASER);
     gamestate->angle_laser1 = 0;
