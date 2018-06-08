@@ -15,9 +15,15 @@ void gamestate_init(gamestate_t *gamestate) {
     gamestate->multiplayer = false;
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
-    point.x += 1400;
-    point.y += 1400;
-    list_push_front(&gamestate->elements, element_create(&point, ELEMENT_LASER));
+    point.x += 1300;
+    element_create(&point, ELEMENT_LASER);
+    gamestate->laser1 = element_create(&point, ELEMENT_LASER);
+    element_create(&point, ELEMENT_LASER);
+    gamestate->laser2 = element_create(&point, ELEMENT_LASER);
+    gamestate->angle_laser1 = 0;
+    gamestate->angle_laser2 = 0;
+    list_push_front(&gamestate->elements, gamestate->laser1);
+    list_push_front(&gamestate->elements, gamestate->laser2);
 }
 
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
@@ -103,16 +109,16 @@ bool collision(gamestate_t *gamestate) {
         }
         iterator_destroy(it);
     }
-    /*iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     int i = 0;
-    for(int s= 0; s <2; s++){
+    for(int s = 0; s <2; s++){
+        iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         double angle = 0;
         if(s == 0){
-            po = &gamestate->laser1.position;
+            po = &gamestate->laser1->position;
             angle = gamestate->angle_laser1;
         }
         if(s == 1){
-            po = &gamestate->laser2.position;
+            po = &gamestate->laser2->position;
             angle = gamestate->angle_laser2;
         }
 
@@ -129,9 +135,11 @@ bool collision(gamestate_t *gamestate) {
                 po->x += 1250;
             }
             i++;
+            iterator_next(it);
         }
+        iterator_destroy(it);
 
-    }*/
+    }
     return false;
 }
 
