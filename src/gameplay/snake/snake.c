@@ -2,6 +2,7 @@
 
 #include "../../standard/collection/list_iterator.h"
 #include "../../standard/math/point.h"
+#include "SDL.h"
 
 #define MAX_X 1200
 #define MAX_Y 800
@@ -162,7 +163,7 @@ bool snake_load_texture(SDL_Renderer *renderer) {
     return true;
 }
 
-void snake_render(snake_t *snake, SDL_Renderer *renderer) {
+void snake_render(snake_t *snake, SDL_Renderer *renderer, bool secondSnake) {
     assert(snake);
     iterator_t *it = list_iterator_create(&snake->body, START_FRONT);
     SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
