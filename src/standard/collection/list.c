@@ -70,7 +70,7 @@ void list_insert_at(list_t *list, void *element, size_t at) {
 
 void list_erase_at(list_t *list, size_t at) {
     assert(list);
-    if(at < list->size)
+    if(at > list->size)
         return;
     node_t *current_node;
     if(at * 2 <= list->size) {
