@@ -1,10 +1,8 @@
 #include "snake.h"
 
-#include "../../standard/collection/list_iterator.h"
-#include "../../standard/math/point.h"
-
 #define MAX_X 1200
 #define MAX_Y 800
+#define M_PI 3.14159265358979323846264338327950288
 
 SDL_Texture *snake_texture1;
 SDL_Texture *snake_texture2;

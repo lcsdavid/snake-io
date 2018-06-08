@@ -10,6 +10,7 @@
 
 #include "../../standard/math/point.h"
 #include "../../standard/collection/list.h"
+#include "../../standard/collection/list_iterator.h"
 
 #define SNAKE_TEXTURE_SIZE_X 32
 #define SNAKE_TEXTURE_SIZE_Y 32

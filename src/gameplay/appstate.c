@@ -84,6 +84,7 @@ void input(appstate_t *appstate) {
     }
 }
 
+/*
 void affiche_scores(appstate_t *appstate){
 
     TTF_Font *police = NULL;
@@ -102,6 +103,7 @@ void affiche_scores(appstate_t *appstate){
 
     SDL_Flip(appstate->window);
 }
+*/
 
 void render(appstate_t *appstate) {
     SDL_RenderClear(appstate->renderer);

@@ -4,7 +4,7 @@
 rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
 CC = gcc
-CFLAGS = -g -std=c11 -Wall
+CFLAGS = -g --std=c11 -Wall
 EXEC = bin/snake-io
 LIB = -lm -lSDL2 -lSDL2main -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 

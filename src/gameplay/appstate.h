@@ -21,7 +21,9 @@ void input(appstate_t *appstate);
 
 void update(appstate_t *appstate);
 
+/*
 void affiche_scores(appstate_t *appstate);
+*/
 
 void render(appstate_t *appstate);
 

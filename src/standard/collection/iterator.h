@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stddef.h>
 
 typedef struct iterator iterator_t;
 

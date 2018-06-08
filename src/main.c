@@ -75,10 +75,12 @@ int main(int argc, char *argv[]) {
         if (end_time - start_time < 2.5)
             SDL_Delay(2.5 - end_time + start_time);
     }
+    /*
     int i =0;
     while (i<10){
         affiche_scores(&appstate);
     }
+     */
     close(&appstate);
     return 0;
 }
