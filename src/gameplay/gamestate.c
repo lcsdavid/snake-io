@@ -61,6 +61,8 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake) {
     gamestate->difficulte += 1;
+    if(element->type == ELEMENT_WALL)
+        return false;//on termine tout de suite l'application, le snake est mort
     element_effect(element, snake);
     if (element->type == ELEMENT_APPLE) {//si c'est une pomme
         point_t point = new_point(gamestate);
@@ -145,7 +147,7 @@ bool collision(gamestate_t *gamestate) {
             point.x += 16;
             point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
             distance = point_distance(&point, po);
-            if (distance <= 6) {
+            if (distance <= 64) {
                 list_erase_at(&gamestate->elements, i);
                 po->x += 1250;
             }
