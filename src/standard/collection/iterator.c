@@ -54,7 +54,8 @@ iterator_t *iterator_create(iterator_create_state_func create, iterator_destroy_
 }
 
 void iterator_destroy(iterator_t *iterator) {
-    if (iterator && iterator->destroy)
+    assert(iterator);
+    if (iterator->destroy)
         iterator->destroy(iterator->state);
     free(iterator);
 }

@@ -1,4 +1,5 @@
 #include "appstate.h"
+#include "gamestate.h"
 
 SDL_Texture *texture_water;
 
@@ -74,12 +75,22 @@ void input(appstate_t *appstate) {
                     appstate->gamestate.multiplayer = true;
                     point_t start = new_point(&appstate->gamestate);
                     snake_init(&appstate->gamestate.player_two, &start, 0);
+                    point_t point = new_point(&appstate->gamestate);
+                    list_push_back(&appstate->gamestate.elements, element_create(&point, ELEMENT_APPLE));
                 }
-                /* Fullscreen */
-                if (event.key.keysym.sym == SDLK_TAB)
-                    SDL_SetWindowFullscreen(appstate->window,
-                                            SDL_GetWindowFlags(appstate->window) & SDL_WINDOW_FULLSCREEN_DESKTOP ? 0
-                                                                                                                 : SDL_WINDOW_FULLSCREEN_DESKTOP);
+
+            }
+            /* Fullscreen */
+            if (event.key.keysym.sym == SDLK_TAB)
+                SDL_SetWindowFullscreen(appstate->window,
+                                        SDL_GetWindowFlags(appstate->window) & SDL_WINDOW_FULLSCREEN_DESKTOP ? 0
+                                                                                                             : SDL_WINDOW_FULLSCREEN_DESKTOP);
+            if(event.key.keysym.sym == SDLK_a){
+                if(appstate->gamestate.modeArcade){
+                    appstate->gamestate.modeArcade = false;
+                }else{
+                    appstate->gamestate.modeArcade = true;
+                }
             }
         }
     }
