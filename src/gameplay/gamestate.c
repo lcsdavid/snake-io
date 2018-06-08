@@ -72,7 +72,7 @@ static void collision_bis(gamestate_t *gamestate, snake_t *snake) {
     element_t *element = NULL;
     for (size_t i = 0; i < gamestate->elements.size; i++) {
         element = list_element_at(&gamestate->elements, i);
-        if(point_distance(&snake_head(snake)->position, &element->position) < 32) {
+        if(element->type != ELEMENT_LASER && point_distance(&snake_head(snake)->position, &element->position) < 32) {
             element_effect(element, snake);
             if(element->type == ELEMENT_APPLE) {
                 point_t point = new_point(gamestate);
@@ -128,8 +128,7 @@ bool collision(gamestate_t *gamestate) {
                 point.x += 16;
                 point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
                 distance = point_distance(&point, po);
-                if (distance <= 264) {
-                    element->position.x += 15;
+                if (distance <= 64) {
                     list_erase_at(&gamestate->elements, i);
                     po->x += 1250;
                 }

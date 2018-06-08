@@ -94,6 +94,12 @@ void input(appstate_t *appstate) {
     if (state[SDL_GetScancodeFromKey(SDLK_d)])
         if (appstate->gamestate.multiplayer)
             snake_change_direction(&appstate->gamestate.player_two, false);
+
+    if (state[SDL_GetScancodeFromKey(SDLK_SPACE)]){
+        snake_node_t * node = (snake_node_t *)appstate->gamestate.player_two.body.front->data;
+        appstate->gamestate.laser2->position = node->position;
+        appstate->gamestate.angle_laser2 = node->angle;
+    }
     /* New player */
     if (state[SDL_GetScancodeFromKey(SDLK_n)]) {
         if (!appstate->gamestate.multiplayer) {
