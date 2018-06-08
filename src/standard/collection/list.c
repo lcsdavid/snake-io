@@ -29,7 +29,7 @@ void *list_element_at(const list_t *list, size_t at) {
             current_node = current_node->next;
     } else {
         current_node = list->back;
-        for (size_t i = list->size; i > at; i--)
+        for (size_t i = list->size - 1; i > at; i--)
             current_node = current_node->previous;
     }
     return current_node->data;

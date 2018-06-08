@@ -166,7 +166,7 @@ void render(appstate_t *appstate) {
 }
 
 void update(appstate_t *appstate) {
-    appstate->end = gamestate_update(&appstate->gamestate);
+    appstate->end = !gamestate_update(&appstate->gamestate);
 }
 
 
