@@ -30,6 +30,7 @@ void init_laser(element_t *element, const point_t *position){
     element->position = *position;
     element->type = ELEMENT_LASER;
     element->element_render = &element_render_laser;
+    element->element_effect = &element_effect_laser;
 
 }
 
@@ -95,6 +96,10 @@ void element_effect_wall(snake_t *snake) {
     while (snake->lenght < 0) {
         snake_diminish(snake);
     }
+}
+
+void element_effect_laser(snake_t *snake){
+
 }
 
 bool element_load_texture(SDL_Renderer *renderer) {

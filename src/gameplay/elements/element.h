@@ -31,6 +31,8 @@ void element_effect_bombe(snake_t *snake);
 
 void element_effect_wall(snake_t *snake);
 
+void element_effect_laser(snake_t *snake);
+
 void element_render(element_t* element, SDL_Renderer* renderer);
 
 void element_render_apple(element_t* element, SDL_Renderer* renderer);
