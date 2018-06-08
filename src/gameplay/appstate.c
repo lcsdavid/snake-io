@@ -2,6 +2,7 @@
 #include "gamestate.h"
 
 SDL_Texture *texture_water;
+TTF_Font* font;
 
 static bool load_texture(appstate_t *appstate) {
     SDL_Surface *surface = IMG_Load("../res/floor_is_water.png");
@@ -55,6 +56,8 @@ bool appstate_init(appstate_t *appstate) {
 
     if (!load_texture(appstate))
         return false;
+
+    font = TTF_OpenFont("../res/font.ttf", 25);
 
     gamestate_init(&appstate->gamestate);
     return true;
