@@ -85,9 +85,10 @@ bool collision(gamestate_t *gamestate) {
                     if(!gestion_collision(gamestate, element, snake)){
                         return true;
                     }
-
+                    list_erase_at(&gamestate->elements, i);
                 }
             }
+            i++;
             it = iterator_next(it);
         }
     }
