@@ -17,12 +17,7 @@
 
 #endif
 
-#include "gameplay/snake/snake.h"
-#include "standard/math/point.h"
-#include "standard/collection/list_iterator.h"
-#include "standard/collection/list.h"
-#include "gameplay/elements/element.h"
-#include "standard/collection/node.h"
+#include "gameplay/appstate.h"
 
 #define FRAME_PER_SEC 60
 #define MILLIS_PER_FRAME 5
@@ -31,10 +26,7 @@
 #define TICKS_PER_SEC 30
 #define MILLIS_PER_TICKS 100
 
-#include "gameplay/appstate.h"
-#include "gameplay/gamestate.h"
-
-void close(appstate_t *appstate);
+void close_(appstate_t *appstate);
 
 void loop(appstate_t *appstate);
 
@@ -97,11 +89,11 @@ int main(int argc, char *argv[]) {
         SDL_Log("Score joueur 1: %ld", appstate.gamestate.player_one.score);
 
 
-    close(&appstate);
+    close_(&appstate);
     return 0;
 }
 
-void close(appstate_t *appstate) {
+void close_(appstate_t *appstate) {
     SDL_DestroyRenderer(appstate->renderer);
     SDL_DestroyWindow(appstate->window);
     SDL_Quit();

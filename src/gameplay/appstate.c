@@ -128,7 +128,7 @@ static void score_render(appstate_t *appstate) {
     SDL_Color color = {255, 255, 255};
     int width, height, window_width, window_height;
     char buffer[32];
-    ltoa(appstate->gamestate.player_one.score, buffer, 10);
+    snprintf(buffer, sizeof(buffer), "%ld", appstate->gamestate.player_one.score);
     TTF_SizeText(font, buffer, &width, &height);
     SDL_Surface *surface = TTF_RenderText_Solid(font, buffer, color);
     SDL_Texture *score = SDL_CreateTextureFromSurface(appstate->renderer, surface);
@@ -136,7 +136,7 @@ static void score_render(appstate_t *appstate) {
     SDL_Rect dst = {15, 15, width, height};
     SDL_RenderCopy(appstate->renderer, score, NULL, &dst);
 
-    ltoa(appstate->gamestate.player_two.score, buffer, 10);
+    snprintf(buffer, sizeof(buffer), "%ld", appstate->gamestate.player_two.score);
     TTF_SizeText(font, buffer, &width, &height);
     surface = TTF_RenderText_Solid(font, buffer, color);
     score = SDL_CreateTextureFromSurface(appstate->renderer, surface);
