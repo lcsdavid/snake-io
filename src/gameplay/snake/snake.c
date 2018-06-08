@@ -163,7 +163,7 @@ bool snake_load_texture(SDL_Renderer *renderer) {
     return true;
 }
 
-void snake_render(snake_t *snake, SDL_Renderer *renderer, bool secondSnake) {
+void snake_render(snake_t *snake, SDL_Renderer *renderer) {
     assert(snake);
     iterator_t *it = list_iterator_create(&snake->body, START_FRONT);
     SDL_Point center = {SNAKE_TEXTURE_SIZE_X / 2, SNAKE_TEXTURE_SIZE_Y / 2};
