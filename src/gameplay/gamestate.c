@@ -77,10 +77,10 @@ static void collision_bis(gamestate_t *gamestate, snake_t *snake) {
             if(element->type == ELEMENT_APPLE) {
                 point_t point = new_point(gamestate);
                 list_push_back(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
+                list_erase_at(&gamestate->elements, i);
+                i--;
             } else if(element->type == ELEMENT_BOMBE)
                 element->position = new_point(gamestate);
-            list_erase_at(&gamestate->elements, i);
-            i--;
             gamestate->difficulte += 1;
             // Toutes les trois difficulte on fait apparaitre une bombe
             if (gamestate->difficulte % 3 == 0) {
