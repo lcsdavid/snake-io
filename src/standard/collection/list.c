@@ -10,26 +10,26 @@ void list_init(list_t *list) {
 
 /* Access */
 
-void* list_front(const list_t *list) {
+void *list_front(const list_t *list) {
     assert(list && !list_empty(list));
     return list->front->data;
 }
 
-void* list_back(const list_t *list) {
+void *list_back(const list_t *list) {
     assert(list && !list_empty(list));
     return list->back->data;
 }
 
-void* list_element_at(const list_t *list, size_t at) {
+void *list_element_at(const list_t *list, size_t at) {
     assert(list && at < list->size);
     node_t *current_node;
-    if(at * 2 <= list->size) {
+    if (at * 2 <= list->size) {
         current_node = list->front;
-        for(size_t i = 0; i < at; i++)
+        for (size_t i = 0; i < at; i++)
             current_node = current_node->next;
     } else {
         current_node = list->back;
-        for(size_t i = list->size; i > at; i--)
+        for (size_t i = list->size; i > at; i--)
             current_node = current_node->previous;
     }
     return current_node->data;
@@ -70,26 +70,33 @@ void list_insert_at(list_t *list, void *element, size_t at) {
 
 void list_erase_at(list_t *list, size_t at) {
     assert(list);
-    if(at > list->size)
+    if (at > list->size)
         return;
-    node_t *current_node;
-    if(at * 2 <= list->size) {
-        current_node = list->front;
-        for(size_t i = 0; i < at; i++)
-            current_node = current_node->next;
+    if (at == 0) {
+        list_pop_front(list);
+    } else if (at == list->size - 1) {
+        list_pop_back(list);
     } else {
-        current_node = list->back;
-        for(size_t i = list->size; i > at; i--)
-            current_node = current_node->previous;
+        node_t *current_node;
+        if (at * 2 <= list->size) {
+            current_node = list->front;
+            for (size_t i = 0; i < at; i++)
+                current_node = current_node->next;
+        } else {
+            current_node = list->back;
+            for (size_t i = list->size; i > at; i--)
+                current_node = current_node->previous;
+        }
+        current_node->previous->next = current_node->next;
+        current_node->next->previous = current_node->previous;
+        node_delete(current_node);
     }
-    current_node->previous->next = current_node->next;
-    current_node->next->previous = current_node->previous;
-    node_delete(current_node);
 }
+
 
 void list_push_back(list_t *list, void *element) {
     assert(list);
-    if(list->back) {
+    if (list->back) {
         list->back->next = node_create(list->back, NULL, element);
         list->back = list->back->next;
     } else
@@ -113,7 +120,7 @@ void list_pop_back(list_t *list) {
 
 void list_push_front(list_t *list, void *element) {
     assert(list);
-    if(list->front) {
+    if (list->front) {
         list->front->previous = node_create(NULL, list->front, element);
         list->front = list->front->previous;
     } else
@@ -123,10 +130,10 @@ void list_push_front(list_t *list, void *element) {
 
 void list_pop_front(list_t *list) {
     assert(list);
-    if(!list->front)
+    if (!list->front)
         return;
     node_t *pop_front = list->front;
-    if(list->front->next) {
+    if (list->front->next) {
         list->front = list->front->next;
         list->front->previous = NULL;
     } else
@@ -137,9 +144,9 @@ void list_pop_front(list_t *list) {
 
 /* Operations */
 
-void for_each(list_t *list, void (*consumer)(void*)) {
+void for_each(list_t *list, void (*consumer)(void *)) {
     assert(list && consumer);
-    node_t* current_node = list->front;
+    node_t *current_node = list->front;
     while (current_node) {
         consumer(current_node->data);
         current_node = current_node->next;
