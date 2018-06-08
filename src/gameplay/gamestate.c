@@ -6,7 +6,7 @@
 #include "../standard/collection/node.h"
 #include "../standard/math/point.h"
 
-static void collision_bis(gamestate_t*, snake_t*);
+static bool collision_bis(gamestate_t*, snake_t*);
 
 void gamestate_init(gamestate_t *gamestate) {
     point_t start = {10, 10};
@@ -44,8 +44,7 @@ bool gamestate_update(gamestate_t *gamestate) {
     if (gamestate->multiplayer)
         snake_move(&gamestate->player_two);
 
-    collision(gamestate);
-    return true;
+    return !collision(gamestate);
 }
 
 /* Render */
@@ -66,21 +65,27 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 
 }
 
-static void collision_bis(gamestate_t *gamestate, snake_t *snake) {
+static bool collision_bis(gamestate_t *gamestate, snake_t *snake) {
     assert(gamestate);
     snake_self_eating(snake);
     element_t *element = NULL;
     for (size_t i = 0; i < gamestate->elements.size; i++) {
         element = list_element_at(&gamestate->elements, i);
         if(element->type != ELEMENT_LASER && point_distance(&snake_head(snake)->position, &element->position) < 32) {
-            element_effect(element, snake);
             if(element->type == ELEMENT_APPLE) {
                 point_t point = new_point(gamestate);
                 list_push_back(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
                 list_erase_at(&gamestate->elements, i);
                 i--;
-            } else if(element->type == ELEMENT_BOMBE)
+            } else if(element->type == ELEMENT_BOMBE){
+                if(snake->lenght == 1){
+                    return true;// on meurt
+                }
                 element->position = new_point(gamestate);
+            }else if(element->type == ELEMENT_WALL){
+                return true;//on meurt
+            }
+            element_effect(element, snake);
             gamestate->difficulte += 1;
             // Toutes les trois difficulte on fait apparaitre une bombe
             if (gamestate->difficulte % 3 == 0) {
@@ -94,6 +99,7 @@ static void collision_bis(gamestate_t *gamestate, snake_t *snake) {
             }
         }
     }
+    return false; //retourne faux si tout se passe bien
 }
 
 bool collision(gamestate_t *gamestate) {
@@ -101,9 +107,12 @@ bool collision(gamestate_t *gamestate) {
     double distance; // floattant pour mesurer la distance
     point_t *po = (point_t *) gamestate->player_one.body.front->data;
     snake_t *snake = &gamestate->player_one;
-    collision_bis(gamestate, &gamestate->player_one);
-    if (gamestate->multiplayer)
-        collision_bis(gamestate, &gamestate->player_two);
+    if(collision_bis(gamestate, &gamestate->player_one))
+        return  true;
+    if (gamestate->multiplayer){
+        if(collision_bis(gamestate, &gamestate->player_two))
+            return true;
+    }
 
 
     /*int i = 0;
