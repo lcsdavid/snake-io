@@ -86,6 +86,7 @@ void list_erase_at(list_t *list, size_t at) {
         current_node->previous->next = current_node->next;
     if (current_node->next)
         current_node->next->previous = current_node->previous;
+    list->size--;
     node_delete(current_node);
 }
 
