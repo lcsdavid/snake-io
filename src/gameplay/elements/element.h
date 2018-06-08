@@ -38,6 +38,6 @@ void element_render_bombe(element_t* element, SDL_Renderer* renderer);
 
 void element_render_wall(element_t* element, SDL_Renderer* renderer);
 
-void element_load_texture(SDL_Renderer *renderer);
+bool element_load_texture(SDL_Renderer *renderer);
 
 #endif
