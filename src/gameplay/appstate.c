@@ -73,7 +73,7 @@ void input(appstate_t *appstate) {
 
 void render(appstate_t *appstate) {
     SDL_RenderClear(appstate->renderer);
-    SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
+    SDL_SetRenderDrawColor(appstate->renderer, 0, 0, 0, 255);
 
     /* If game running */
     gamestate_render(&appstate->gamestate, appstate->renderer);

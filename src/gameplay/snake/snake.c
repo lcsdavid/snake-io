@@ -2,12 +2,12 @@
 
 #include "../../standard/collection/list_iterator.h"
 #include "../../standard/math/point.h"
-#include "SDL.h"
 
 #define MAX_X 1200
 #define MAX_Y 800
 
-SDL_Texture *snake_texture;
+SDL_Texture *snake_texture1;
+SDL_Texture *snake_texture2;
 
 //
 
@@ -149,13 +149,23 @@ bool snake_self_eating(snake_t *snake) {
 /* SDL */
 
 bool snake_load_texture(SDL_Renderer *renderer) {
-    SDL_Surface *snake_surface = IMG_Load("../res/snake/snake.png");
+    SDL_Surface *snake_surface = IMG_Load("../res/snake/snake1.png");
     if (!snake_surface) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
         return false;
     }
-    snake_texture = SDL_CreateTextureFromSurface(renderer, snake_surface);
-    if (!snake_texture) {
+    snake_texture1 = SDL_CreateTextureFromSurface(renderer, snake_surface);
+    if (!snake_texture1) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        return false;
+    }
+    snake_surface = IMG_Load("../res/snake/snake.png");
+    if (!snake_surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        return false;
+    }
+    snake_texture2 = SDL_CreateTextureFromSurface(renderer, snake_surface);
+    if (!snake_texture2) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         return false;
     }
@@ -179,7 +189,11 @@ void snake_render(snake_t *snake, SDL_Renderer *renderer, bool secondSnake) {
         SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2,
                         snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
                         SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
-        SDL_SetAlpha()
+
+        SDL_Texture *snake_texture;
+        snake_texture = snake_texture1;//on charge la texture du primer snake
+        if(secondSnake)//si c'est le deuxième on charge l'autre
+            snake_texture = snake_texture2;
         if (SDL_RenderCopyEx(renderer, snake_texture, &src, &dst, snake_node->angle * 180 / M_PI + 90, &center,
                              SDL_FLIP_NONE))
             fprintf(stderr, "SDL_RenderCopyEx(): %s\n", SDL_GetError());
