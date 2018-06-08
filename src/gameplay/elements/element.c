@@ -1,49 +1,13 @@
 #include "element.h"
 
-SDL_Texture *element_texture_apple;
-SDL_Texture *element_texture_bombe;
-SDL_Texture *element_texture_wall;
-SDL_Texture *element_texture_laser;
+SDL_Texture **element_textures;
 
-void init_apple(element_t *element, const point_t *position) {
-    element->position = *position;
-    element->type = ELEMENT_APPLE;
-    element->element_effect = &element_effect_apple;
-    element->element_render = &element_render_apple;
-}
-
-void init_bombe(element_t *element, const point_t *position) {
-    element->position = *position;
-    element->type = ELEMENT_BOMBE;
-    element->element_effect = &element_effect_bombe;
-    element->element_render = &element_render_bombe;
-}
-
-void init_wall(element_t *element, const point_t *position) {
-    element->position = *position;
-    element->type = ELEMENT_WALL;
-    element->element_effect = &element_effect_wall;
-    element->element_render = &element_render_wall;
-}
-
-void init_laser(element_t *element, const point_t *position){
-    element->position = *position;
-    element->type = ELEMENT_LASER;
-    element->element_render = &element_render_laser;
-    element->element_effect = &element_effect_laser;
-
-}
+/* Init */
 
 void element_init(element_t *element, const point_t *position, int type) {
     assert(element);
-    if (type == ELEMENT_APPLE)
-        init_apple(element, position);
-    else if (type == ELEMENT_BOMBE)
-        init_bombe(element, position);
-    else if (type == ELEMENT_WALL)
-        init_wall(element, position);
-    else if (type == ELEMENT_LASER)
-        init_laser(element, position);
+    element->position = *position;
+    element->type = type;
 }
 
 element_t *element_create(const point_t *position, int type) {
@@ -56,98 +20,158 @@ element_t *element_create(const point_t *position, int type) {
     return element;
 }
 
-void element_render_apple(element_t *element, SDL_Renderer *renderer) {
-    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture_apple, NULL, &dst);
-}
+/* Effects */
 
-void element_render_bombe(element_t *element, SDL_Renderer *renderer) {
-    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture_bombe, NULL, &dst);
-}
-
-void element_render_wall(element_t *element, SDL_Renderer *renderer) {
-    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture_wall, NULL, &dst);
-}
-
-void element_render_laser(element_t *element, SDL_Renderer *renderer){
-    SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
-    SDL_RenderCopy(renderer, element_texture_laser, NULL, &dst);
-}
-
-void element_effect_apple(snake_t *snake) {
+static void element_effect_apple(snake_t *snake) {
     assert(snake);
     snake_grow(snake);
+    snake->score += 100;
 }
 
-void element_effect_bombe(snake_t *snake) {
+static void element_effect_bombe(snake_t *snake) {
     assert(snake);
     snake_diminish(snake);
+    snake->score -= 50;
 }
 
-void element_effect_wall(snake_t *snake) {
+static void element_effect_wall(snake_t *snake) {
     assert(snake);
-    while (snake->lenght < 0) {
+    while (snake->lenght < 0)
         snake_diminish(snake);
+    snake->lenght -= 1000;
+}
+
+static void element_effect_laser(snake_t *snake) {
+    // TODO
+}
+
+void element_effect(element_t *element, snake_t *snake) {
+    assert(element && snake);
+    switch (element->type) {
+        case ELEMENT_APPLE:
+            element_effect_apple(snake);
+            break;
+        case ELEMENT_BOMBE:
+            element_effect_bombe(snake);
+            break;
+        case ELEMENT_WALL:
+            element_effect_wall(snake);
+            break;
+        case ELEMENT_LASER:
+            element_effect_laser(snake);
+            break;
+        default:
+            break;
     }
 }
 
-void element_effect_laser(snake_t *snake){
+/* Render */
 
+static void element_render_apple(element_t *element, SDL_Renderer *renderer) {
+    assert(element && renderer);
+    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_RenderCopy(renderer, element_textures[ELEMENT_APPLE], NULL, &dst);
 }
+
+static void element_render_bombe(element_t *element, SDL_Renderer *renderer) {
+    assert(element && renderer);
+    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_RenderCopy(renderer, element_textures[ELEMENT_BOMBE], NULL, &dst);
+}
+
+static void element_render_wall(element_t *element, SDL_Renderer *renderer) {
+    assert(element && renderer);
+    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_RenderCopy(renderer, element_textures[ELEMENT_WALL], NULL, &dst);
+}
+
+static void element_render_laser(element_t *element, SDL_Renderer *renderer) {
+    assert(element && renderer);
+    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_RenderCopy(renderer, element_textures[ELEMENT_LASER], NULL, &dst);
+}
+
+void element_render(element_t *element, SDL_Renderer *renderer) {
+    assert(element && renderer);
+    switch (element->type) {
+        case ELEMENT_APPLE:
+            element_render_apple(element, renderer);
+            break;
+        case ELEMENT_BOMBE:
+            element_render_bombe(element, renderer);
+            break;
+        case ELEMENT_WALL:
+            element_render_wall(element, renderer);
+            break;
+        case ELEMENT_LASER:
+            element_render_laser(element, renderer);
+            break;
+        default:
+            break;
+    }
+}
+
+/* Load textures */
 
 bool element_load_texture(SDL_Renderer *renderer) {
     assert(renderer);
-    SDL_Surface *element_surface = IMG_Load("../res/element/apple.png");
-    if (!element_surface) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
-        return false;
-    }
-    element_texture_apple = SDL_CreateTextureFromSurface(renderer, element_surface);
-    if (!element_texture_apple) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
-        return false;
-    }
-    SDL_FreeSurface(element_surface);
-
-    // Chargement des bombes
-    element_surface = IMG_Load("../res/element/bombe.png");
-    if (!element_surface) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
-        return false;
-    }
-    element_texture_bombe = SDL_CreateTextureFromSurface(renderer, element_surface);
-    if (!element_texture_bombe) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
-        return false;
-    }
-    SDL_FreeSurface(element_surface);
-
-    // Chargement des murs
-    element_surface = IMG_Load("../res/element/wall.png");
-    if (!element_surface) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
-        return false;
-    }
-    element_texture_wall = SDL_CreateTextureFromSurface(renderer, element_surface);
-    if (!element_texture_wall) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+    element_textures = calloc(4, sizeof(SDL_Surface *));
+    if (!element_textures) {
+        perror("calloc():");
         return false;
     }
 
-    // Chargement des laser
-    element_surface = IMG_Load("../res/element/laser.png");
-    if (!element_surface) {
+    /* ELEMENT APPLE */
+    SDL_Surface *surface = IMG_Load("../res/element/apple.png");
+    if (!surface) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
         return false;
     }
-    element_texture_laser = SDL_CreateTextureFromSurface(renderer, element_surface);
-    if (!element_texture_laser) {
+    element_textures[ELEMENT_APPLE] = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!element_textures[ELEMENT_APPLE]) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
         return false;
     }
-    SDL_FreeSurface(element_surface);
+    SDL_FreeSurface(surface);
+
+    /* ELEMENT BOMBE */
+    surface = IMG_Load("../res/element/bombe.png");
+    if (!surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        return false;
+    }
+    element_textures[ELEMENT_BOMBE] = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!element_textures[ELEMENT_BOMBE]) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        return false;
+    }
+    SDL_FreeSurface(surface);
+
+    /* ELEMENT WALL */
+    surface = IMG_Load("../res/element/wall.png");
+    if (!surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        return false;
+    }
+    element_textures[ELEMENT_WALL] = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!element_textures[ELEMENT_WALL]) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        return false;
+    }
+    SDL_FreeSurface(surface);
+
+    /* ELEMENT LASER */
+    surface = IMG_Load("../res/element/laser.png");
+    if (!surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_LoadBMP(): %s\n", SDL_GetError());
+        return false;
+    }
+    element_textures[ELEMENT_LASER] = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!element_textures[ELEMENT_LASER]) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTextureFromSurface(): %s\n", SDL_GetError());
+        return false;
+    }
+    SDL_FreeSurface(surface);
     return true;
 }
 

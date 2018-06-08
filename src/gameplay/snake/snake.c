@@ -185,8 +185,8 @@ void snake_render(snake_t *snake, SDL_Renderer *renderer, bool secondSnake) {
             src = (SDL_Rect){100, 0, 50, 50};
         else
             src = (SDL_Rect){50, 0, 50, 50};
-        SDL_Rect dst = {snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2,
-                        snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2,
+        SDL_Rect dst = {(int) (snake_node->position.x - SNAKE_TEXTURE_SIZE_X / 2),
+                        (int) (snake_node->position.y - SNAKE_TEXTURE_SIZE_Y / 2),
                         SNAKE_TEXTURE_SIZE_X, SNAKE_TEXTURE_SIZE_Y};
         SDL_Texture *snake_texture;
         snake_texture = snake_texture1;//on charge la texture du primer snake

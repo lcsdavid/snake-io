@@ -77,14 +77,14 @@ int main(int argc, char *argv[]) {
             SDL_Delay(5 - end_time + start_time);
     }
     if(appstate.gamestate.multiplayer) {
-        if (appstate.gamestate.score_player_one > appstate.gamestate.score_player_two)
-            SDL_Log("Score joueur 1: %ld\nScore joueur 2: %ld\n Joueur 1 gagne!", appstate.gamestate.score_player_one,
-                    appstate.gamestate.score_player_two);
+        if (appstate.gamestate.player_one.score > appstate.gamestate.player_two.score)
+            SDL_Log("Score joueur 1: %ld\nScore joueur 2: %ld\n Joueur 1 gagne!", appstate.gamestate.player_one.score,
+                    appstate.gamestate.player_two.score);
         else
-            SDL_Log("Score joueur 1: %ld\nScore joueur 2: %ld\n Joueur 2 gagne!", appstate.gamestate.score_player_one,
-                    appstate.gamestate.score_player_two);
+            SDL_Log("Score joueur 1: %ld\nScore joueur 2: %ld\n Joueur 2 gagne!", appstate.gamestate.player_one.score,
+                    appstate.gamestate.player_two.score);
     } else
-        SDL_Log("Score joueur 1: %ld", appstate.gamestate.score_player_one);
+        SDL_Log("Score joueur 1: %ld", appstate.gamestate.player_one.score);
 
 
     close(&appstate);
