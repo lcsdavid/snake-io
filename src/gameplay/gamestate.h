@@ -12,6 +12,10 @@ typedef struct {
     bool gameover;
     int difficulte;
     bool modeArcade;
+    element_t laser1;
+    double angle_laser1;
+    element_t laser2;
+    double angle_laser2;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);

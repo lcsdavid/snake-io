@@ -15,6 +15,9 @@ void gamestate_init(gamestate_t *gamestate) {
     gamestate->multiplayer = false;
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
+    point.x += 1400;
+    point.y += 1400;
+    list_push_front(&gamestate->elements, element_create(&point, ELEMENT_LASER));
 }
 
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
@@ -99,6 +102,35 @@ bool collision(gamestate_t *gamestate) {
             i++;
         }
         iterator_destroy(it);
+    }
+    iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
+    int i = 0;
+    for(int s= 0; s <2; s++){
+        double angle = 0;
+        if(s == 0){
+            po = &gamestate->laser1.position;
+            angle = gamestate->angle_laser1;
+        }
+        if(s == 1){
+            po = &gamestate->laser2.position;
+            angle = gamestate->angle_laser2;
+        }
+
+        po->x += SNAKE_BODY_DIAMETER * 2 * cos(angle);
+        po->y += SNAKE_BODY_DIAMETER * 2 * sin(angle);
+        while(iterator_has_data(it)){
+            element_t * element = iterator_data(it);
+            point_t point = element->position;
+            point.x += 16;
+            point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
+            distance = point_distance(&point, po);
+            if (distance <= 64) {
+                list_erase_at(&gamestate->elements, i);
+                po->x += 1250;
+            }
+            i++;
+        }
+
     }
     return false;
 }
