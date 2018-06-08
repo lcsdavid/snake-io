@@ -81,7 +81,7 @@ void snake_change_direction(snake_t *snake, bool gauche) {
         snake_head(snake)->angle += M_PI / 100;
 }
 
-bool snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement
+bool snake_move(snake_t *snake) {
     snake_node_t *prev_node, *current_node;
     iterator_t *it = list_iterator_create(&snake->body, START_BACK);
     prev_node = iterator_data(it);
