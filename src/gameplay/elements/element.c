@@ -69,25 +69,25 @@ void element_effect(element_t *element, snake_t *snake) {
 
 static void element_render_apple(element_t *element, SDL_Renderer *renderer) {
     assert(element && renderer);
-    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_Rect dst = {(int) element->position.x - 16, (int) element->position.y - 16, 32, 32};
     SDL_RenderCopy(renderer, element_textures[ELEMENT_APPLE], NULL, &dst);
 }
 
 static void element_render_bombe(element_t *element, SDL_Renderer *renderer) {
     assert(element && renderer);
-    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_Rect dst = {(int) element->position.x - 16, (int) element->position.y - 16, 32, 32};
     SDL_RenderCopy(renderer, element_textures[ELEMENT_BOMBE], NULL, &dst);
 }
 
 static void element_render_wall(element_t *element, SDL_Renderer *renderer) {
     assert(element && renderer);
-    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_Rect dst = {(int) element->position.x - 16, (int) element->position.y - 16, 32, 32};
     SDL_RenderCopy(renderer, element_textures[ELEMENT_WALL], NULL, &dst);
 }
 
 static void element_render_laser(element_t *element, SDL_Renderer *renderer) {
     assert(element && renderer);
-    SDL_Rect dst = {(int) element->position.x, (int) element->position.y, 32, 32};
+    SDL_Rect dst = {(int) element->position.x - 16, (int) element->position.y  - 16, 32, 32};
     SDL_RenderCopy(renderer, element_textures[ELEMENT_LASER], NULL, &dst);
 }
 
