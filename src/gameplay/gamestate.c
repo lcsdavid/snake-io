@@ -16,11 +16,9 @@ void gamestate_init(gamestate_t *gamestate) {
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
     point = new_point(gamestate);
-    point.x = 1250;
     element_create(&point, ELEMENT_LASER);
     gamestate->laser1 = element_create(&point, ELEMENT_LASER);
     point = new_point(gamestate);
-    point.x = 1350;
     element_create(&point, ELEMENT_LASER);
     gamestate->laser2 = element_create(&point, ELEMENT_LASER);
     gamestate->angle_laser1 = 0;
@@ -74,6 +72,7 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snak
             element->position = point;
         }
     } else if (element->type == ELEMENT_BOMBE) {
+
         element->position = new_point(gamestate);
     }
 
@@ -87,6 +86,7 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snak
         point_t point = new_point(gamestate);
         list_push_front(&gamestate->elements, element_create(&point, ELEMENT_WALL));
     }
+
     return true;
 }
 
@@ -145,13 +145,15 @@ bool collision(gamestate_t *gamestate) {
         po->y += SNAKE_BODY_DIAMETER * 2 * sin(angle);
         while(iterator_has_data(it)){
             element_t * element = iterator_data(it);
-            point_t point = element->position;
-            point.x += 16;
-            point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
-            distance = point_distance(&point, po);
-            if (&point != po && distance <= 64) {
-                //list_erase_at(&gamestate->elements, i);
-                po->x += 1250;
+            if(element->type != ELEMENT_LASER){
+                point_t point = element->position;
+                point.x += 16;
+                point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
+                distance = point_distance(&point, po);
+                if (distance <= 64) {
+                    list_erase_at(&gamestate->elements, i);
+                    po->x += 1250;
+                }
             }
             i++;
             iterator_next(it);
