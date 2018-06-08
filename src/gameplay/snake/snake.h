@@ -57,6 +57,6 @@ bool snake_load_texture(SDL_Renderer *renderer);
 
 void snake_free_texture(SDL_Renderer *renderer);
 
-void snake_render(snake_t *snake, SDL_Renderer *renderer, bool secondSnake);
+void snake_render(snake_t *snake, SDL_Renderer *renderer);
 
 #endif
