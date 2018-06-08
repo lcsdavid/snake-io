@@ -10,7 +10,6 @@ typedef struct {
     list_t elements;
     bool multiplayer;
     bool gameover;
-    bool fullscreen;
     int difficulte;
 } gamestate_t;
 

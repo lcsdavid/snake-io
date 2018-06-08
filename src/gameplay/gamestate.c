@@ -12,7 +12,6 @@ void gamestate_init(gamestate_t *gamestate) {
     snake_init(&gamestate->player_one, &start, 0);
     list_init(&gamestate->elements);
     gamestate->multiplayer = false;
-    gamestate->fullscreen = false;
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
 }
