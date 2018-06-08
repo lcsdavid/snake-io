@@ -1,5 +1,4 @@
 #include "appstate.h"
-#include "gamestate.h"
 
 SDL_Texture *texture_water;
 
@@ -52,48 +51,45 @@ void input(appstate_t *appstate) {
     if (SDL_PollEvent(&event)) {
         if (event.type == SDL_WINDOWEVENT_CLOSE || event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE)
             appstate->end = true;
-        if (event.type == SDL_KEYDOWN) {
-            /* Player One */
-            if (event.key.keysym.sym == SDLK_LEFT)
-                snake_change_direction(&appstate->gamestate.player_one, true);
-            if (event.key.keysym.sym == SDLK_RIGHT)
-                snake_change_direction(&appstate->gamestate.player_one, false);
-            if (event.key.keysym.sym == SDLK_8) /* Test grow() */
-                snake_grow(&appstate->gamestate.player_one);
-            if (event.key.keysym.sym == SDLK_9) /* Test diminish() */
-                snake_diminish(&appstate->gamestate.player_one);
-            /* Player Two */
-            if (event.key.keysym.sym == SDLK_q)
-                if (appstate->gamestate.multiplayer)
-                    snake_change_direction(&appstate->gamestate.player_two, true);
-            if (event.key.keysym.sym == SDLK_d)
-                if (appstate->gamestate.multiplayer)
-                    snake_change_direction(&appstate->gamestate.player_two, false);
-            /* New player */
-            if (event.key.keysym.sym == SDLK_n) {
-                if (!appstate->gamestate.multiplayer) {
-                    appstate->gamestate.multiplayer = true;
-                    point_t start = new_point(&appstate->gamestate);
-                    snake_init(&appstate->gamestate.player_two, &start, 0);
-                    point_t point = new_point(&appstate->gamestate);
-                    list_push_back(&appstate->gamestate.elements, element_create(&point, ELEMENT_APPLE));
-                }
-
-            }
-            /* Fullscreen */
-            if (event.key.keysym.sym == SDLK_TAB)
-                SDL_SetWindowFullscreen(appstate->window,
-                                        SDL_GetWindowFlags(appstate->window) & SDL_WINDOW_FULLSCREEN_DESKTOP ? 0
-                                                                                                             : SDL_WINDOW_FULLSCREEN_DESKTOP);
-            if(event.key.keysym.sym == SDLK_a){
-                if(appstate->gamestate.modeArcade){
-                    appstate->gamestate.modeArcade = false;
-                }else{
-                    appstate->gamestate.modeArcade = true;
-                }
-            }
+    }
+    const Uint8 *state = SDL_GetKeyboardState(NULL);
+    /* Player One */
+    if (state[SDL_GetScancodeFromKey(SDLK_LEFT)])
+        snake_change_direction(&appstate->gamestate.player_one, true);
+    if (state[SDL_GetScancodeFromKey(SDLK_RIGHT)])
+        snake_change_direction(&appstate->gamestate.player_one, false);
+    if (state[SDL_GetScancodeFromKey(SDLK_8)]) /* Test grow() */
+        snake_grow(&appstate->gamestate.player_one);
+    if (state[SDL_GetScancodeFromKey(SDLK_9)]) /* Test diminish() */
+        snake_diminish(&appstate->gamestate.player_one);
+    /* Player Two */
+    if (state[SDL_GetScancodeFromKey(SDLK_q)])
+        if (appstate->gamestate.multiplayer)
+            snake_change_direction(&appstate->gamestate.player_two, true);
+    if (state[SDL_GetScancodeFromKey(SDLK_d)])
+        if (appstate->gamestate.multiplayer)
+            snake_change_direction(&appstate->gamestate.player_two, false);
+    /* New player */
+    if (state[SDL_GetScancodeFromKey(SDLK_n)]) {
+        if (!appstate->gamestate.multiplayer) {
+            appstate->gamestate.multiplayer = true;
+            point_t start = new_point(&appstate->gamestate);
+            snake_init(&appstate->gamestate.player_two, &start, 0);
         }
     }
+    if (state[SDL_GetScancodeFromKey(SDLK_a)]) {
+        if (appstate->gamestate.modeArcade) {
+            appstate->gamestate.modeArcade = false;
+        } else {
+            appstate->gamestate.modeArcade = true;
+        }
+    }
+    /* Fullscreen */
+    if (state[SDL_GetScancodeFromKey(SDLK_TAB)])
+        SDL_SetWindowFullscreen(appstate->window,
+                                SDL_GetWindowFlags(appstate->window) & SDL_WINDOW_FULLSCREEN_DESKTOP ? 0
+                                                                                                     : SDL_WINDOW_FULLSCREEN_DESKTOP);
+
 }
 
 void render(appstate_t *appstate) {
