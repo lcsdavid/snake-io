@@ -109,7 +109,7 @@ bool collision(gamestate_t *gamestate) {
         }
         iterator_destroy(it);
     }
-    int i = 0;
+    /*int i = 0;
     for(int s = 0; s <2; s++){
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         double angle = 0;
@@ -139,7 +139,7 @@ bool collision(gamestate_t *gamestate) {
         }
         iterator_destroy(it);
 
-    }
+    }*/
     return false;
 }
 
