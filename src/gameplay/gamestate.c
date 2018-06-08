@@ -31,17 +31,17 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     iterator_destroy(it);
 }
 
-bool gestion_collision(gamestate_t *gamestate, element_t *element){
+bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake){
     gamestate->difficulte += 1;
     if(element->type == 1){//si c'est une pomme
-        element->element_effect(&gamestate->player_one);
+        element->element_effect(snake);
         element->position = new_point(gamestate);
         //mettre l'apparition d'obstacles
     }else if(element->type == 2){
-        if(gamestate->player_one.lenght <= 1){//mort du joueur
+        if(snake->lenght <= 1){//mort du joueur
             return false;
         }
-        element->element_effect(&gamestate->player_one);
+        element->element_effect(snake);
         element->position = new_point(gamestate);
     }else if(element->type == 3){
         return false;
@@ -64,7 +64,15 @@ bool collision(gamestate_t *gamestate) {
     assert(gamestate);
     double distance; // floattant pour mesurer la distance
     point_t *po = (point_t *)gamestate->player_one.body.front->data;
-    for(int s = 0; s < 1; s++) {
+    snake_t *snake = &gamestate->player_one;
+    int limite = 1;
+    if(gamestate->multiplayer)//on stock le nombre de serpents que l'on doit parcourird
+        limite = 2;
+    for(int s = 0; s < limite; s++) {
+        if(s == 1){
+            po = (point_t *)gamestate->player_two.body.front->data;
+            snake = &gamestate->player_two;
+        }
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         while (iterator_has_data(it)) {
             element_t *element = iterator_data(it);
@@ -74,7 +82,7 @@ bool collision(gamestate_t *gamestate) {
                 point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
                 distance = point_distance(&point, po);
                 if(distance <= 32){
-                    if(!gestion_collision(gamestate, element)){
+                    if(!gestion_collision(gamestate, element, snake)){
                         return true;
                     }
 

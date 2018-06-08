@@ -20,7 +20,7 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer);
 
 bool collision(gamestate_t *gamestate);
 
-bool gestion_collision(gamestate_t *gamestate, element_t *element);
+bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake);
 
 bool point_taken(const gamestate_t* gamestate, const point_t* point);
 
