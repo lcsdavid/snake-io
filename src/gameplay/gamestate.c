@@ -73,8 +73,8 @@ bool collision(gamestate_t *gamestate) {
             snake = &gamestate->player_two;
         }
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
-        int i =0;
-        while (iterator_has_data(it)) {
+        int i = 0;
+        while (it && iterator_has_data(it)) {
             element_t *element = iterator_data(it);
             if(&element->position != po){ //si on a bien affaire a deux points différents
                 point_t point = element->position;
