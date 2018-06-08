@@ -42,9 +42,7 @@ bool gamestate_update(gamestate_t *gamestate) {
     if (gamestate->multiplayer)
         snake_move(&gamestate->player_two);
 
-    collision_bis(gamestate, &gamestate->player_one);
-    if (gamestate->multiplayer)
-        collision_bis(gamestate, &gamestate->player_two);
+    collision(gamestate);
     return true;
 }
 
