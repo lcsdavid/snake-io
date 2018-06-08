@@ -77,9 +77,11 @@ void input(appstate_t *appstate) {
                         appstate->gamestate.multiplayer = true;
                         point_t start = new_point(&appstate->gamestate);
                         snake_init(&appstate->gamestate.player_two, &start, 0);
+                        break;
                     case SDLK_q:
                         if(appstate->gamestate.multiplayer)
                             snake_change_direction(&appstate->gamestate.player_two, true);
+                        break;
                     case SDLK_d:
                         if(appstate->gamestate.multiplayer)
                             snake_change_direction(&appstate->gamestate.player_two, false);
