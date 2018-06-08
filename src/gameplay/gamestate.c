@@ -17,9 +17,9 @@ void gamestate_init(gamestate_t *gamestate) {
 }
 
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
-    snake_render(&gamestate->player_one, renderer);
+    snake_render(&gamestate->player_one, renderer, false);
     if(gamestate->multiplayer)
-        snake_render(&gamestate->player_two, renderer);
+        snake_render(&gamestate->player_two, renderer, true);
 
     iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {

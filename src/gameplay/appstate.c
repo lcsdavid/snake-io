@@ -7,12 +7,10 @@ static bool load_texture(appstate_t *appstate) {
     texture_water = SDL_CreateTextureFromSurface(appstate->renderer, surface);
     if (!snake_load_texture(appstate->renderer))
         return false;
-    if(!element_load_texture(appstate->renderer))
+    if (!element_load_texture(appstate->renderer))
         return false;
     return true;
 }
-
-
 
 
 bool appstate_init(appstate_t *appstate) {
@@ -41,12 +39,10 @@ bool appstate_init(appstate_t *appstate) {
     appstate->renderer = renderer;
     appstate->end = false;
 
-    if(!load_texture(appstate))
+    if (!load_texture(appstate))
         return false;
 
     gamestate_init(&appstate->gamestate);
-
-
     return true;
 }
 
@@ -73,24 +69,24 @@ void input(appstate_t *appstate) {
                 if (appstate->gamestate.multiplayer)
                     snake_change_direction(&appstate->gamestate.player_two, false);
             /* New player */
-            if (event.key.keysym.sym == SDLK_KP_ENTER) {
-                appstate->gamestate.multiplayer = true;
-                point_t start = new_point(&appstate->gamestate);
-                snake_init(&appstate->gamestate.player_two, &start, 0);
+            if (event.key.keysym.sym == SDLK_n) {
+                if (!appstate->gamestate.multiplayer) {
+                    appstate->gamestate.multiplayer = true;
+                    point_t start = new_point(&appstate->gamestate);
+                    snake_init(&appstate->gamestate.player_two, &start, 0);
+                }
+                /* Fullscreen */
+                if (event.key.keysym.sym == SDLK_TAB)
+                    SDL_SetWindowFullscreen(appstate->window,
+                                            SDL_GetWindowFlags(appstate->window) & SDL_WINDOW_FULLSCREEN_DESKTOP ? 0
+                                                                                                                 : SDL_WINDOW_FULLSCREEN_DESKTOP);
             }
-            /* Fullscreen */
-            if (event.key.keysym.sym == SDLK_TAB)
-                SDL_SetWindowFullscreen(appstate->window,
-                                        SDL_GetWindowFlags(appstate->window) & SDL_WINDOW_FULLSCREEN_DESKTOP ? 0
-                                                                                                             : SDL_WINDOW_FULLSCREEN_DESKTOP);
         }
     }
 }
 
 void render(appstate_t *appstate) {
     SDL_RenderClear(appstate->renderer);
-    //SDL_SetRenderDrawColor(appstate->renderer, 15, 78, 234, 255);
-
     SDL_Rect dst;
     for (int i = 0; i < 75; i++) {
         for (int j = 0; j < 50; j++) {
@@ -103,7 +99,6 @@ void render(appstate_t *appstate) {
     gamestate_render(&appstate->gamestate, appstate->renderer);
 
     SDL_RenderPresent(appstate->renderer);
-    //TODO ajouter un deuxieme joueur et les différents éléments
 }
 
 void update(appstate_t *appstate) {
