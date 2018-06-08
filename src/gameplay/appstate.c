@@ -1,4 +1,5 @@
 #include "appstate.h"
+#include "gamestate.h"
 
 SDL_Texture *texture_water;
 
@@ -87,6 +88,8 @@ void input(appstate_t *appstate) {
         if (!appstate->gamestate.multiplayer) {
             appstate->gamestate.multiplayer = true;
             point_t start = new_point(&appstate->gamestate);
+            point_t point = new_point(&appstate->gamestate);
+            list_push_front(&appstate->gamestate.elements, element_create(&point, ELEMENT_APPLE));
             snake_init(&appstate->gamestate.player_two, &start, 0);
         }
     }
