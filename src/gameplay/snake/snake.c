@@ -3,6 +3,7 @@
 #include "../../standard/collection/list_iterator.h"
 #include "../../standard/math/point.h"
 
+#define M_PI 3.14159265358979323846
 #define MAX_X 1200
 #define MAX_Y 800
 
