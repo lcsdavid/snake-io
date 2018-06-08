@@ -16,8 +16,6 @@ typedef struct {
     double angle_laser1;
     element_t *laser2;
     double angle_laser2;
-
-    long score_player_one, score_player_two;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);

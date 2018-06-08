@@ -25,17 +25,20 @@ element_t *element_create(const point_t *position, int type) {
 static void element_effect_apple(snake_t *snake) {
     assert(snake);
     snake_grow(snake);
+    snake->score += 100;
 }
 
 static void element_effect_bombe(snake_t *snake) {
     assert(snake);
     snake_diminish(snake);
+    snake->score -= 50;
 }
 
 static void element_effect_wall(snake_t *snake) {
     assert(snake);
     while (snake->lenght < 0)
         snake_diminish(snake);
+    snake->lenght -= 1000;
 }
 
 static void element_effect_laser(snake_t *snake) {

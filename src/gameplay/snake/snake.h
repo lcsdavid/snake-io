@@ -19,6 +19,7 @@
 typedef struct snake {
     list_t body;
     unsigned char lenght;
+    long score;
 } snake_t ;
 
 typedef struct snake_node {

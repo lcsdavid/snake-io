@@ -26,25 +26,21 @@ void gamestate_init(gamestate_t *gamestate) {
     list_push_front(&gamestate->elements, gamestate->laser2);
 }
 
-bool gamestate_update(gamestate_t* gamestate) {
-    if(gamestate->player_one.lenght < 1)
+bool gamestate_update(gamestate_t *gamestate) {
+    if (gamestate->player_one.lenght < 1)
         return false;
-    if(gamestate->multiplayer)
-        if(gamestate->player_two.lenght < 1)
+    if (gamestate->multiplayer)
+        if (gamestate->player_two.lenght < 1)
             return false;
 
     snake_move(&gamestate->player_one);
-    if(gamestate->multiplayer)
+    if (gamestate->multiplayer)
         snake_move(&gamestate->player_two);
 
     return collision(gamestate);
 }
 
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
-    snake_render(&gamestate->player_one, renderer, false);
-    if (gamestate->multiplayer)
-        snake_render(&gamestate->player_two, renderer, true);
-
     iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);
@@ -52,6 +48,12 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
         it = iterator_next(it);
     }
     iterator_destroy(it);
+
+    snake_render(&gamestate->player_one, renderer, false);
+    if (gamestate->multiplayer)
+        snake_render(&gamestate->player_two, renderer, true);
+
+
 }
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake) {
@@ -59,39 +61,24 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snak
     element_effect(element, snake);
     if (element->type == ELEMENT_APPLE) {//si c'est une pomme
         point_t point = new_point(gamestate);
-        if(gamestate->modeArcade){
+        if (gamestate->modeArcade) {
             list_push_back(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
-        }else{
+        } else {
             element->position = point;
         }
-        if(&gamestate->player_one == snake)
-            gamestate->score_player_one += 100;
-        if(&gamestate->player_two == snake)
-            gamestate->score_player_two += 100;
     } else if (element->type == ELEMENT_BOMBE) {
-        if (snake->lenght <= 1) {//mort du joueur
-            return false;
-        }
         element->position = new_point(gamestate);
-        if(&gamestate->player_one == snake)
-            gamestate->score_player_one -= 50;
-        if(&gamestate->player_two == snake)
-            gamestate->score_player_two -= 50;
-    } else if (element->type == ELEMENT_WALL) {
-        if(&gamestate->player_one == snake)
-            gamestate->score_player_one -= 5000;
-        if(&gamestate->player_two == snake)
-            gamestate->score_player_two -= 5000;
-        return false;
     }
-    if (gamestate->difficulte % 3 == 0) {//toutes les trois difficulte on fait apparaitre une bombe
+
+    // Toutes les trois difficulte on fait apparaitre une bombe
+    if (gamestate->difficulte % 3 == 0) {
         point_t point = new_point(gamestate);
         list_push_front(&gamestate->elements, element_create(&point, ELEMENT_BOMBE));
     }
-    if (gamestate->difficulte % 7 == 0) {///tous les 7 éléments un mur apparait
+    // Tous les 7 éléments un mur apparait
+    if (gamestate->difficulte % 7 == 0) {
         point_t point = new_point(gamestate);
         list_push_front(&gamestate->elements, element_create(&point, ELEMENT_WALL));
-
     }
     return true;
 }
@@ -124,7 +111,7 @@ bool collision(gamestate_t *gamestate) {
                     if (!gestion_collision(gamestate, element, snake)) {
                         return true;
                     }
-                    if(gamestate->modeArcade) {
+                    if (gamestate->modeArcade) {
                         list_erase_at(&gamestate->elements, i);
                         i--;
                     }

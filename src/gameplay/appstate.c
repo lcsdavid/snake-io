@@ -57,8 +57,6 @@ bool appstate_init(appstate_t *appstate) {
     if (!load_texture(appstate))
         return false;
 
-    appstate->gamestate.score_player_one = appstate->gamestate.score_player_two = 0;
-
     font = TTF_OpenFont("../res/font.ttf", 25);
 
     gamestate_init(&appstate->gamestate);
@@ -125,7 +123,7 @@ void render(appstate_t *appstate) {
 
     /* If game running */
     gamestate_render(&appstate->gamestate, appstate->renderer);
-
+/*
     SDL_Color color = {255, 255, 255};
     int w1, h1, w2, h2;
     char buffer[32];
@@ -146,7 +144,7 @@ void render(appstate_t *appstate) {
     SDL_Rect rect2 = {w - w2 - 15, 15, w2, h2};
 
     SDL_RenderCopy(appstate->renderer, score1, NULL, &rect1);
-    SDL_RenderCopy(appstate->renderer, score2, NULL, &rect2);
+    SDL_RenderCopy(appstate->renderer, score2, NULL, &rect2);*/
 
     SDL_RenderPresent(appstate->renderer);
 }
