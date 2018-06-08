@@ -2,7 +2,7 @@
 #include "gamestate.h"
 
 SDL_Texture *texture_water;
-TTF_Font* font;
+TTF_Font *font;
 
 static bool load_texture(appstate_t *appstate) {
     SDL_Surface *surface = IMG_Load("../res/floor_is_water.png");
@@ -13,7 +13,6 @@ static bool load_texture(appstate_t *appstate) {
         return false;
     return true;
 }
-
 
 bool appstate_init(appstate_t *appstate) {
     srand((unsigned int) time(NULL));
@@ -66,10 +65,12 @@ bool appstate_init(appstate_t *appstate) {
 void input(appstate_t *appstate) {
     SDL_Event event;
     if (SDL_PollEvent(&event)) {
-        if (event.type == SDL_WINDOWEVENT_CLOSE || event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE)
+        if (event.type == SDL_WINDOWEVENT_CLOSE || event.type == SDL_QUIT)
             appstate->end = true;
     }
     const Uint8 *state = SDL_GetKeyboardState(NULL);
+    if (state[SDL_GetScancodeFromKey(SDLK_ESCAPE)])
+        appstate->end = true;
     /* Player One */
     if (state[SDL_GetScancodeFromKey(SDLK_LEFT)])
         snake_change_direction(&appstate->gamestate.player_one, true);
@@ -111,40 +112,48 @@ void input(appstate_t *appstate) {
 
 }
 
-void render(appstate_t *appstate) {
-    SDL_RenderClear(appstate->renderer);
+static void score_render(appstate_t *appstate) {
+    assert(appstate);
+    SDL_Color color = {255, 255, 255};
+    int width, height, window_width, window_height;
+    char buffer[32];
+    ltoa(appstate->gamestate.player_one.score, buffer, 10);
+    TTF_SizeText(font, buffer, &width, &height);
+    SDL_Surface *surface = TTF_RenderText_Solid(font, buffer, color);
+    SDL_Texture *score = SDL_CreateTextureFromSurface(appstate->renderer, surface);
+    SDL_FreeSurface(surface);
+    SDL_Rect dst = {15, 15, width, height};
+    SDL_RenderCopy(appstate->renderer, score, NULL, &dst);
+
+    ltoa(appstate->gamestate.player_two.score, buffer, 10);
+    TTF_SizeText(font, buffer, &width, &height);
+    surface = TTF_RenderText_Solid(font, buffer, color);
+    score = SDL_CreateTextureFromSurface(appstate->renderer, surface);
+    SDL_FreeSurface(surface);
+    SDL_GetWindowSize(appstate->window, &window_width, &window_height);
+    dst = (SDL_Rect) {window_width - width - 15, 15, width, height};
+    SDL_RenderCopy(appstate->renderer, score, NULL, &dst);
+}
+
+static void floor_render(appstate_t* appstate) {
+    assert(appstate);
+    int window_width, window_height;
+    SDL_GetWindowSize(appstate->window, &window_width, &window_height);
     SDL_Rect dst;
-    for (int i = 0; i < 75; i++) {
-        for (int j = 0; j < 50; j++) {
+    for (int i = 0; i < window_width / 16 + 1; i++) {
+        for (int j = 0; j < window_height / 16 + 1; j++) {
             dst = (SDL_Rect) {i * 16, j * 16, 16, 16};
             SDL_RenderCopy(appstate->renderer, texture_water, NULL, &dst);
         }
     }
+}
 
-    /* If game running */
+void render(appstate_t *appstate) {
+    SDL_RenderClear(appstate->renderer);
+
+    floor_render(appstate);
     gamestate_render(&appstate->gamestate, appstate->renderer);
-/*
-    SDL_Color color = {255, 255, 255};
-    int w1, h1, w2, h2;
-    char buffer[32];
-    ltoa(appstate->gamestate.score_player_one, buffer, 10);
-    TTF_SizeText(font, buffer, &w1, &h1);
-    SDL_Surface* surface_1 = TTF_RenderText_Solid(font, buffer, color);
-    SDL_Texture* score1 = SDL_CreateTextureFromSurface(appstate->renderer, surface_1);
-    SDL_Rect rect1 = {15, 15, w1, h1};
-
-
-    ltoa(appstate->gamestate.score_player_two, buffer, 10);
-    TTF_SizeText(font, buffer, &w2, &h2);
-    SDL_Surface* surface_2 = TTF_RenderText_Solid(font, buffer, color);
-    SDL_Texture* score2 = SDL_CreateTextureFromSurface(appstate->renderer, surface_2);
-
-    int w, h;
-    SDL_GetWindowSize(appstate->window, &w, &h);
-    SDL_Rect rect2 = {w - w2 - 15, 15, w2, h2};
-
-    SDL_RenderCopy(appstate->renderer, score1, NULL, &rect1);
-    SDL_RenderCopy(appstate->renderer, score2, NULL, &rect2);*/
+    score_render(appstate);
 
     SDL_RenderPresent(appstate->renderer);
 }

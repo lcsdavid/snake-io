@@ -40,6 +40,8 @@ bool gamestate_update(gamestate_t *gamestate) {
     return collision(gamestate);
 }
 
+/* Render */
+
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {
