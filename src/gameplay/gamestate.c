@@ -38,9 +38,6 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
         it = iterator_next(it);
     }
     iterator_destroy(it);
-
-
-
 }
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake) {
@@ -101,7 +98,7 @@ bool collision(gamestate_t *gamestate) {
             snake = &gamestate->player_two;
         }
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
-        int i = 0;
+        size_t i = 0;
         while (iterator_has_data(it)) {
             element_t *element = iterator_data(it);
             it = iterator_next(it);

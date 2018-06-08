@@ -137,7 +137,6 @@ bool snake_self_eating(snake_t *snake) {
     snake_node_t *body_part;
     for (size_t i = 5; i < snake->lenght-1; i++) {
         body_part = list_element_at(&snake->body, i);
-        SDL_Log("%p %p Distance %lf", head, body_part, point_distance(&head->position, &body_part->position));
         if (point_distance(&head->position, &body_part->position) < SNAKE_BODY_DIAMETER - 1){
             return true;
 

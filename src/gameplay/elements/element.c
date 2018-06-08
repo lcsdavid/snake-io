@@ -57,26 +57,21 @@ element_t *element_create(const point_t *position, int type) {
 }
 
 void element_render_apple(element_t *element, SDL_Renderer *renderer) {
-    SDL_Log("%lf %lf", element->position.x, element->position.y);
     SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
     SDL_RenderCopy(renderer, element_texture_apple, NULL, &dst);
 }
 
 void element_render_bombe(element_t *element, SDL_Renderer *renderer) {
-    SDL_Log("%lf %lf", element->position.x, element->position.y);
     SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
     SDL_RenderCopy(renderer, element_texture_bombe, NULL, &dst);
 }
 
 void element_render_wall(element_t *element, SDL_Renderer *renderer) {
-    SDL_Log("%lf %lf", element->position.x, element->position.y);
     SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
     SDL_RenderCopy(renderer, element_texture_wall, NULL, &dst);
 }
 
 void element_render_laser(element_t *element, SDL_Renderer *renderer){
-
-    SDL_Log("%lf %lf", element->position.x, element->position.y);
     SDL_Rect dst = {element->position.x, element->position.y, 32, 32};
     SDL_RenderCopy(renderer, element_texture_laser, NULL, &dst);
 }
