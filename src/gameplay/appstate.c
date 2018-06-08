@@ -56,7 +56,7 @@ void input(appstate_t *appstate) {
             if (appstate->gamestate.multiplayer)
                 snake_change_direction(&appstate->gamestate.player_two, false);
         /* New player */
-        if (event.key.keysym.sym == SDLK_KP_ENTER) {
+        if (event.key.keysym.sym == SDLK_n) {
             appstate->gamestate.multiplayer = true;
             point_t start = new_point(&appstate->gamestate);
             snake_init(&appstate->gamestate.player_two, &start, 0);
@@ -73,13 +73,12 @@ void input(appstate_t *appstate) {
 
 void render(appstate_t *appstate) {
     SDL_RenderClear(appstate->renderer);
-    SDL_SetRenderDrawColor(appstate->renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(appstate->renderer, 255, 255, 255, 255);
 
     /* If game running */
     gamestate_render(&appstate->gamestate, appstate->renderer);
 
     SDL_RenderPresent(appstate->renderer);
-    //TODO ajouter un deuxieme joueur et les différents éléments
 }
 
 void update(appstate_t *appstate) {
