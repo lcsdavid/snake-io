@@ -15,9 +15,10 @@ void gamestate_init(gamestate_t *gamestate) {
     gamestate->multiplayer = false;
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
-    point.x += 1300;
+    point = new_point(gamestate);
     element_create(&point, ELEMENT_LASER);
     gamestate->laser1 = element_create(&point, ELEMENT_LASER);
+    point = new_point(gamestate);
     element_create(&point, ELEMENT_LASER);
     gamestate->laser2 = element_create(&point, ELEMENT_LASER);
     gamestate->angle_laser1 = 0;
@@ -123,7 +124,7 @@ bool collision(gamestate_t *gamestate) {
         }
         iterator_destroy(it);
     }
-    /*int i = 0;
+    int i = 0;
     for(int s = 0; s <2; s++){
         iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
         double angle = 0;
@@ -144,7 +145,7 @@ bool collision(gamestate_t *gamestate) {
             point.x += 16;
             point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
             distance = point_distance(&point, po);
-            if (distance <= 64) {
+            if (distance <= 6) {
                 list_erase_at(&gamestate->elements, i);
                 po->x += 1250;
             }
@@ -153,7 +154,7 @@ bool collision(gamestate_t *gamestate) {
         }
         iterator_destroy(it);
 
-    }*/
+    }
     return false;
 }
 
