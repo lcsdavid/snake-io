@@ -72,7 +72,6 @@ static void collision_bis(gamestate_t *gamestate, snake_t *snake) {
     element_t *element = NULL;
     for (size_t i = 0; i < gamestate->elements.size; i++) {
         element = list_element_at(&gamestate->elements, i);
-        SDL_Log("%lld %d %lf %lf", i, element->type, element->position.x, element->position.y);
         if(point_distance(&snake_head(snake)->position, &element->position) < 32) {
             element_effect(element, snake);
             if(element->type == ELEMENT_APPLE) {
