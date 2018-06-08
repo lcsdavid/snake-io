@@ -16,9 +16,11 @@ void gamestate_init(gamestate_t *gamestate) {
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
     point = new_point(gamestate);
+    point.x = 1250;
     element_create(&point, ELEMENT_LASER);
     gamestate->laser1 = element_create(&point, ELEMENT_LASER);
     point = new_point(gamestate);
+    point.x = 1350;
     element_create(&point, ELEMENT_LASER);
     gamestate->laser2 = element_create(&point, ELEMENT_LASER);
     gamestate->angle_laser1 = 0;
@@ -147,8 +149,8 @@ bool collision(gamestate_t *gamestate) {
             point.x += 16;
             point.y += 16; //les coordonnées originelles d'un element désignent le coin en haut a gauche de sa tuile, avec cette opération on obtient le centre de la tuile (qui fait 16*16)
             distance = point_distance(&point, po);
-            if (distance <= 64) {
-                list_erase_at(&gamestate->elements, i);
+            if (&point != po && distance <= 64) {
+                //list_erase_at(&gamestate->elements, i);
                 po->x += 1250;
             }
             i++;
