@@ -3,6 +3,7 @@
 
 #include <time.h>
 
+#include <SDL_ttf.h>
 #include <SDL_mixer.h>
 
 #include "gamestate.h"

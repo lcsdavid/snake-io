@@ -25,6 +25,11 @@ bool appstate_init(appstate_t *appstate) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init(): %s\n", SDL_GetError());
         return false;
     }
+    if (TTF_Init() == -1) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "TTF_Init(): %s\n", SDL_GetError());
+        return false;
+    }
+
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
         return -1;
     Mix_Music *music = Mix_LoadMUS("../res/music.mp3");
