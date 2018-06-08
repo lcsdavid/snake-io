@@ -75,9 +75,9 @@ void snake_diminish(snake_t *snake) {
 
 void snake_change_direction(snake_t *snake, bool gauche) {
     if (gauche)
-        snake_head(snake)->angle -= M_PI / 18;
+        snake_head(snake)->angle -= M_PI / 36;
     else
-        snake_head(snake)->angle += M_PI / 18;
+        snake_head(snake)->angle += M_PI / 36;
 }
 
 bool snake_move(snake_t *snake) { // TODO améliorer la propagation la queue doit être vider plus efficacement

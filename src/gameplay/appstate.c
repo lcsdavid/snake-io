@@ -56,9 +56,11 @@ void input(appstate_t *appstate) {
                 snake_change_direction(&appstate->gamestate.player_two, false);
         /* New player */
         if (event.key.keysym.sym == SDLK_n) {
-            appstate->gamestate.multiplayer = true;
-            point_t start = new_point(&appstate->gamestate);
-            snake_init(&appstate->gamestate.player_two, &start, 0);
+            if(!appstate->gamestate.multiplayer ){
+                appstate->gamestate.multiplayer = true;
+                point_t start = new_point(&appstate->gamestate);
+                snake_init(&appstate->gamestate.player_two, &start, 0);
+            }
         }
         /* Fullscreen */
         if (event.key.keysym.sym == SDLK_TAB) {
