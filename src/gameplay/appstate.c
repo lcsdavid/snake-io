@@ -57,6 +57,8 @@ bool appstate_init(appstate_t *appstate) {
     if (!load_texture(appstate))
         return false;
 
+    appstate->gamestate.score_player_one = appstate->gamestate.score_player_two = 0;
+
     font = TTF_OpenFont("../res/font.ttf", 25);
 
     gamestate_init(&appstate->gamestate);
@@ -123,6 +125,28 @@ void render(appstate_t *appstate) {
 
     /* If game running */
     gamestate_render(&appstate->gamestate, appstate->renderer);
+
+    SDL_Color color = {255, 255, 255};
+    int w1, h1, w2, h2;
+    char buffer[32];
+    ltoa(appstate->gamestate.score_player_one, buffer, 10);
+    TTF_SizeText(font, buffer, &w1, &h1);
+    SDL_Surface* surface_1 = TTF_RenderText_Solid(font, buffer, color);
+    SDL_Texture* score1 = SDL_CreateTextureFromSurface(appstate->renderer, surface_1);
+    SDL_Rect rect1 = {15, 15, w1, h1};
+
+
+    ltoa(appstate->gamestate.score_player_two, buffer, 10);
+    TTF_SizeText(font, buffer, &w2, &h2);
+    SDL_Surface* surface_2 = TTF_RenderText_Solid(font, buffer, color);
+    SDL_Texture* score2 = SDL_CreateTextureFromSurface(appstate->renderer, surface_2);
+
+    int w, h;
+    SDL_GetWindowSize(appstate->window, &w, &h);
+    SDL_Rect rect2 = {w - w2 - 15, 15, w2, h2};
+
+    SDL_RenderCopy(appstate->renderer, score1, NULL, &rect1);
+    SDL_RenderCopy(appstate->renderer, score2, NULL, &rect2);
 
     SDL_RenderPresent(appstate->renderer);
 }
