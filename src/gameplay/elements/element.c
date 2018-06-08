@@ -63,6 +63,10 @@ void element_render_wall(element_t *element, SDL_Renderer *renderer) {
     SDL_RenderCopy(renderer, element_texture_wall, NULL, &dst);
 }
 
+void element_render_laser(element_t *element, SDL_Renderer *renderer){
+
+}
+
 void element_effect_apple(snake_t *snake) {
     assert(snake);
     snake_grow(snake);

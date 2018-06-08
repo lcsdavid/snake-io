@@ -10,6 +10,7 @@
 #define ELEMENT_HEAD 4
 #define ELEMENT_BODY 5
 #define ELEMENT_QUEUE 6
+#define ELEMENT_LASER 7
 
 typedef struct element element_t;
 
