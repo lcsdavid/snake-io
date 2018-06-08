@@ -22,6 +22,8 @@ typedef struct {
 
 void gamestate_init(gamestate_t *gamestate);
 
+bool gamestate_update(gamestate_t* gamestate);
+
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer);
 
 bool collision(gamestate_t *gamestate);

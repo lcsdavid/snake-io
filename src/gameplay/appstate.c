@@ -152,14 +152,7 @@ void render(appstate_t *appstate) {
 }
 
 void update(appstate_t *appstate) {
-    if (!snake_move(&appstate->gamestate.player_one)) {
-        appstate->end = true; //on sort de l'application
-        return;
-    }//si le serpent se mange lui même
-    if (appstate->gamestate.multiplayer)
-        if (!snake_move(&appstate->gamestate.player_two))
-            appstate->end = true;
-    appstate->end = collision(&appstate->gamestate);
+    appstate->end = gamestate_update(&appstate->gamestate);
 }
 
 

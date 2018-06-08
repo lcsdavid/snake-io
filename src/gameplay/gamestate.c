@@ -26,6 +26,20 @@ void gamestate_init(gamestate_t *gamestate) {
     list_push_front(&gamestate->elements, gamestate->laser2);
 }
 
+bool gamestate_update(gamestate_t* gamestate) {
+    if(gamestate->player_one.lenght < 1)
+        return false;
+    if(gamestate->multiplayer)
+        if(gamestate->player_two.lenght < 1)
+            return false;
+
+    snake_move(&gamestate->player_one);
+    if(gamestate->multiplayer)
+        snake_move(&gamestate->player_two);
+
+    return collision(gamestate);
+}
+
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     snake_render(&gamestate->player_one, renderer, false);
     if (gamestate->multiplayer)
@@ -34,7 +48,7 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
     iterator_t *it = list_iterator_create(&gamestate->elements, START_FRONT);
     while (iterator_has_data(it)) {
         element_t *element = iterator_data(it);
-        element->element_render(element, renderer);
+        element_render(element, renderer);
         it = iterator_next(it);
     }
     iterator_destroy(it);
@@ -42,8 +56,8 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake) {
     gamestate->difficulte += 1;
+    element_effect(element, snake);
     if (element->type == ELEMENT_APPLE) {//si c'est une pomme
-        element->element_effect(snake);
         point_t point = new_point(gamestate);
         if(gamestate->modeArcade){
             list_push_back(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
@@ -58,7 +72,6 @@ bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snak
         if (snake->lenght <= 1) {//mort du joueur
             return false;
         }
-        element->element_effect(snake);
         element->position = new_point(gamestate);
         if(&gamestate->player_one == snake)
             gamestate->score_player_one -= 50;
