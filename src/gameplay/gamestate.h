@@ -11,8 +11,6 @@ typedef struct {
     bool multiplayer;
     bool gameover;
     int difficulte;
-    int score_joueur1;
-    int score_joueur2;
 } gamestate_t;
 
 void gamestate_init(gamestate_t *gamestate);

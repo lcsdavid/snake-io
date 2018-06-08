@@ -73,12 +73,8 @@ int main(int argc, char *argv[]) {
         input(&appstate);
         SDL_mutexV(appstate.lock);
         end_time = SDL_GetTicks();
-        if (end_time - start_time < 2.5)
-            SDL_Delay(2.5 - end_time + start_time);
-    }
-    int i =0;
-    while (i<10){
-        affiche_scores(&appstate);
+        if (end_time - start_time < 5)
+            SDL_Delay(5 - end_time + start_time);
     }
     close(&appstate);
     return 0;

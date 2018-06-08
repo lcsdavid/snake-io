@@ -85,25 +85,6 @@ void input(appstate_t *appstate) {
     }
 }
 
-void affiche_scores(appstate_t *appstate){
-
-    TTF_Font *police = NULL;
-    SDL_Surface *texte;
-    SDL_Rect position;
-    SDL_Color couleurNoire = {0, 0, 0};
-
-    police = TTF_OpenFont("angelina.ttf", 65);
-
-    texte = TTF_RenderText_Blended(police, "Salut les Zér0s !", couleurNoire);
-    position.x = 60;
-
-    position.y = 370;
-
-    SDL_BlitSurface(texte, NULL, appstate->window, &position);
-
-    SDL_Flip(appstate->window);
-}
-
 void render(appstate_t *appstate) {
     SDL_RenderClear(appstate->renderer);
     SDL_Rect dst;

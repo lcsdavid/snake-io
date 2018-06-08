@@ -1,8 +1,8 @@
 #ifndef APPSTATE_H
 #define APPSTATE_H
 
-#include <SDL2/time.h>
-#include <SDL_ttf.h>
+#include <time.h>
+
 #include "gamestate.h"
 
 typedef struct {
@@ -18,8 +18,6 @@ bool appstate_init(appstate_t *appstate);
 void input(appstate_t *appstate);
 
 void update(appstate_t *appstate);
-
-void affiche_scores(appstate_t *appstate);
 
 void render(appstate_t *appstate);
 

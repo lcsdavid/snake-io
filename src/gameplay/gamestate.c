@@ -14,8 +14,6 @@ void gamestate_init(gamestate_t *gamestate) {
     gamestate->multiplayer = false;
     point_t point = new_point(gamestate);
     list_push_front(&gamestate->elements, element_create(&point, ELEMENT_APPLE));
-    gamestate->score_joueur1 = 0;
-    gamestate->score_joueur2 = 0;
 }
 
 void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
@@ -34,10 +32,6 @@ void gamestate_render(gamestate_t *gamestate, SDL_Renderer *renderer) {
 
 bool gestion_collision(gamestate_t *gamestate, element_t *element, snake_t *snake){
     gamestate->difficulte += 1;
-    if(snake == &gamestate->player_one)
-        gamestate->score_joueur1 += 1;
-    if(snake == &gamestate->player_two)
-        gamestate->score_joueur2 += 1;
     if(element->type == 1){//si c'est une pomme
         element->element_effect(snake);
         element->position = new_point(gamestate);
@@ -71,7 +65,6 @@ bool collision(gamestate_t *gamestate) {
     point_t *po = (point_t *)gamestate->player_one.body.front->data;
     snake_t *snake = &gamestate->player_one;
     int limite = 1;
-    int i=0;
     if(gamestate->multiplayer)//on stock le nombre de serpents que l'on doit parcourird
         limite = 2;
     for(int s = 0; s < limite; s++) {
