@@ -18,7 +18,6 @@
 
 #endif
 
-#include"SDL2.h"
 #include "../../standard/math/point.h"
 #include "../../standard/collection/list.h"
 #include "../../standard/collection/queue.h"
