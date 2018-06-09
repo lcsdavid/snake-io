@@ -4,7 +4,6 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 typedef struct node node_t;
 
