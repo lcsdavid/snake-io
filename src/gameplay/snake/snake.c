@@ -39,6 +39,7 @@ void snake_init(snake_t *snake, const point_t *position, double direction) {
     list_init(&snake->body);
     list_push_back(&snake->body, snake_node_create(position, direction));
     snake->lenght = 1;
+	snake->score = 0;
 }
 
 //

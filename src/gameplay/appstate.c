@@ -136,7 +136,10 @@ static void score_render(appstate_t *appstate) {
     SDL_Rect dst = {15, 15, width, height};
     SDL_RenderCopy(appstate->renderer, score, NULL, &dst);
 
-    snprintf(buffer, sizeof(buffer), "%ld", appstate->gamestate.player_two.score);
+	if(appstate->gamestate.multiplayer)
+    	snprintf(buffer, sizeof(buffer), "%ld", appstate->gamestate.player_two.score);
+	else
+		snprintf(buffer, sizeof(buffer), "%d", 0);
     TTF_SizeText(font, buffer, &width, &height);
     surface = TTF_RenderText_Solid(font, buffer, color);
     score = SDL_CreateTextureFromSurface(appstate->renderer, surface);
