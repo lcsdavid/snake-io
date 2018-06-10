@@ -1,6 +1,6 @@
 # Custom
-!bin/*
-lib
+!/bin/*
+/lib
 
 # Prerequisites
 *.d
