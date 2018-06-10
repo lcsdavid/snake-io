@@ -1,6 +1,6 @@
-.idea
-cmake-build-debug/
-lib/
+# Custom
+!bin
+lib
 
 # Prerequisites
 *.d

@@ -1,0 +1,6 @@
+"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" D:\Users\lucasdavid\Documents\GitHub\snake-io
+-- Found SDL2_ttf: D:/Users/lucasdavid/Documents/GitHub/snake-io/lib/SDL2_ttf/win32/x86_64-w64-mingw32/lib/libSDL2_ttf.dll.a (found version "2.0.14") 
+-- Found SDL2_MIXER: D:/Users/lucasdavid/Documents/GitHub/snake-io/lib/SDL2_mixer/win32/x86_64-w64-mingw32/lib/libSDL2_mixer.dll.a (found version "2.0.2") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/Users/lucasdavid/Documents/GitHub/snake-io/cmake-build-debug
