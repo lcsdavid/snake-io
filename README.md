@@ -10,7 +10,7 @@ Le projet étant multi-plateforme voici les instructions concernant les platefor
 
 [mingw64](https://sourceforge.net/projects/mingw-w64/)  
 [CMake](https://cmake.org/)  
-[Les modules FindSDL2](https://github.com/tcbrindle/sdl2-cmake-scripts) pour CMake a déposer dans le dossier d'installer de CMake,
+[Les modules FindSDL2](https://github.com/tcbrindle/sdl2-cmake-scripts) pour CMake a déposé dans le dossier d'installer de CMake,
 comme dans l'exemple qui suit.
 > C:\Program Files\CMake\share\cmake-3.11\Modules
 
