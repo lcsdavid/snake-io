@@ -14,18 +14,14 @@ SRC = $(call rwildcard,$(SRC_DIR),*.c)
 OBJ = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 _OBJ_DIR = $(dir $(OBJ))
 
-all: $(_OBJ_DIR) $(EXEC)
-	rm -pv all
+all: $(EXEC)
+	mkdir -pv --mode=777 $(_OBJ_DIR)
 
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LIB)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
-
-%:
-	mkdir -pv $@
-	
 
 .PHONY: check clean cclean
 
