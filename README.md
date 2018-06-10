@@ -18,7 +18,7 @@ comme dans l'exemple qui suit.
 L'IDE utilisé pour ce projet ce qui pourrait simplifié l'utilisation de CMake.
 
 Le dossier [lib](lib) du projet doit contenir chaque librairies SDL2.   
-[SDL2](https://www.libsdl.org/release/SDL2-2.0.8-win32-x64.zip)  
+[SDL2](https://www.libsdl.org/release/SDL2-devel-2.0.8-mingw.tar.gz)  
 [SDL2-image](https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.3-mingw.tar.gz)  
 [SDL2-mixer](https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.2-mingw.tar.gz)  
 [SDL2-ttf](https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-2.0.14-mingw.tar.gz)
