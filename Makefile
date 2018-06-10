@@ -15,6 +15,7 @@ OBJ = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 _OBJ_DIR = $(dir $(OBJ))
 
 all: $(_OBJ_DIR) $(EXEC)
+	rm -pv all
 
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LIB)
@@ -24,6 +25,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 %:
 	mkdir -pv $@
+	
 
 .PHONY: check clean cclean
 
