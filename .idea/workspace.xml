@@ -15,10 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="435250e5-7633-4f4b-b282-e54cad921f0a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToRead.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/snake_io.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/snake_io.exe" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,8 +32,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-353">
-                <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+              <first_editor relative-caret-position="323">
+                <caret line="19" column="72" selection-start-line="19" selection-start-column="72" selection-end-line="19" selection-end-column="72" />
               </first_editor>
               <second_editor />
             </state>
@@ -113,9 +110,10 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="197" />
+    <option name="x" value="216" />
+    <option name="y" value="114" />
     <option name="width" value="1473" />
-    <option name="height" value="1071" />
+    <option name="height" value="588" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -133,26 +131,25 @@
             <path>
               <item name="snake-io" type="b2602c69:ProjectViewProjectNode" />
               <item name="snake-io" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="snake-io" type="b2602c69:ProjectViewProjectNode" />
               <item name="snake-io" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="gameplay" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="SDL2_image" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="snake-io" type="b2602c69:ProjectViewProjectNode" />
               <item name="snake-io" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="standard" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="SDL2_mixer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="snake-io" type="b2602c69:ProjectViewProjectNode" />
               <item name="snake-io" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="standard" type="462c0819:PsiDirectoryNode" />
-              <item name="function" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="SDL2_ttf" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -238,12 +235,12 @@
       <workItem from="1528545357023" duration="667000" />
       <workItem from="1528583598131" duration="42000" />
       <workItem from="1528666522245" duration="103000" />
-      <workItem from="1528666999809" duration="1030000" />
+      <workItem from="1528666999809" duration="1971000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56225000" />
+    <option name="totallyTimeSpent" value="57166000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -678,8 +675,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-353">
-            <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+          <first_editor relative-caret-position="323">
+            <caret line="19" column="72" selection-start-line="19" selection-start-column="72" selection-end-line="19" selection-end-column="72" />
           </first_editor>
           <second_editor />
         </state>
