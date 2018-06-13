@@ -79,10 +79,12 @@ static bool collision_bis(gamestate_t *gamestate, snake_t *snake) {
                 i--;
             } else if(element->type == ELEMENT_BOMBE){
                 if(snake->lenght == 1){
+                    snake->score -= 50;
                     return true;// on meurt
                 }
                 element->position = new_point(gamestate);
             }else if(element->type == ELEMENT_WALL){
+                snake->score -= 2000;
                 return true;//on meurt
             }
             element_effect(element, snake);
@@ -157,8 +159,7 @@ bool point_taken(const gamestate_t *gamestate, const point_t *point) {
     for (int s = 0; s < 1; s++) {
         if (s == 0)
             it = list_iterator_create(&gamestate->player_one.body, START_FRONT);
-        else if (s == 1)
-            it = list_iterator_create(&gamestate->player_two.body, START_FRONT);
+        else if (s == 1)it = list_iterator_create(&gamestate->player_two.body, START_FRONT);
 
         while (iterator_has_data(it)) {
             snake_node_t *current = iterator_data(it);
